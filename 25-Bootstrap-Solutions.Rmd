@@ -1,0 +1,338 @@
+# Bootstrap {#BOOT}
+
+## Objectives
+
+1) Use the bootstrap to estimate the standard error, the standard deviation, of the sample statistic.  
+2) Using bootstrap methods, obtain and interpret a confidence interval for an unknown parameter, based on a random sample.   
+3) Describe the advantages, disadvantages, and assumptions behind using bootstrapping for confidence intervals. 
+
+## Homework  
+
+### Problem 1
+
+**Poker**  
+
+An aspiring poker player recorded her winnings and losses over 50 evenings of play, the data is in the `openintro` package in the object `poker`. The poker player would like to better understand the volatility in her long term play.
+
+a. Load the data and plot a histogram.  
+
+```{r warning=FALSE,message=FALSE}
+poker<-read_csv("data/poker.csv")
+```
+
+```{r}
+poker %>%
+  gf_histogram(~winnings,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Winnings")
+```
+
+
+b. Find the summary statistics.  
+
+```{r}
+favstats(~winnings,data=poker)
+```
+
+
+c.  *Mean absolute deviation* or *MAD* is a more intuitive measure of spread than variance. It directly measures the average distance from the mean. It is found by the formula:
+$$mad = \sum_{i=1}^{n}\frac{\left| x_{i} - \bar{x} \right|}{n}$$
+Write a function and find the *MAD* of the data.
+
+```{r}
+mad<-function(x){
+  xbar<-mean(x)
+  sum(abs(x-xbar))/length(x)
+}
+```
+
+```{r}
+obs<-mad(poker$winnings)
+obs
+```
+
+
+d. Find the bootstrap distribution of the *MAD* using 1000 replicates.
+
+```{r cache=TRUE}
+set.seed(1122)
+results<-do(1000)*mad(resample(poker$winnings))
+```
+
+e. Plot a histogram of the bootstrap distribution.
+
+```{r}
+results %>%
+  gf_histogram(~mad,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Mean absolute deviation")
+```
+
+
+f. Report a 95% confidence interval on the MAD.
+
+```{r}
+cdata(~mad,data=results)
+```
+
+
+g. ADVANCED: Do you think sample MAD is an unbiased estimator of population MAD? Why or why not? 
+
+We don't know without doing some math. We do know that the sample standard deviation is biased and part of that is because we have to use the sample mean in its calculation. We are doing the same thing here, so our estimate might also be biased for the same reason.
+
+
+### Problem 2
+
+**Bootstrap hypothesis testing**  
+
+Bootstrap hypothesis testing is relatively undeveloped, and is generally not as accurate as permutation testing. Therefore in general avoid it. But for our problem in the reading, it may work. We will sample in a way that is consistent with the null hypothesis, then calculate a p-value as a tail probability like we do in permutation tests. This example does not generalize well to other applications like relative risk, correlation, regression, or categorical data.
+
+a. Using the `HELPrct` data set, store the observed value of the difference of means for male and female.  
+
+I am going to just select the two columns I need.
+
+```{r}
+HELP_sub <- HELPrct %>%
+  select(age,sex)
+```
+
+
+```{r}
+obs <- diffmean(age~sex,data=HELP_sub)
+obs
+```
+
+
+
+b. The null hypothesis requires the means of each group to be equal. Pick one group to adjust, either `male` or `female`. First zero the mean of the selected group by subtracting the sample mean of this group from data points only in this group. Then add the sample mean of the other group to each data point in the selected group. Store in a new object called `HELP_null`.
+
+This is tricky, we are doing some data wrangling here.
+
+```{r}
+means<-mean(age~sex,data=HELP_sub)
+means
+```
+
+```{r}
+means['female']
+``` 
+
+Let's get all the female observations and adjust the mean to equal that of the males.
+
+```{r}
+H_female <- HELP_sub %>%
+  filter(sex=="female") %>%
+  mutate(age=age-means['female']+means['male'])
+```
+
+
+```{r}
+mean(~age,data=H_female)
+```
+
+Combine back into one data set.
+
+```{r}
+HELP_sub_new<-HELP_sub %>%
+  filter(sex=="male") %>%
+  rbind(H_female)
+```
+
+
+c. Run `favstats()` to check that the means are equal.
+
+```{r}
+favstats(age~sex,data=HELP_sub_new)
+```
+
+d. On this new adjusted data set, generate a bootstrap distribution of the difference in sample means.
+
+```{r cache=TRUE}
+set.seed(1159)
+results<-do(1000)*diffmean(age~sex,data=resample(HELP_sub_new))
+```
+
+
+e. Plot the bootstrap distribution and a line at the observed difference in sample means.
+
+```{r warning=TRUE}
+results %>%
+  gf_histogram(~diffmean,fill="cyan",color="black") %>%
+  gf_vline(xintercept=obs) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Difference in means")
+```
+
+
+f. Find a p-value.
+
+```{r}
+2*prop1(~(diffmean<=obs),data=results)
+```
+
+
+g. How does the p-value compare with those in the reading.
+
+This is a similar p-value.
+
+### Problem 3
+
+**Paired data**  
+
+Are textbooks actually cheaper online? Here we compare the price of textbooks at the University of California, Los Angeles' (UCLA's) bookstore and prices at Amazon.com. Seventy-three UCLA courses were randomly sampled in Spring 2010, representing less than 10\% of all UCLA courses. When a class had multiple books, only the most expensive text was considered.
+
+The data is in the file `textbooks.csv` under the data folder.
+
+```{r}
+textbooks<-read_csv("data/textbooks.csv")
+```
+
+```{r}
+head(textbooks)
+```
+
+
+Each textbook has two corresponding prices in the data set: one for the UCLA bookstore and one for Amazon. Therefore, each textbook price from the UCLA bookstore has a natural correspondence with a textbook price from Amazon. When two sets of observations have this special correspondence, they are said to be **paired**.
+
+To analyze paired data, it is often useful to look at the difference in outcomes of each pair of observations. In  `textbooks`, we look at the difference in prices, which is represented as the `diff` variable. It is important that we always subtract using a consistent order; here Amazon prices are always subtracted from UCLA prices. 
+
+a. Is this data tidy? Explain. 
+
+Yes, because each row is a textbook and each column is a variable.  
+
+b. Make a scatterplot of the UCLA price versus the Amazon price. Add a 45 degree line to the plot. 
+
+```{r warning=FALSE}
+textbooks %>%
+  gf_point(ucla_new~amaz_new) %>%
+  gf_abline(slope=1,intercept = 0,color="darkblue") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Amazon",y="UCLA")
+```
+
+It appears the books at the UCLA bookstore are more expensive. One way to test this is with a regression model; we will learn about in the next block.
+
+
+c. Make a histogram of the differences in price. 
+
+
+```{r}
+textbooks %>%
+  gf_histogram(~diff,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Distribution of price differences",
+          x="Price difference between UCLA and Amazon")
+```  
+
+The distribution is skewed.
+
+The hypotheses are:  
+$H_0$: $\mu_{diff}=0$. There is no difference in the average textbook price.  
+$H_A$: $\mu_{diff} \neq 0$. There is a difference in average prices.  
+ 
+d. To use a $t$ distribution, the variable `diff` has to be independent and normally distributed. Since the 73 books represent less than 10\% of the population, the assumption that the random sample is independent is reasonable. Check normality using `qqnorsim()` from the `openintro` package. It generates 8 qq plots of simulated normal data that you can use to judge the `diff` variable. 
+
+```{r}
+qqnormsim(diff,textbooks)
+```  
+
+The normality assumption is suspect but we have a large sample so it should be acceptable to use the $t$.
+
+e. Run a $t$ test on the `diff` variable. Report the p-value and conclusion.
+
+```{r}
+t_test(~diff,textbooks)
+```  
+
+We did not have to use the `paired` option since we already took the difference. Here is an example of using the `paired` option.
+
+```{r}
+t_test(textbooks$ucla_new,textbooks$amaz_new,paired=TRUE)
+```  
+
+The p-value is so small that we don't believe the average price of the books from the UCLA bookstore and Amazon are the same.
+
+f. Create a bootstrap distribution and generate a 95\% confidence interval on the mean of the differences, the `diff` column.
+
+```{r}
+textbooks %>%
+  summarise(obs_diff=mean(diff))
+```
+
+We need to just pull the difference.
+
+```{r}
+obs_stat<- textbooks %>%
+  summarise(obs_diff=mean(diff)) %>%
+  pull(obs_diff)
+
+obs_stat
+```
+
+Next a bootstrap distribution.
+
+```{r cache=TRUE}
+set.seed(843)
+results<-do(1000)*mean(~diff,data=resample(textbooks))
+```
+
+```{r warning=FALSE,message=FALSE}
+results %>%
+  gf_dhistogram(~mean,fill="cyan",color="black") %>%
+  gf_dist("norm",mean=12.76,sd=14/sqrt(72),color="red") %>%
+  gf_vline(xintercept = obs_stat) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Sampling distribution of the mean of differences in price",
+          x="Mean of differences in price")
+```
+
+```{r}
+cdata(~mean,data=results)
+```
+
+Not a bad solution for this problem.
+
+g. If there is really no differences between book sources, the variable `more` is a binomial and under the null the probably of success is $\pi = 0.5$. Run a hypothesis test using the variable `more`.
+
+```{r warning=FALSE,message=FALSE}
+inspect(textbooks)
+```
+
+We have 45 books that were more expensive out of the total of 73.
+
+```{r}
+prop_test(45,73,p=0.5)
+```  
+
+Notice that this test failed to reject the null hypothesis. In the paired test, the evidence was so strong but in the binomial model it is not. There is a loss of information making a discrete variable out of a continuous one.
+
+h. Could you use a permutation test on this example? Explain.  
+
+Yes, but you have to be careful because you want to keep the pairing so you can't just shuffle the names. You have to shuffle the names within the paired values. This means to simply randomly switch the names within a row. This is easier to do by just multiplying the diff column by a random choice of -1 and 1.
+
+```{r}
+sample(c(-1,1),size=73,replace = TRUE)
+```
+
+```{r cache=TRUE}
+set.seed(406)
+results <- do(1000)*mean((~diff*sample(c(-1,1),size=73,replace = TRUE)),data=textbooks)
+```
+
+```{r}
+results %>%
+  gf_histogram(~mean,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Randomization sampling distribution of mean of differences in price",
+          x="Mean of price difference")
+```
+
+```{r}
+prop1((~mean>=obs_stat),data=results)
+```
+
+None of the permuted values is at or greater that the observed value.
+
+
+
+

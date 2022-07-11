@@ -1,2 +1,2 @@
-# Solution-Manual-CPS
- Solutions for Computational Probability and Statistics
+# Solutions-Manual-Master
+ Solutions for Computational Probability and Statistics - Master version

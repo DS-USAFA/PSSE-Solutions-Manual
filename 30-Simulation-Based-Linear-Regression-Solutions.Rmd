@@ -1,0 +1,212 @@
+# Simulation Based Linear Regression {#LRSIM}
+
+```{r setup, include=FALSE}
+library(infer)
+library(broom)
+```
+
+## Objectives
+
+1) Using the bootstrap, generate confidence and estimates of standard error for parameter estimates from a linear regression model.  
+2) Generate and interpret bootstrap confidence intervals for predicted values.  
+3) Generate bootstrap samples from sampling rows of the data or sampling residuals. Explain why you might prefer one over the other.  
+4) Interpret regression coefficients for a linear model with a categorical explanatory variable.  
+
+## Homework  
+
+We will use the loans data set again to create linear models. Remember this data set represents thousands of loans made through the Lending Club platform, which is a platform that allows individuals to lend to other individuals.
+
+### Problem 1  
+
+**Loans**  
+
+In this exercise we will examine the relationship between interest rate and loan amount.  
+
+a. Read in the data from `loans.csv` in the `data` folder.  
+
+```{r warning=FALSE,message=FALSE}
+loans <- read_csv("data/loans.csv")
+```  
+
+b. Create a subset of data with 200 with the following three variables `interest_rate`, `loan_amount`, and `term`. Change `term` into a factor and use a stratified sample to keep the proportion of loan term roughly the same as the original data. 
+
+```{r}
+tally(~term,data=loans,format="percent")
+```  
+
+```{r}
+set.seed(2111)
+loans200 <- loans %>%
+  select(interest_rate,loan_amount,term) %>%
+  mutate(term=factor(term)) %>%
+  group_by(term) %>%
+  slice_sample(prop=0.02) %>%
+  ungroup()
+```  
+
+```{r}
+tally(~term,data=loans200,format="percent")
+```
+
+```{r}
+str(loans200)
+```
+
+c. Plot `interest_rate` versus `loan_amount`. We think `interest_rate` should be the response.  
+
+It seems natural that you would want to predict interest rate from loan amount.  
+
+```{r}
+ggplot(loans200,aes(x=loan_amount,y=interest_rate)) +
+  geom_point() +
+  labs(title="Lending Club",subtitle="Loan amount versus Interest rate",
+       x="Loan Amount",y="Interest rate (percent)") +
+  theme_bw()
+```
+
+d. Fit a linear model to the data by regressing `interest_rate` on `loan_amount`. Is there a significant relationship between `interest_rate` and `loan_amount`?  
+
+```{r}
+int_rate_mod <- lm(interest_rate~loan_amount,data=loans200)
+```  
+
+```{r}
+summary(int_rate_mod)
+```
+
+To test if there a significant relationship between `interest_rate` and `loan_amount`, we test if $\beta_1 = 0$. The p-value for this is 0.4613, so we fail to reject that there is no relationship between `interest_rate` and `loan_amount`.
+
+e. Using the $t$ distribution:  
+   i. Find a 95% confidence interval for the slope.  
+   ii. Find and interpret a 90% confidence interval for a loan amount of $20000. 
+   
+```{r}
+confint(int_rate_mod)
+```  
+
+We are 95\% confident the true slope is between -4.592357e-05 and 1.008748e-04.   
+
+```{r}
+predict(int_rate_mod,newdata = data.frame(loan_amount=20000),
+        interval = "confidence",level=0.90)
+```  
+
+We are 90\% confident that the average interest rate for a loan of $20000 is between 11.5\% and 12.9\%.
+   
+f. Repeat part e using a bootstrap.  
+
+```{r cache=TRUE}
+set.seed(3011)
+results <- do(1000)*lm(interest_rate ~ loan_amount,data=resample(loans200))
+```
+
+```{r}
+head(results)
+```
+
+```{r}
+cdata(~loan_amount,data=results)
+```
+
+Or using the `infer` package:
+
+```{r}
+results2 <- loans200 %>%
+  specify(interest_rate~loan_amount) %>%
+  generate(reps=1000,type="bootstrap") %>%
+  calculate(stat="slope")
+head(results2)
+get_confidence_interval(results2)
+```
+
+Now the confidence interval for average interest rate at a loan amount of 20000:
+
+```{r}
+results %>%
+  mutate(pred=Intercept+loan_amount*20000) %>%
+  cdata(~pred,data=.)
+```
+
+Again, close to what we had but slightly different. Maybe some of the assumptions such as normality are not appropriate.  
+
+
+g. Check the assumptions of linear regression.
+
+```{r}
+plot(int_rate_mod)
+```
+
+There appears to be a lack of normality as the residuals are skewed to the right, large positive residuals. The bootstrap would probably be more appropriate for this problem.
+
+### Problem 2
+
+**Loans II**
+
+Using the `loans` data set of 200 observations from the previous exercise, use the variable `term` to determine if there is a difference in interest rates for the two different loan lengths.
+
+a. Build a set of side-by-side boxplots that summarize interest rate by term. Describe the relationship you see. Note: You will have to convert the `term` variable to a factor prior to continuing.  
+
+```{r}
+loans200 %>%
+  gf_boxplot(interest_rate~term) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Lending Club",x="Length of Loan",y="Interest Rate")
+```
+
+It looks like there is a difference in interest rate based on the length of the loan. It also appears both are skewed to the right, positive skew. Let's plot the density and see what we find.
+
+```{r}
+loans200 %>%
+  gf_dens(~interest_rate,group=~term,color=~term) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Lending Club",x="Interest Rate",y="Density")
+```  
+
+Just as we thought.
+
+b. Build a linear model fitting interest rate against term. Does there appear to be a significant difference in mean interest rates by term?  
+
+```{r}
+int_rate_mod2 <- lm(interest_rate~term,data=loans200)
+```  
+
+```{r}
+summary(int_rate_mod2)
+```
+
+There is a significant difference between the average interest rate based on the length of the loan.
+
+c. Write out the estimated linear model. In words, interpret the coefficient estimate.   
+
+The intercept $\beta_\text{Intercept} = \mu_\text{term36}$ is the average interest rate for a 36 month loan. And $\beta_\text{term60} = \mu_\text{term60} - \mu_\text{term36}$ is the difference in average interest rates between loan length. In this case, a 60 month loan is 4.66 percentage points higher on average than a 36 month loan.
+
+d. Construct a bootstrap confidence interval on the coefficient.   
+
+```{r cache=TRUE}
+set.seed(331)
+results <- do(1000)*lm(interest_rate ~ term,data=resample(loans200))
+head(results)
+```
+
+```{r}
+cdata(~term60,data=results)
+```  
+
+We are 95\% confident the difference in average interest rates for loans of 60 month and 36 month is between 3.03\% and 6.24\%. 
+
+Let's check using the assumption of normally distributed errors.  
+
+
+```{r}
+confint(int_rate_mod2)
+```  
+
+Close, but slightly narrower.
+
+e. Check model assumptions.   
+
+```{r}
+plot(int_rate_mod2)
+```
+
+Because of the discrete nature of the predictor, only the first two plots are of interest. The assumption of constant variable does seem reasonable but the assumption of normally distributed errors is not. We have a positive skewness.

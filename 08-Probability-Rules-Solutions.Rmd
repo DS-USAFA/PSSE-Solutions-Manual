@@ -1,5 +1,10 @@
 # Probability Rules {#PROBRULES}
 
+\newcommand{\E}{\mbox{E}}
+\newcommand{\Var}{\mbox{Var}}
+\newcommand{\Cov}{\mbox{Cov}}
+\newcommand{\Prob}{\mbox{P}}
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
 
 ## Objectives
 
@@ -68,7 +73,7 @@ $$
 
 
 
-b. In `R`, find the probability that at least one other person shares my birthday for each value of $n$ from 1 to 80. Plot these probabilities with $n$ on the $x$-axis and probability on the $y$-axis. At what value of $n$ would the probability be at least 50%? 
+b. In `R`, find the probability that at least one other person shares my birthday for each value of $n$ from 1 to 300. Plot these probabilities with $n$ on the $x$-axis and probability on the $y$-axis. At what value of $n$ would the probability be at least 50%? 
  
 
 Generalizing,
@@ -185,7 +190,7 @@ a. How many ways can we obtain a "two pairs" (2 of one number, 2 of another, and
 We have to pick the rank of the two pairs.
 
 $$\binom{13}{2}$$
-Notice here the order does matter because a pair of Kings and 4s is the same as a pair of 4s and Kings. This is different from the full house example. Make sure you understand this point.
+Notice here the order doesn't matter because a pair of Kings and 4s is the same as a pair of 4s and Kings. This is different from the full house example. Make sure you understand this point.
 
 Now we have to pick two of the fours cards for each rank
 

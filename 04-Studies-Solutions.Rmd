@@ -37,7 +37,7 @@ It is unlikely that the women who were reached at the same address 3 years later
 ### Problem 3
 
 **Sampling strategies**  
-A Math 377 student who is curious about the relationship between the amount of time students spend on social networking sites and their performance at school decides to conduct a survey. Four research strategies for collecting data are described below. In each, name the sampling method proposed and any bias you might expect.
+A statistics student who is curious about the relationship between the amount of time students spend on social networking sites and their performance at school decides to conduct a survey. Four research strategies for collecting data are described below. In each, name the sampling method proposed and any bias you might expect.
 
 a. He randomly samples 40 students from the study's population, gives them the survey, asks them to fill it out and bring it back the next day.  
 b. He gives out the survey only to his friends, and makes sure each one of them fills out the survey.    
