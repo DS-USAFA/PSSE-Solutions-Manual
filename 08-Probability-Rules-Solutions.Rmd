@@ -1,0 +1,283 @@
+# Probability Rules {#PROBRULES}
+
+
+## Objectives
+
+1) Define and use properly in context all new terminology related to probability to include but not limited to: outcome, event, sample space, probability.  
+2) Apply basic probability and counting rules to find probabilities.  
+3) Describe the basic axioms of probability.  
+4) Use `R` to calculate and simulate probabilities of events.    
+
+## Homework  
+
+### Problem 1
+
+Let $A$, $B$ and $C$ be events such that $\Prob(A)=0.5$, $\Prob(B)=0.3$, and $\Prob(C)=0.4$. Also, we know that $\Prob(A \cap B)=0.2$, $\Prob(B \cap C)=0.12$, $\Prob(A \cap C)=0.1$, and $\Prob(A \cap B \cap C)=0.05$. Find the following: 
+
+  a. $\Prob(A\cup B)$
+$$
+\Prob(A\cup B) = \Prob(A)+\Prob(B)-\Prob(A\cap B)= 0.5+0.3-0.2 = 0.6
+$$
+
+  b. $\Prob(A\cup B \cup C)$
+$$
+\Prob(A\cup B \cup C) = \Prob(A)+\Prob(B)+\Prob(C)-\Prob(A\cap B)-\Prob(A\cap C)-\Prob(B\cap C)+\Prob(A\cap B \cap C)
+$$
+$$
+= 0.5+0.3+0.4-0.2-0.12-0.1+0.05 = 0.83
+$$
+
+  c. $\Prob(B'\cap C')$
+$$
+\Prob(B'\cap C')=\Prob((B\cup C)') = 1-\Prob(B\cup C) = 1-[\Prob(B)+\Prob(C)-\Prob(B\cap C)]
+$$
+$$
+= 1-(0.3+0.4-0.12) = 0.42
+$$
+
+  d. $\Prob(A\cup (B\cap C))$
+$$
+\Prob(A\cup (B\cap C)) = \Prob(A)+\Prob(B\cap C) -\Prob(A\cap B \cap C) = 0.5+0.12-0.05 = 0.57
+$$
+
+  e. $\Prob((A\cup B \cup C)\cap (A\cap B \cap C)')$
+$$
+\Prob((A\cup B \cup C)\cap (A\cap B \cap C)')=\Prob(A\cup B \cup C)-\Prob(A\cap B \cap C) = 0.83-0.05 = 0.78
+$$
+
+### Problem 2  
+
+Consider the example of the family in the reading. What is the probability that the family has at least one boy?  
+$$
+\Prob(\mbox{at least one boy})=1-\Prob(\mbox{no boys})=1-\Prob(\mbox{GGG})=1-\frac{1}{8} = 0.875
+$$
+
+### Problem 3  
+
+The Birthday Problem Revisited. 
+
+a. Suppose there are $n=20$ students in a classroom. My birthday, the instructor, is April 3rd. What is the probability that at least one student shares my birthday? Assume only 365 days in a year and assume that all birthdays are equally likely.  
+
+$$
+\Prob(\mbox{at least one other person shares my bday})=1-\Prob(\mbox{no one else has my bday}) = 
+$$
+
+$$
+1-\left( \frac{364}{365}\right)^{20} = 0.0534
+$$
+
+
+
+b. In `R`, find the probability that at least one other person shares my birthday for each value of $n$ from 1 to 80. Plot these probabilities with $n$ on the $x$-axis and probability on the $y$-axis. At what value of $n$ would the probability be at least 50%? 
+ 
+
+Generalizing,
+$$
+\Prob(\mbox{at least one other person shares my bday})=1-\Prob(\mbox{no one else has my bday}) = 1-\left( \frac{364}{365}\right)^{n}
+$$
+```{r}
+n<-1:300
+mybday<-function(x) 1-(364/365)^x
+mybday <- Vectorize(mybday)
+```  
+
+Check our function.
+
+```{r}
+mybday(20)
+```
+
+
+
+```{r}
+gf_line(mybday(n)~ n,
+        xlab="Number of People",
+        ylab="Probability of Match",
+        title="Probability of at least 1 person matching my birthday") %>%
+  gf_theme(theme_bw)
+```
+
+```{r}
+prob <- mybday(n)
+which(prob>= .5)
+```
+So 253 people.
+
+### Problem 4
+
+Thinking of the cards again. Answer the following questions:
+
+a. Define two events that are mutually exclusive.  
+
+The first card drawn is red.  
+The first card drawn is black.  
+
+b. Define two events that are independent.  
+
+The first card drawn is black.  
+The first card drawn is a face card.  
+
+c. Define an event and its complement.  
+
+The first card drawn is less than 5.  
+The first card drawn is equal to or more than 5. 
+
+### Problem 5
+
+Consider the license plate example from the reading.
+
+a. What is the probability that a license plate contains **exactly** one "B"?  
+
+```{r}
+#fourth spot
+num4<-10*10*10*1*25*25
+
+#fifth spot
+num5<-10*10*10*25*1*25
+
+#sixth spot
+num6<-10*10*10*25*25*1
+
+denom<-10*10*10*26*26*26
+
+(num4+num5+num6)/denom
+```
+
+
+b. What is the probability that a license plate contains **at least one** "B"?
+
+$$
+1-\Prob(\mbox{no B's})
+$$
+```{r}
+num0<-10*10*10*25*25*25
+1-num0/denom
+```
+
+### Problem 6
+
+Consider the party example in the reading. 
+
+a. Suppose 8 people showed up to the party dressed as zombies. What is the probability that all three awards are won by people dressed as zombies? 
+$$
+\frac{8\cdot 7 \cdot 6}{25\cdot 24 \cdot 23}
+$$
+
+```{r}
+(8*7*6)/(25*24*23)
+```
+
+b. What is the probability that zombies win "most creative" and "funniest" but not "scariest"? 
+$$
+\frac{8 \cdot 17 \cdot 7}{25 \cdot 24 \cdot 23}
+$$
+
+```{r}
+(8*17*7)/(25*24*23)
+```
+
+### Problem 7
+
+Consider the cards example from the reading.   
+
+a. How many ways can we obtain a "two pairs" (2 of one number, 2 of another, and the final different)? 
+
+We have to pick the rank of the two pairs.
+
+$$\binom{13}{2}$$
+Notice here the order does matter because a pair of Kings and 4s is the same as a pair of 4s and Kings. This is different from the full house example. Make sure you understand this point.
+
+Now we have to pick two of the fours cards for each rank
+
+
+$$\binom{4}{2}\binom{4}{2}$$
+
+And finally we need the last card to come from the 44 remaining cards so that we don't get a full house.
+
+$\binom{44}{1}$
+
+Putting it all together:
+
+$\binom{13}{2}\binom{4}{2}\binom{4}{2}\binom{44}{1}$
+
+
+```{r}
+choose(13,2)*choose(4,2)*choose(4,2)*choose(44,1)
+```
+
+
+b.  What is the probability of drawing a "four of a kind" (four cards of the same value)? 
+
+$$
+\Prob(\mbox{4 of a kind})=\frac{\binom{13}{1}\binom{4}{4}\binom{48}{1}}{\binom{52}{5}}
+$$
+
+```{r}
+(13*1*48)/choose(52,5)
+```
+
+### Problem 8
+
+Advanced Question: Consider rolling 5 dice. What is the **probability** of a pour resulting in a full house?
+
+First pick the value for the three of a kind, there are 6. Then pick the value from the remaining 5 for the two of a kind. This is actually a permutation. There are 30 distinct "flavors" of full house (three 1's & two 2's, three 1's & two 3's, etc.). In the reading we did this as 
+$$
+\binom{6}{1} \times \binom{5}{1}
+$$
+We now have the 5 dice. We have to select three to have the same value and the order doesn't matter since they are the same value. Thus we multiple by $\binom{5}{3}$. Divide this by the total distinct ways the dice could have landed (assuming order matters). 
+$$
+\Prob(\mbox{full house}) = \frac{30 \times \frac{5!}{3!2!}}{6^5}
+$$
+$$
+\Prob(\mbox{full house}) = \frac{\binom{6}{1} \times \binom{5}{1} \times \binom{5}{3}}{6^5}
+$$
+
+
+```{r}
+30*10/(6^5)
+```
+
+Simulating is tough so let's write some code that may help.
+
+
+```{r}
+set.seed(23)
+temp<-table(sample(1:6,size=5,replace=TRUE))
+temp
+```
+```{r}
+sum(temp==2) & sum(temp==3)
+```
+```{r}
+temp<-c(1,1,1,2,2)
+temp<-table(temp)
+temp
+```
+
+```{r}
+sum(temp==2) & sum(temp==3)
+```
+
+Let's write a function.
+
+```{r}
+full_house <-function(x){
+  temp<-table(x)
+  sum(temp==2) & sum(temp==3)
+}
+```
+
+
+
+```{r}
+temp<-c(1,1,1,2,2)
+full_house(temp)
+```
+
+```{r}
+set.seed(751)
+results<-do(10000)*full_house(sample(1:6,size=5,replace=TRUE))
+mean(~full_house,data=results)
+```
+
+

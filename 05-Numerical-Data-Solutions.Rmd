@@ -1,0 +1,169 @@
+# Numerical Data {#NUMDATA}
+
+
+## Objectives
+
+1) Define and use properly in context all new terminology.  
+2) Generate in `R` summary statistics for a numeric variable including breaking down by cases.  
+3) Generate in `R` appropriate graphical summaries of numerical variables.  
+4) Be able to interpret and explain output both graphically and numerically.  
+
+
+
+## Homework  
+
+### Problem 1  
+
+**Mammals exploratory**  
+
+Data were collected on 39 species of mammals distributed over 13 orders.  The data is in the `openintro` package as `mammals`
+
+a. Using help, report the units for the variable `BrainWt`.  
+```{r eval=FALSE}
+?mammals
+```
+
+
+b. Using `inspect` how many variables are numeric?  
+
+```{r warning=FALSE}
+inspect(mammals)
+```
+
+c. What type of variable is `danger`?
+
+Categorical
+
+d. Create a histogram of `total_sleep` and describe the distribution.  
+
+```{r warning=FALSE}
+gf_histogram(~total_sleep,data=mammals,binwidth = 2)
+```
+
+```{r warning=FALSE}
+gf_dens(~total_sleep,data=mammals)
+```
+
+The distribution is unimodal and skewed to the right. It appears it is centered around the value of 11.
+
+e. Create a boxplot of `life_span` and describe the distribution.  
+
+```{r warning=FALSE}
+gf_boxplot(~life_span,data=mammals)
+```
+
+
+f. Report the mean and median life span of a mammal.  
+
+```{r}
+mean(~life_span,data=mammals,na.rm=TRUE)
+```
+
+```{r}
+median(~life_span,data=mammals,na.rm=TRUE)
+```
+
+g. Calculate the summary statistics for `LifeSpan` broken down by `Danger`.
+
+```{r}
+favstats(life_span~danger,data=mammals)
+```
+
+### Problem 2  
+
+**Mammals life spans**  
+
+Continue using the `mammals` data set.
+
+a. Create side-by-side boxplots for `life_span` broken down by `exposure`. Note: you will have to change `exposure` to a `factor()`. Report on any findings.  
+
+```{r warning=FALSE}
+mammals %>%
+gf_boxplot(life_span~factor(exposure))
+```
+
+Mammals who are more exposed have a longer life span. There must be a confounding variable, maybe the size of the animal or the `danger` variable.
+
+
+b. What happened to the median and third quartile in exposure group 4?
+
+```{r}
+favstats(life_span~factor(exposure),data=mammals)
+```
+
+The median and third quartile are equal in exposure group 4. There are a large number of the observed mammals with the same life span in this group.
+
+c. Create faceted histograms. What are the shortcomings of this plot?
+
+```{r warning=FALSE}
+gf_histogram(~life_span,color=~factor(exposure),data=mammals)
+```
+
+This is awful.
+
+```{r warning=FALSE}
+gf_histogram(~life_span|factor(exposure),data=mammals)
+```
+
+Not enough data for each histogram; some of the histograms provide little to no information. Let's do denisty plots.
+
+```{r warning=FALSE}
+gf_dens(~life_span,color=~factor(exposure),data=mammals)
+```
+
+```{r warning=FALSE}
+gf_dens(~life_span|factor(exposure),data=mammals)
+```
+
+Which do you think is the best graph?
+
+d. Create a new variable `exposed` that is a factor with level `Low` if exposure is `1` or `2` and `High` otherwise.
+
+```{r}
+mammals <- mammals %>%
+  mutate(exposed=factor(ifelse((exposure==1)|(exposure==2),"Low","High")))
+```
+
+
+```{r warning=FALSE}
+inspect(mammals)
+```
+
+
+e. Repeat part c with the new variable.
+
+```{r warning=FALSE}
+gf_dens(~life_span,color=~exposed,data=mammals)
+```
+
+### Problem 3  
+
+**Mammals life spans continued**  
+
+a. Create a scatterplot of life span versus length of gestation.  
+
+```{r warning=FALSE}
+mammals %>%
+gf_point(life_span~gestation)
+```
+
+
+b. What type of an association is apparent between life span and length of gestation?   
+
+It is a weak positive association.
+
+c. What type of an association would you expect to see if the axes of the plot were reversed, i.e. if we plotted length of gestation versus life span?  
+
+The same as this is observational data there is no reason to beliee is a causal relationship just by looking at the data. Switching the axis will preserve the association.
+
+d. Create the new scatterplot suggested in c.  
+
+```{r warning=FALSE}
+mammals %>%
+gf_point(gestation~life_span)
+```
+
+e. Are life span and length of gestation independent? Explain your reasoning. 
+
+No there is an association and it appears to be linear. If the plot looked like a "shotgun" blast, we would consider the variables to be independent. However, remember there may be confounding variables that could impact the association between these variables.
+

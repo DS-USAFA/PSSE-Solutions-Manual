@@ -1,0 +1,44 @@
+book_filename: "Solution Manual CPS"
+output_dir: "docs"
+new_session: yes
+before_chapter_script: "library_load.R"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
+
+rmd_files: [
+   "index.Rmd",
+   "01-Data-Case-Study-Solutions.Rmd",           # Ch 1
+   "02-Data-Basics-Solutions.Rmd",               # Ch 2
+   "03-Overview-of-Data-Collection-Principles-Solutions.Rmd",                
+   "04-Studies-Solutions.Rmd",               
+   "05-Numerical-Data-Solutions.Rmd",           
+   "06-Categorical-Data-Solutions.Rmd",                                      
+   "07-Probability-Case-Study-Solutions.Rmd",                                
+   "08-Probability-Rules-Solutions.Rmd",                                     
+   "09-Conditional-Probability-Solutions.Rmd",                               
+   "10-Random-Variables-Solutions.Rmd",                                       
+   "11-Continuous-Random-Variables-Solutions.Rmd",                           
+   "12-Named-Discrete-Distributions-Solutions.Rmd",                          
+   "13-Named-Continuous-Distributions-Solutions.Rmd",                        
+   "14-Multivariate-Distributions-Solutions.Rmd",                            
+   "15-Multivariate-Expectation-Solutions.Rmd",                              
+   "16-Transformations-Solutions.Rmd",                                       
+   "17-Estimation-Methods-Solutions.Rmd",                                    
+   "18-Hypothesis-Testing-Case-Study-Solutions.Rmd",                         
+   "19-Hypothesis-Testing-Solutions.Rmd",                                    
+   "20-Empirical-p-values-Solutions.Rmd",                                   
+   "21-Central-Limit-Theorem-Solutions.Rmd",                                 
+   "22-Confidence-Intervals-Solutions.Rmd",                                  
+   "23-Bootstrap-Solutions.Rmd",                                             
+   "24-Additional-Hypothesis-Tests-Solutions.Rmd",                           
+   "25-Linear-Regression-Case-Study-Solutions.Rmd",                          
+   "26-Linear-Regression-Basics-Solutions.Rmd",                              
+   "27-Regression-Inference-Solutions.Rmd",                                  
+   "28-Regression-Diagnostics-Solutions.Rmd",                                
+   "29-Simulation-Based-Linear-Regression-Solutions.Rmd",                    
+   "30-Multiple-Regression-Solutions.Rmd",                                   
+   "31-Logistic-Regression-Solutions.Rmd",                                   
+    "32-references.Rmd"                                             
+   ]

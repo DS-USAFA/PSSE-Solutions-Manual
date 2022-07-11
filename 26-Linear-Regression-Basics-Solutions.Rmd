@@ -1,0 +1,122 @@
+# Linear Regression Basics {#LRBASICS}
+
+## Objectives
+
+1) Obtain parameter estimates of a simple linear regression model given a sample of data.   
+2) Interpret the coefficients of a simple linear regression.  
+3) Create a scatterplot with a regression line.  
+4) Explain and check the assumptions of linear regression.   
+5) Use and be able to explain all new terms.  
+
+## Homework  
+
+### Problem 1
+
+**Nutrition at Starbucks**  
+
+In the `data` folder is a file named `starbucks.csv`. Use it to answer the questions below.
+
+a. Create a scatterplot of number of calories and amount of carbohydrates. 
+
+```{r}
+starbucks <- read_csv("data/starbucks.csv")
+```
+
+```{r}
+glimpse(starbucks)
+```
+
+```{r}
+starbucks %>%
+  gf_point(calories~carb) %>%
+  gf_labs(x="Carbohydrate Content (g)",y="Calories") %>%
+  gf_theme(theme_classic())
+```  
+
+We put `calories` as the response.
+
+b. Describe the relationship in the graph. 
+
+There is a positive, moderate, linear association between number of calories and amount of carbohydrates. In addition, the amount of carbohydrates is more variable for menu items with higher calories, indicating non-constant variance. There also appear to be two clusters of data: a patch of about a dozen observations in the lower left and a
+larger patch on the right side. There might be some natural groupings of the these points. For example, the points in the lower left might come from a *light* menu.
+
+c. In this scenario, what are the explanatory and response variables?  
+
+Response: number of calories. Explanatory: amount of carbohydrates (in grams).
+
+
+d. Why might we want to fit a regression line to these data?  
+
+With a regression line, we can predict the amount of calories for a given number of carbohydrates. This may be useful if you are concerned about your carb intake and its impact on calorie consumption. Typically you can get both on the menu so this model might not be that valuable. 
+
+
+e. Create a scatterplot of number of calories and amount of carbohydrates with the regression line included.
+
+```{r}
+starbucks %>%
+  gf_point(calories~carb) %>%
+  gf_labs(x="Carbohydrate Content (g)",y="Calories") %>%
+  gf_lm() %>%
+  gf_theme(theme_classic())
+```
+
+f. Using 'lm()` fit a least squares line to the data.  
+
+```{r}
+star_mod <- lm(calories~carb,data=starbucks)
+```
+
+```{r}
+summary(star_mod)
+```  
+
+g. Report and interpret the slope coefficient.  
+
+The estimated slope is 4.297 so one additional gram of carbohydrates results in an average increase in calories of 4.297.  
+
+h. For a menu item with 51 g of carbs, what is the estimated calorie count? 
+
+```{r}
+146.0204+4.2971*51
+```  
+
+i. Could we use the model for a menu item with 100 g of carbs?  
+
+```{r}
+summary(starbucks)
+```  
+
+The maximum carb value is 80 so 100 is outside of the observed data. It would be suspect to extrapolate to that value.  
+
+j. Does the assumption of constant variance seem reasonable for this problem?  
+
+We are going to use the `broom` package to get the residuals and corresponding independent variable values. You could also get the residuals from the model object and the independent variable values from the original dataframe.
+
+```{r message=FALSE,warning=FALSE}
+library(broom)
+```  
+
+```{r warning=FALSE,message=FALSE}
+augment(star_mod) %>%
+  gf_point(.resid~carb) %>%
+  gf_hline(yintercept = 0) %>%
+  gf_theme(theme_bw()) %>%
+  gf_labs(title="Residual plot",x="Carbohydrates",y="Residual")
+```  
+
+It seems that the variance in the second group is larger that the first, so it may not be a reasonable assumption. Also note that the linearity assumption is also questionable.  
+
+k. Verify that the line passes through the mean carb and mean calories, do this mathematically.
+
+```{r}
+146.0204+4.2971*44.87
+```  
+
+It checks.  
+
+l. What is the estimate of the standard deviation of the residuals? How could you use this information? 
+
+The estimate is 78.26. If the normal assumption is accurate, we would expect a majority of observations to be within $\pm$ 78.26 calories of the line.  
+
+
+

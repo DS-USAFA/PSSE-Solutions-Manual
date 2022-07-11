@@ -1,0 +1,189 @@
+# Hypothesis Testing {#HYPOTEST}
+
+## Objectives
+
+1) Know and properly use the terminology of a hypothesis test.  
+2) Conduct all four steps of a hypothesis test using randomization.  
+3) Discuss and explain the ideas of decision errors, one-sided versus two-sided, and choice of statistical significance. 
+
+
+## Homework  
+
+### Problem 1  
+
+Repeat the analysis of the commercial length in the notes. This time use a different test statistic.  
+
+
+```{r warning=FALSE,message=FALSE}
+ads<-read_csv("data/ads.csv")
+```
+
+```{r}
+ads
+```
+
+```{r}
+ads <- ads %>%
+  pivot_longer(cols=everything(),names_to="channel",values_to = "length")
+ads
+```
+
+```{r}
+favstats(length~channel,data=ads)
+```
+
+a. State the null and alternative hypotheses. 
+
+$H_0$: **Null hypothesis**. The distribution of length of commercials in premium and basic channels is the same.  
+$H_A$: **Alternative hypothesis**. The distribution of length of commercials in premium and basic channels is different.  
+
+b. Compute a test statistic.  
+
+We will use the difference in means so we can use `diffmeans()` from `mosiac`.
+
+```{r}
+obs <- diffmean(length~channel,data=ads)
+obs
+```
+
+c. Determine the p-value.   
+
+```{r cache=TRUE}
+set.seed(4172)
+results <- do(10000)*diffmean(length~shuffle(channel),data=ads)
+```
+
+Next we create a plot of the empirical sampling distribution of the difference of means.
+
+```{r warning=FALSE}
+results %>%
+  gf_histogram(~diffmean,
+               fill="cyan",
+               color="black") %>%
+  gf_vline(xintercept =obs) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Test statistic")
+```
+
+Again, notice it is centered at zero and symmetrical.
+
+
+```{r}
+prop1(~(diffmean<=obs),data=results)
+```
+
+The p-value is much smaller! The test statistic matters in terms of efficiency of the testing procedure.
+
+d. Draw a conclusion.    
+
+Based on our data, if there were really no difference in the distribution of lengths of commercials in 30 minute shows between basic and premium channels then the probability of finding our observed difference of means is 0.005. Since this is less than our significance level of 0.05, we reject the null in favor of the alternative that the basic channel has longer commercials.
+
+\pagebreak
+
+### Problem 2
+
+**Is yawning contagious?**
+
+An experiment conducted by the *MythBusters*, a science entertainment TV program on the Discovery Channel, tested if a person can be subconsciously influenced into yawning if another person near them yawns. 50 people were randomly assigned to two groups: 34 to a group where a person near them yawned (treatment) and 16 to a group where there wasn't a person yawning near them (control). The following table shows the results of this experiment. 
+
+$$
+\begin{array}{ccc|cc|c} & & &\textbf{Group} &  &
+\\& & 		& Treatment 	& Control 		& Total	\\
+&\hline \textbf{Result}		& \textit{Yawn} 	& 10	 	& 4			& 14 	\\
+& & \textit{No Yawn}		& 24		& 12	 		& 36\\
+&\hline	&Total				& 34		& 16			& 50
+\end{array} 
+$$
+
+The data is in the file "yawn.csv".
+
+```{r echo=FALSE,eval=FALSE}
+set.seed(7220)
+yawn <- data.frame(group =c(rep('control', 16), rep('treatment', 34)), outcome = c(rep(c('yawn', 'no_yawn'), c(4, 12)), rep(c('yawn', 'no_yawn'), c(10, 24))))
+
+yawn <- yawn %>%
+sample() %>%
+select(-orig.id)
+write_csv(yawn,"data/yawn.csv")
+``` 
+
+```{r message=FALSE,warning=FALSE}
+yawn <- read_csv("data/yawn.csv")
+```
+
+
+```{r}
+glimpse(yawn)
+```
+
+```{r warning=FALSE,message=FALSE}
+inspect(yawn)
+```
+
+```{r}
+tally(outcome~group,data=yawn,margins = TRUE,format="proportion")
+```
+
+
+a. What are the hypotheses?  
+
+$H_0$: Yawning is not contagious, someone in the group yawning does not impact the percentage of the group that yawns. $p_c - p_t = 0$ or equivalently $p_c = p_t$ .  
+$H_A$: Yawning does have an impact, it is contagious. If someone yawns then you are more likely to yawn. $p_t > p_c$ or $p_c - p_t < 0$.  
+
+
+b. Calculate the observed difference between the yawning rates under the two scenarios. Yes we are giving you the test statistic.
+
+```{r}
+obs <- diffprop(outcome~group,data=yawn)
+obs
+```
+
+Notice that it is negative. If it had been positive, then we would not even need the next step; we would fail to reject the null because the p-value would be much larger than 0.05. Think about this and make sure you understand.
+
+c. Estimate the p-value using randomization.
+
+```{r cache=TRUE}
+set.seed(56)
+results<-do(10000)*diffprop(outcome~shuffle(group),data=yawn)
+```
+
+```{r}
+prop1(~(diffprop<=obs),data=results)
+```
+
+This is a large p-value. Notice that if we were doing a two-sided hypothesis test, then doubling the p-value would exceed 1. Since a p-value is a probability, this is not possible and so we would report a p-value of approximately 1. The reason is that the sampling distribution is not symmetrical. We can see this if we plot the hypergeometric distribution for this problem.
+
+```{r}
+gf_dist("hyper",m=16,n=34,k=14) %>%
+  gf_theme(theme_classic()) %>%
+  gf_refine(scale_x_continuous(breaks=0:14))
+```
+
+
+d. Plot the empirical sampling distribution.
+
+```{r warning=FALSE}
+results %>%
+  gf_histogram(~diffprop,
+               fill="cyan",
+               color="black") %>%
+  gf_vline(xintercept =obs ) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Test statistic")
+```
+
+
+e. Determine the conclusion of the hypothesis test.
+
+Since p-value, 0.54, is high, larger than 0.05, we fail to reject the null hypothesis of yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
+
+f. The traditional belief is that yawning is contagious -- one yawn can lead to another yawn, which might lead to another, and so on. In this exercise, there was the option of selecting a one-sided or two-sided test. Which would you recommend (or which did you choose)? Justify your answer in 1-3 sentences.
+
+I chose a one-sided test since as a researcher, I thought having someone in the group yawn would lead to more people in that group yawning.
+
+
+
+g. How did you select your level of significance? Explain in 1-3 sentences.
+
+Since there was no clear impact on one type of error being worse than the other, I stayed with the default of 0.05.
+
