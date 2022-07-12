@@ -1,4 +1,4 @@
-# Empirical p-values {#PVALUES}
+# Empirical p-values {#HYPTESTDIST}
 
 ## Objective
 

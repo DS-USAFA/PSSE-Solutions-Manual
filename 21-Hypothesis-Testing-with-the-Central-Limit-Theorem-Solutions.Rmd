@@ -1,4 +1,4 @@
-# Central Limit Theorem {#CLT}
+# Central Limit Theorem {#HYPTESTCLT}
 
 ## Objectives
 

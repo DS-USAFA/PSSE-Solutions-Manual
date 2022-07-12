@@ -1,4 +1,4 @@
-# Hypothesis Testing {#HYPOTEST}
+# Hypothesis Testing {#HYPTESTSIM}
 
 ## Objectives
 
