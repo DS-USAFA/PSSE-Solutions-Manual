@@ -2,10 +2,16 @@
 
 ## Objectives
 
-1) Conduct and interpret a hypothesis test for equality of two or more means using both permutation and the $F$ distribution.   
-2) Conduct and interpret a goodness of fit test using both Pearson's chi-squared and randomization to evaluate the independence between two categorical variables.   
-3) Conduct and interpret a hypothesis test for the equality of two variances.   
-4) Know and check assumptions for the tests in this lesson.
+1) Conduct and interpret a goodness of fit test using both Pearson's chi-squared and randomization to evaluate the independence between two categorical variables.  
+
+2) Explain how the chi-squared distribution relates to the normal distribution, where it is used, and how changing parameters impacts the shape of the distribution.   
+
+3) Conduct and interpret a hypothesis test for equality of two means and equality of two variances using both permutation and the CLT.   
+ 
+4) Conduct and interpret a hypothesis test for paired data.
+ 
+5) Know and check the assumptions for Pearson's chi-square and two-sample $t$ tests.  
+
 
 ## Homework  
 

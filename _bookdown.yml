@@ -10,7 +10,7 @@ language:
 rmd_files: [
    "index.Rmd",
    "01-Data-Case-Study-Solutions.Rmd",           
-   "02-Data-Basics-Solutions.Rmd",               
+   "02-Data-Basics-Solutions.Rmd",
    "03-Overview-of-Data-Collection-Principles-Solutions.Rmd",                
    "04-Studies-Solutions.Rmd",               
    "05-Numerical-Data-Solutions.Rmd",           
@@ -37,7 +37,7 @@ rmd_files: [
    "26-Linear-Regression-Case-Study-Solutions.Rmd",                          
    "27-Linear-Regression-Basics-Solutions.Rmd",                              
    "28-Linear-Regression-Inference-Solutions.Rmd",                                  
-   "29-Regression-Diagnostics-Solutions.Rmd",                                
+   "29-Linear-Regression-Diagnostics-Solutions.Rmd",                                
    "30-Simulation-Based-Linear-Regression-Solutions.Rmd",                    
    "31-Multiple-Linear-Regression-Solutions.Rmd",                                   
    "32-Logistic-Regression-Solutions.Rmd",                                   

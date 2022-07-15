@@ -3,8 +3,13 @@
 ## Objectives
 
 1) Using asymptotic methods based on the normal distribution, construct and interpret a confidence interval for an unknown parameter.   
+
 2) Describe the relationships between confidence intervals, confidence level, and sample size.  
-3) For proportions, be able to calculate the three different approaches for confidence intervals using `R`.  
+
+3) Describe the relationships between confidence intervals and hypothesis testing.  
+
+4) Calculate confidence intervals for proportions using three different approaches in `R`: explicit calculation, `binom.test()`, and `prop_test()`.  
+ 
 
 ## Homework  
 

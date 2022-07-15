@@ -1,10 +1,12 @@
-# Hypothesis Testing {#HYPTESTSIM}
+# Hypothesis Testing with Simulation {#HYPTESTSIM}
 
 ## Objectives
 
-1) Know and properly use the terminology of a hypothesis test.  
+1) Know and properly use the terminology of a hypothesis test, to include: *null hypothesis*, *alternative hypothesis*, *test statistic*, *$p$-value*, *randomization test*, *one-sided test*, *two-sided test*, *statistically significant*, *significance level*, *type I error*, *type II error*, *false positive*, *false negative*, *null distribution*, and *sampling distribution*.  
+
 2) Conduct all four steps of a hypothesis test using randomization.  
-3) Discuss and explain the ideas of decision errors, one-sided versus two-sided, and choice of statistical significance. 
+
+3) Discuss and explain the ideas of decision errors, one-sided versus two-sided tests, and the choice of a significance level.  
 
 
 ## Homework  

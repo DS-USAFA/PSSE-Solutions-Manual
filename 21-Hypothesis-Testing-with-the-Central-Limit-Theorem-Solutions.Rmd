@@ -1,10 +1,13 @@
-# Central Limit Theorem {#HYPTESTCLT}
+# Hypothesis Testing with the Central Limit Theorem {#HYPTESTCLT}
 
 ## Objectives
 
-1) Explain the central limit theorem and when you can use it for inference.   
+1) Explain the central limit theorem and when it can be used for inference.   
+
 2) Conduct hypothesis tests of a single mean and proportion using the CLT and `R`.   
-3) Explain how the chi-squared and $t$ distributions relate to the normal distribution, where we use them, and describe the impact on the shape of the distribution when the parameters are changed.   
+
+3) Explain how the $t$ distribution relates to the normal distribution, where it is used, and how changing parameters impacts the shape of the distribution.   
+ 
 
 ## Homework  
 

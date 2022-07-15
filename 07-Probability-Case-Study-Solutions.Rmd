@@ -5,8 +5,9 @@
 
 ## Objectives
 
-1) Use R to simulate a probabilistic model.  
-2) Use basic counting methods.
+1) Use `R` to simulate a probabilistic model.  
+
+2) Use basic counting methods.  
 
 
 ```{r echo=FALSE}
