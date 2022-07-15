@@ -4,8 +4,10 @@
 
 ## Objectives
 
-1) Use R for basic analysis and visualization.  
-2) Compile a report using `knitr`.
+1) Use `R` for basic analysis and visualization.  
+
+2) Compile a report using `knitr`. 
+
 
 ```{r results='hide', echo=FALSE, eval=FALSE}
 migraine_study <- data.frame(group = c(rep('treatment', 43), rep('control', 46)), 
@@ -15,7 +17,7 @@ migraine_study <- data.frame(group = c(rep('treatment', 43), rep('control', 46))
 
 ## Homework    
 
-Load `tidyverse`,`mosaic`, and `knitr` packages.  
+Load the `tidyverse`, `mosaic`, and `knitr` packages.  
 
 ```{r message=FALSE,eval=FALSE}
 library(tidyverse)
@@ -34,44 +36,38 @@ stent_study <- read_csv('data/stent_study.csv')
 ```
   
 
-  b. Complete similar steps as in the class notes.   
+  b. Complete the steps below.   
     i. Use `inspect` on the data.  
-    ii. Create a table of `outcome365` and `group`. Comment on the results.  
-    iii. Create a barchart of the data.  
-
-Using `inspect`:  
-
+    
 ```{r}
 inspect(stent_study)
 ```
-
-The table: 
-
-```{r}
+    
+    ii. Create a table of `outcome365` and `group`. Comment on the results.  
+    
+    ```{r}
 tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = TRUE)
 ```
 
 Patients in the treatment group had a higher proportion of strokes than those in the control group after one year. The treatment does not appear to help the rate of strokes and, in fact, may hurt it.
 
-Barchart: 
+    iii. Create a barchart of the data.  
 
 ```{r}
 stent_study %>%
-  gf_props(~ group, fill = ~ outcome365, position = 'fill') %>%
-  gf_labs(title = "Impact of Stents of Stroke",
+  gf_props(~group, fill = ~outcome365, position = 'fill') %>%
+  gf_labs(title = "Impact of Stents on Stroke",
           subtitle = 'Experiment with 451 Patients',
           x = "Experimental Group", 
           y = "Number of Events")
 ```
 
+
 ### Problem 2 
 
-**Migraine and acupuncture**.  A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture. To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control. 43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. 46 patients in the control group received placebo acupuncture (needle insertion at nonacupoint locations). 24 hours after patients received acupuncture, they were asked if they were pain free.^[G. Allais et al. [“Ear acupuncture in the treatment of migraine attacks:  a randomized trial on the efficacy of appropriate versus inappropriate acupoints”.](http://www.ncbi.nlm.nih.gov/pubmed/21533739) In: Neurological Sci. 32.1 (2011), pp. 173–175.]
+**Migraine and acupuncture**.  A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture. To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control. The 43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. The 46 patients in the control group received placebo acupuncture (needle insertion at non-acupoint locations). Then 24 hours after patients received acupuncture, they were asked if they were pain free.^[G. Allais et al. [“Ear acupuncture in the treatment of migraine attacks:  a randomized trial on the efficacy of appropriate versus inappropriate acupoints”.](http://www.ncbi.nlm.nih.gov/pubmed/21533739) In: Neurological Sci. 32.1 (2011), pp. 173–175.]
 
-
-The data is in the file `migraine_study.csv` in the `data` folder.
-
-Complete the following work:
+    The data is in the file `migraine_study.csv` in the `data` folder. Complete the following work:
 
   a. Read the data into an object called `migraine_study`.  
   
@@ -87,31 +83,33 @@ head(migraine_study)
   b. Create a table of the data.
   
 ```{r}
-tally(pain_free ~ group, data = migraine_study, format = "proportion", margin = TRUE)
+tally(pain_free ~ group, data = migraine_study, 
+      format = "proportion", margin = TRUE)
 ```
    
   
   c. Report the percent of patients in the treatment group who were pain free 24 hours after receiving acupuncture.
   
-  There are 23.2% of the treatment group pain free.
+There were 23.2% of the treatment group who were pain free.
   
   d. Repeat for the control group.
   
-  There are only 4.3% of the control group pain free.
+There were 4.3% of the control group who were pain free.
   
   e. At first glance, does acupuncture appear to be an effective treatment for migraines? Explain your reasoning.
   
-  Yes, there was a substantial increase in the percentage of patients pain free after acupuncture versus those with no acupuncture, so it appears to be effective.
+  Yes, there was a substantially larger percentage of patients who were pain free after receiving acupuncture versus those who did not receive acupuncture, so it appears to be effective.
   
   f. Do the data provide convincing evidence that there is a real pain reduction for those patients in the treatment group? Or do you think that the observed difference might just be due to chance?
   
   Either of these is acceptable:  
   
  i. We could get slightly different group estimates even if there is no real difference. Though the difference is big, I'm skeptical the results show a real difference and think this might be due to chance.  
+ 
  ii. The difference in these rates looks pretty big, and so I suspect acupuncture is having a positive impact on pain.
 
 
 3. Compile, `knit`, this report into an html and a pdf. In order to `knit` the report into a pdf, you may need to install the `knitr` and `tinytex` packages in `R`.
 
-Complete on your computer or server.
+Complete on your computer or RStudio Cloud. Knit the report by clicking the `Knit` button and choose either the "Knit to HTML" or "Knit to PDF" option from the drop down menu.  
 
