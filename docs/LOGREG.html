@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 32 Logistic Regression | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="32.1 Objectives Using R, conduct logistic regression, interpret the output, and perform model selection. Write the logistic regression model and predict outputs for given inputs. Find confidence...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 32 Logistic Regression | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="32.1 Objectives Using R, conduct logistic regression, interpret the output, and perform model selection. Write the logistic regression model and predict outputs for given inputs. Find confidence...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 32 Logistic Regression | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="32.1 Objectives Using R, conduct logistic regression, interpret the output, and perform model selection. Write the logistic regression model and predict outputs for given inputs. Find confidence...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="active" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="LOGREG" class="section level1" number="32">
+<h1>
+<span class="header-section-number">32</span> Logistic Regression<a class="anchor" aria-label="anchor" href="#LOGREG"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-30" class="section level2" number="32.1">
+<h2>
+<span class="header-section-number">32.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-30"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Using <code>R</code>, conduct logistic regression, interpret the output, and perform model selection.</p></li>
+<li><p>Write the logistic regression model and predict outputs for given inputs.</p></li>
+<li><p>Find confidence intervals for parameter estimates and predictions.</p></li>
+<li><p>Create and interpret a confusion matrix.</p></li>
+</ol>
+</div>
+<div id="homework-problems" class="section level2" number="32.2">
+<h2>
+<span class="header-section-number">32.2</span> Homework Problems<a class="anchor" aria-label="anchor" href="#homework-problems"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-31" class="section level3" number="32.2.1">
+<h3>
+<span class="header-section-number">32.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-31"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Possum classification</strong></p>
+<p>Let’s investigate the <code>possum</code> data set again. This time we want to model a binary outcome variable. As a reminder, the common brushtail possum of the Australia region is a bit cuter than its distant cousin, the American opossum. We consider 104 brushtail possums from two regions in Australia, where the possums may be considered a random sample from the population. The first region is Victoria, which is in the eastern half of Australia and traverses the southern coast. The second region consists of New South Wales and Queensland, which make up eastern and northeastern Australia.</p>
+<p>We use logistic regression to differentiate between possums in these two regions. The outcome variable, called <code>pop</code>, takes value <code>Vic</code> when a possum is from Victoria and <code>other</code> when it is from New South Wales or Queensland. We consider five predictors: <code>sex</code>, <code>head_l</code>, <code>skull_w</code>, <code>total_l</code>, and <code>tail_l</code>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Explore the data by making histograms of the quantitative variables, and bar charts of the discrete variables. Are there any outliers that are likely to have a very large influence on the logistic regression model?</li>
+</ol>
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/possum.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pop</span>,<span class="va">sex</span>,<span class="va">head_l</span>,<span class="va">skull_w</span>,<span class="va">total_l</span>,<span class="va">tail_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pop<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,sex<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb757"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">possum</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## categorical variables:  
+##   name  class levels   n missing                                  distribution
+## 1  pop factor      2 104       0 other (55.8%), Vic (44.2%)                   
+## 2  sex factor      2 104       0 m (58.7%), f (41.3%)                         
+## 
+## quantitative variables:  
+##      name   class  min     Q1 median     Q3   max     mean       sd   n missing
+## 1  head_l numeric 82.5 90.675  92.80 94.725 103.1 92.60288 3.573349 104       0
+## 2 skull_w numeric 50.0 54.975  56.35 58.100  68.6 56.88365 3.113426 104       0
+## 3 total_l numeric 75.0 84.000  88.00 90.000  96.5 87.08846 4.310549 104       0
+## 4  tail_l numeric 32.0 35.875  37.00 38.000  43.0 37.00962 1.959518 104       0</code></pre>
+<div class="sourceCode" id="cb759"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_props</span><span class="op">(</span><span class="op">~</span><span class="va">pop</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_props</span><span class="op">(</span><span class="op">~</span><span class="va">sex</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Gender"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">head_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">skull_w</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<div class="sourceCode" id="cb763"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">total_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
+<div class="sourceCode" id="cb764"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">tail_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<p>There are some potential outliers for skull width but otherwise not much concern.</p>
+<div class="sourceCode" id="cb765"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">possum</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,lower.panel <span class="op">=</span> <span class="va">panel.smooth</span><span class="op">)</span></span></code></pre></div>
+<p><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672">
+We can see that <code>head_l</code> is correlated with the other three variables. This will cause some multicollinearity problems.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Build a logistic regression model with all the variable. Report a summary of the model.</li>
+</ol>
+<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">pop</span><span class="op">==</span><span class="st">"Vic"</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">possum</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb767"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">possum_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = pop == "Vic" ~ ., family = "binomial", data = possum)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.6430  -0.5514  -0.1182   0.3760   2.8501  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  39.2349    11.5368   3.401 0.000672 ***
+## sexm         -1.2376     0.6662  -1.858 0.063195 .  
+## head_l       -0.1601     0.1386  -1.155 0.248002    
+## skull_w      -0.2012     0.1327  -1.517 0.129380    
+## total_l       0.6488     0.1531   4.236 2.27e-05 ***
+## tail_l       -1.8708     0.3741  -5.001 5.71e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 142.787  on 103  degrees of freedom
+## Residual deviance:  72.155  on  98  degrees of freedom
+## AIC: 84.155
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode" id="cb769"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">possum_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<pre><code>##                  2.5 %      97.5 %
+## (Intercept) 18.8530781 64.66444839
+## sexm        -2.6227018  0.02472167
+## head_l      -0.4428559  0.10865739
+## skull_w     -0.4933140  0.04479826
+## total_l      0.3768179  0.98455786
+## tail_l      -2.7170468 -1.23231969</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Using the p-values decide if you want to remove a variable(S) and if so build that model.</li>
+</ol>
+<p>Let’s remove <code>head_l</code> first.</p>
+<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">possum_mod_red</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">pop</span><span class="op">==</span><span class="st">"Vic"</span><span class="op">~</span><span class="va">sex</span><span class="op">+</span><span class="va">skull_w</span><span class="op">+</span><span class="va">total_l</span><span class="op">+</span><span class="va">tail_l</span>,data<span class="op">=</span><span class="va">possum</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">possum_mod_red</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = pop == "Vic" ~ sex + skull_w + total_l + tail_l, 
+##     family = "binomial", data = possum)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.8102  -0.5683  -0.1222   0.4153   2.7599  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  33.5095     9.9053   3.383 0.000717 ***
+## sexm         -1.4207     0.6457  -2.200 0.027790 *  
+## skull_w      -0.2787     0.1226  -2.273 0.023053 *  
+## total_l       0.5687     0.1322   4.302 1.69e-05 ***
+## tail_l       -1.8057     0.3599  -5.016 5.26e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 142.787  on 103  degrees of freedom
+## Residual deviance:  73.516  on  99  degrees of freedom
+## AIC: 83.516
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Since <code>head_l</code> was correlated with the other variables, removing it has increased the precision, decreased the standard error, of the other predictors. There p-values are all now less than 0.05.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>For any variable you decide to remove, build a 95% confidence interval for the parameter.</li>
+</ol>
+<div class="sourceCode" id="cb775"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">possum_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<pre><code>##                  2.5 %      97.5 %
+## (Intercept) 18.8530781 64.66444839
+## sexm        -2.6227018  0.02472167
+## head_l      -0.4428559  0.10865739
+## skull_w     -0.4933140  0.04479826
+## total_l      0.3768179  0.98455786
+## tail_l      -2.7170468 -1.23231969</code></pre>
+<p>We are 95% confident that the true slope coefficient for <code>head_l</code> is between -0.44 and 0.108.</p>
+<p>The bootstrap is not working for this problem. It may be that we have convergence issues when we resample the data. This is a reminder that we need to be careful and not just run methods without checking results. Here is the code:</p>
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">952</span><span class="op">)</span></span>
+<span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">pop</span><span class="op">==</span><span class="st">"Vic"</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">possum</span><span class="op">)</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb779"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##     Intercept          sexm        head_l       skull_w       total_l
+## 1 -1184.61875  2.122389e+01  3.861561e+00  2.749263e+00  7.274005e+00
+## 2  6371.55550 -1.301514e+02  1.023732e+01 -2.738816e+01 -1.076913e+01
+## 3 -9612.61941 -2.392900e+03 -1.875252e+02  5.782027e+02 -2.820691e+02
+## 4   -25.18662 -1.852185e+01  2.097593e+01 -1.353619e+01  1.483815e+01
+## 5   -26.56607 -1.398995e-14 -2.258909e-14  6.528545e-15  2.388756e-14
+## 6 -1025.00035  6.159665e+01  2.526181e+01 -2.032143e+01  1.438639e+01</code></pre>
+<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">head_l</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling distribtuion"</span>,</span>
+<span>          x<span class="op">=</span><span class="st">"sex paramater estimate"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
+<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">head_l</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          lower    upper central.p
+## 2.5% -122.7029 63.61867      0.95</code></pre>
+<p>This interval is too large. The resampling process has too much variation in it. This could be due to the small sample size and the multicollinearity.</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Explain why the remaining parameter estimates change between the two models.</li>
+</ol>
+<p>When coefficient estimates are sensitive to which variables are included in the model, this typically indicates that some variables are collinear. For example, a possum’s gender may be related to its head length, which would explain why the coefficient (and p-value) for sex male changed when we removed the head length variable. Likewise, a possum’s skull width is likely to be related to its head length, probably even much more closely related than the head length was to gender.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Write out the form of the model. Also identify which of the following variables are positively associated (when controlling for other variables) with a possum being from Victoria: <code>head_l</code>, <code>skull_w</code>, <code>total_l</code>, and <code>tail_l</code>.</li>
+</ol>
+<p>We dropped <code>head_l</code> from the model. Here is the equation:</p>
+<p><span class="math display">\[
+\log_{e}\left( \frac{p_i}{1-p_i} \right)
+    = 33.5 - 1.42 \text{ sex} -0.28 \text{ skull width}  + 0.57 \text{ total length} - 1.81 \text{ tail length}
+\]</span></p>
+<p>Only <code>total_l</code> is positively association with the probability of being from Victoria.</p>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Suppose we see a brushtail possum at a zoo in the US, and a sign says the possum had been captured in the wild in Australia, but it doesn’t say which part of Australia. However, the sign does indicate that the possum is male, its skull is about 63 mm wide, its tail is 37 cm long, and its total length is 83 cm. What is the reduced model’s computed probability that this possum is from Victoria? How confident are you in the model’s accuracy of this probability calculation?</li>
+</ol>
+<p>Let’s predict the outcome. We use <code>response</code> for the type to put the answer in the form of a probability. See the help menu on <code>predict.glm</code> for more information.</p>
+<div class="sourceCode" id="cb784"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">possum_mod_red</span>,newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>sex<span class="op">=</span><span class="st">"m"</span>,skull_w<span class="op">=</span><span class="fl">63</span>,tail_l<span class="op">=</span><span class="fl">37</span>,total_l<span class="op">=</span><span class="fl">83</span><span class="op">)</span>,</span>
+<span>        type<span class="op">=</span><span class="st">"response"</span>,se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## $fit
+##           1 
+## 0.006205055 
+## 
+## $se.fit
+##           1 
+## 0.008011468 
+## 
+## $residual.scale
+## [1] 1</code></pre>
+<p>While the probability, 0.006, is very near zero, we have not run diagnostics on the model. We should also have a little skepticism that the model will hold for a possum found in a US zoo. However, it is encouraging that the possum was caught in the wild.</p>
+<p>As a rough sense of the accuracy, we will use the standard error. The errors are really binomial but we are trying to use a normal approximation. If you remember back to our block on probability, with such a low probability, this assumption of normality is suspect. However, we will use it to give us an upper bound.</p>
+<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">0.0062</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">1.96</span><span class="op">*</span><span class="fl">.008</span></span></code></pre></div>
+<pre><code>## [1] -0.00948  0.02188</code></pre>
+<p>So at most, the probability of the possum being from Victoria is 2%.</p>
+</div>
+<div id="problem-2-29" class="section level3" number="32.2.2">
+<h3>
+<span class="header-section-number">32.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-29"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Medical school admission</strong></p>
+<p>The file <code>MedGPA.csv</code> in the <code>data</code> folder has information on medical school admission status and GPA and standardized test scores gathered on 55 medical school applicants from a liberal arts college in the Midwest.</p>
+<p>The variables are:</p>
+<p><code>Accept Status</code>: A=accepted to medical school or D=denied admission
+<code>Acceptance</code>: Indicator for Accept: 1=accepted or 0=denied<br><code>Sex</code>: F=female or M=male<br><code>BCPM</code>: Bio/Chem/Physics/Math grade point average<br><code>GPA</code>: College grade point average<br><code>VR</code>: Verbal reasoning (subscore)<br><code>PS</code>: Physical sciences (subscore)<br><code>WS</code>: Writing sample (subcore)<br><code>BS</code>: Biological sciences (subscore)<br><code>MCAT</code>: Score on the MCAT exam (sum of CR+PS+WS+BS)<br><code>Apps</code>: Number of medical schools applied to</p>
+<ol style="list-style-type: lower-alpha">
+<li>Build a logistic regression model to predict <code>Acceptance</code> from <code>GPA</code> and `Sex.</li>
+</ol>
+<div class="sourceCode" id="cb788"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">MedGPA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/MedGPA.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb789"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">MedGPA</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Rows: 55
+## Columns: 11
+## $ Accept     &lt;chr&gt; "D", "A", "A", "A", "A", "A", "A", "D", "A", "A", "A", "A",~
+## $ Acceptance &lt;dbl&gt; 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1,~
+## $ Sex        &lt;chr&gt; "F", "M", "F", "F", "F", "M", "M", "M", "F", "F", "F", "F",~
+## $ BCPM       &lt;dbl&gt; 3.59, 3.75, 3.24, 3.74, 3.53, 3.59, 3.85, 3.26, 3.74, 3.86,~
+## $ GPA        &lt;dbl&gt; 3.62, 3.84, 3.23, 3.69, 3.38, 3.72, 3.89, 3.34, 3.71, 3.89,~
+## $ VR         &lt;dbl&gt; 11, 12, 9, 12, 9, 10, 11, 11, 8, 9, 11, 11, 8, 9, 11, 12, 8~
+## $ PS         &lt;dbl&gt; 9, 13, 10, 11, 11, 9, 12, 11, 10, 9, 9, 8, 10, 9, 8, 8, 8, ~
+## $ WS         &lt;dbl&gt; 9, 8, 5, 7, 4, 7, 6, 8, 6, 6, 8, 4, 7, 4, 6, 8, 8, 9, 5, 8,~
+## $ BS         &lt;dbl&gt; 9, 12, 9, 10, 11, 10, 11, 9, 11, 10, 11, 8, 10, 10, 7, 10, ~
+## $ MCAT       &lt;dbl&gt; 38, 45, 33, 40, 35, 36, 40, 39, 35, 34, 39, 31, 35, 32, 32,~
+## $ Apps       &lt;dbl&gt; 5, 3, 19, 5, 11, 5, 5, 7, 5, 11, 6, 9, 5, 8, 15, 6, 6, 1, 5~</code></pre>
+<div class="sourceCode" id="cb791"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">med_mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">GPA</span><span class="op">+</span><span class="va">Sex</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb792"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">med_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Accept == "D" ~ GPA + Sex, family = binomial, data = MedGPA)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.4623  -0.7194  -0.2978   0.9753   1.8171  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  21.0680     6.4025   3.291 0.001000 ***
+## GPA          -6.1324     1.8283  -3.354 0.000796 ***
+## SexM          1.1697     0.7178   1.629 0.103210    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 75.791  on 54  degrees of freedom
+## Residual deviance: 53.945  on 52  degrees of freedom
+## AIC: 59.945
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Generate a 95% confidence interval for the coefficient associated with <code>GPA</code>.</li>
+</ol>
+<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">med_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<pre><code>##                   2.5 %    97.5 %
+## (Intercept)  10.0651173 35.579760
+## GPA         -10.2977983 -3.007544
+## SexM         -0.1720454  2.697436</code></pre>
+<p>Let’s try the bootstrap for this problem.</p>
+<div class="sourceCode" id="cb797"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">819</span><span class="op">)</span></span>
+<span><span class="va">results_med</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">GPA</span><span class="op">+</span><span class="va">Sex</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">MedGPA</span><span class="op">)</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
+<div class="sourceCode" id="cb799"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results_med</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">GPA</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling distribtuion"</span>,</span>
+<span>          x<span class="op">=</span><span class="st">"GPA paramater estimate"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
+<div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">GPA</span>,data<span class="op">=</span><span class="va">results_med</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##         lower     upper central.p
+## 2.5% -14.2047 -3.213036      0.95</code></pre>
+<p>This is not so bad. It appears that the distribution of <code>GPA</code> is skewed to the left.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Fit a model with a polynomial of degree 2 in the <code>GPA</code>. Drop <code>Sex</code> from the model. Does a quadratic fit improve the model?</li>
+</ol>
+<div class="sourceCode" id="cb802"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">med_mod2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">GPA</span>,<span class="fl">2</span><span class="op">)</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb803"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">med_mod2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Accept == "D" ~ poly(GPA, 2), family = binomial, 
+##     data = MedGPA)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.9553  -0.7830  -0.3207   0.8020   1.8363  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -0.3301     0.3582  -0.921 0.356822    
+## poly(GPA, 2)1 -10.7293     3.0664  -3.499 0.000467 ***
+## poly(GPA, 2)2  -3.4967     3.0987  -1.128 0.259133    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 75.791  on 54  degrees of freedom
+## Residual deviance: 55.800  on 52  degrees of freedom
+## AIC: 61.8
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>The quadratic term did not improve the model.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Fit a model with just <code>GPA</code> and interpret the coefficient.</li>
+</ol>
+<div class="sourceCode" id="cb805"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">GPA</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    19.2       5.63      3.41 0.000644
+## 2 GPA            -5.45      1.58     -3.45 0.000553</code></pre>
+<div class="sourceCode" id="cb807"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5.454166</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.004278444</code></pre>
+<p>An increase of 1 in a student’s GPA decreases the odds of being denied acceptance by 0.00428. Remember that this is not a probability. As a reminder an odds of <span class="math inline">\(\frac{1}{2}\)</span> means the probability of success is <span class="math inline">\(\frac{1}{3}\)</span>. An odds of 1 means a probability of success of <span class="math inline">\(\frac{1}{2}\)</span>. Assume the initial odds are 1 if the odds are now 0.00428 smaller, then the probability of success is <span class="math inline">\(\frac{428}{10428}\)</span> or 0.04. The probability decreased by an order of magnitude.</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Try to add different predictors to come up with your best model. Do not use Acceptance and MCAT in the model.</li>
+</ol>
+<div class="sourceCode" id="cb809"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 9 x 3
+##   term        p.value  p.adj
+##   &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+## 1 (Intercept) 0.00279 0.0251
+## 2 SexM        0.110   0.551 
+## 3 BCPM        0.376   1     
+## 4 GPA         0.150   0.600 
+## 5 VR          0.799   1     
+## 6 PS          0.0305  0.213 
+## 7 WS          0.0491  0.295 
+## 8 BS          0.00490 0.0392
+## 9 Apps        0.728   1</code></pre>
+<p>Let’s take out <code>VR</code>.</p>
+<div class="sourceCode" id="cb811"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   term        p.value  p.adj
+##   &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+## 1 (Intercept) 0.00239 0.0191
+## 2 SexM        0.0681  0.272 
+## 3 BCPM        0.362   0.723 
+## 4 GPA         0.143   0.430 
+## 5 PS          0.0280  0.168 
+## 6 WS          0.0452  0.226 
+## 7 BS          0.00476 0.0333
+## 8 Apps        0.742   0.742</code></pre>
+<p>Now let’s take out <code>Apps</code>.</p>
+<div class="sourceCode" id="cb813"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 7 x 3
+##   term        p.value  p.adj
+##   &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;
+## 1 (Intercept) 0.00147 0.0103
+## 2 SexM        0.0272  0.133 
+## 3 BCPM        0.379   0.379 
+## 4 GPA         0.120   0.240 
+## 5 PS          0.0266  0.133 
+## 6 WS          0.0385  0.133 
+## 7 BS          0.00477 0.0286</code></pre>
+<p>Next, let’s remove <code>BCPM</code>.</p>
+<div class="sourceCode" id="cb815"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span><span class="op">-</span><span class="va">BCPM</span>,</span>
+<span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   term        p.value   p.adj
+##   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept) 0.00123 0.00739
+## 2 SexM        0.0142  0.0567 
+## 3 GPA         0.0315  0.0901 
+## 4 PS          0.0300  0.0901 
+## 5 WS          0.0401  0.0901 
+## 6 BS          0.00537 0.0269</code></pre>
+<p>Now <code>WS</code>.</p>
+<div class="sourceCode" id="cb817"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span><span class="op">-</span><span class="va">BCPM</span><span class="op">-</span><span class="va">WS</span>,</span>
+<span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 x 3
+##   term         p.value   p.adj
+##   &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept) 0.000584 0.00292
+## 2 SexM        0.0168   0.0504 
+## 3 GPA         0.0366   0.0732 
+## 4 PS          0.0634   0.0732 
+## 5 BS          0.0100   0.0401</code></pre>
+<p>Maybe <code>PS</code>.</p>
+<div class="sourceCode" id="cb819"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span><span class="op">-</span><span class="va">BCPM</span><span class="op">-</span><span class="va">WS</span><span class="op">-</span><span class="va">PS</span>,</span>
+<span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   term         p.value   p.adj
+##   &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept) 0.000574 0.00230
+## 2 SexM        0.0306   0.0611 
+## 3 GPA         0.0325   0.0611 
+## 4 BS          0.00448  0.0134</code></pre>
+<p>We will stop there. There has to be a better way. Machine learning and advanced regression courses explore how to select predictors and improve a model.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Generate a confusion matrix for the best model you have developed.</li>
+</ol>
+<div class="sourceCode" id="cb821"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">med_mod2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">Sex</span><span class="op">+</span><span class="va">GPA</span><span class="op">+</span><span class="va">BS</span>,</span>
+<span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">med_mod2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = Accept == "D" ~ Sex + GPA + BS, family = binomial, 
+##     data = MedGPA)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.8388  -0.4707  -0.1347   0.5535   2.6411  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  27.4608     7.9721   3.445 0.000572 ***
+## SexM          1.9885     0.9193   2.163 0.030543 *  
+## GPA          -4.2900     2.0062  -2.138 0.032484 *  
+## BS           -1.3752     0.4838  -2.843 0.004471 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 75.791  on 54  degrees of freedom
+## Residual deviance: 40.835  on 51  degrees of freedom
+## AIC: 48.835
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<div class="sourceCode" id="cb824"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">med_mod2</span>,type.predict <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>actual<span class="op">=</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">'Accept =='</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>result<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">.fitted</span><span class="op">&gt;</span><span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>            actual<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">actual</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##       actual
+## result  0  1
+##      0 26  4
+##      1  4 21</code></pre>
+<p>This model has an accuracy of <span class="math inline">\(\frac{47}{55}\)</span> or 85.5%.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Find a 95% confidence interval for the probability a female student with a 3.5 GPA, a <code>BCPM</code> of 3.8, a verbal reasoning score of 10, a physical sciences score of 9, a writing sample score of 8, a biological score of 10, a MCAT score of 40, and who applied to 5 medical schools.</li>
+</ol>
+<div class="sourceCode" id="cb826"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">med_mod2</span>,newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Sex<span class="op">=</span><span class="st">"F"</span>,</span>
+<span>                                      GPA<span class="op">=</span><span class="fl">3.5</span>,</span>
+<span>                                      BS<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>        type<span class="op">=</span><span class="st">"response"</span>,se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## $fit
+##         1 
+## 0.2130332 
+## 
+## $se.fit
+##         1 
+## 0.1122277 
+## 
+## $residual.scale
+## [1] 1</code></pre>
+<div class="sourceCode" id="cb828"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">0.2130332</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">1.96</span><span class="op">*</span><span class="fl">.1122277</span></span></code></pre></div>
+<pre><code>## [1] -0.006933092  0.432999492</code></pre>
+<p>For a female students with a GPA of 3.5 and a biological score of 10, we are 95% confident that the probability of being denied acceptance to medical school is between 0 and .433.</p>
+<p>Let’s try a bootstrap.</p>
+<div class="sourceCode" id="cb830"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">729</span><span class="op">)</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">Sex</span><span class="op">+</span><span class="va">GPA</span><span class="op">+</span><span class="va">BS</span>,</span>
+<span>                      data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">MedGPA</span><span class="op">)</span>,</span>
+<span>                      family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    Intercept       SexM        GPA         BS .row .index
+## 1  204.23984  20.701630  -4.547781 -20.801516    1      1
+## 2   16.78193   1.373795  -2.508340  -0.908112    1      2
+## 3   36.09536   4.170571  -7.479463  -1.219088    1      3
+## 4 1104.42269 105.236280 -90.461857 -86.132398    1      4
+## 5   25.37989   1.139262  -3.729948  -1.331750    1      5
+## 6   26.58307   3.197072  -3.426165  -1.772581    1      6</code></pre>
+<div class="sourceCode" id="cb833"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results_pred</span> <span class="op">&lt;-</span> <span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pred<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">Intercept</span><span class="op">+</span><span class="fl">3.5</span><span class="op">*</span><span class="va">GPA</span><span class="op">+</span><span class="fl">10</span><span class="op">*</span><span class="va">BS</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">pred</span>,data<span class="op">=</span><span class="va">results_pred</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##            lower     upper central.p
+## 2.5% 7.77316e-10 0.5032905      0.95</code></pre>
+<p>This is close to what we found and does not make the assumption the probability of success is normally distributed.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#LOGREG"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="nav-link" href="#objectives-30"><span class="header-section-number">32.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-problems"><span class="header-section-number">32.2</span> Homework Problems</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-31"><span class="header-section-number">32.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-29"><span class="header-section-number">32.2.2</span> Problem 2</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

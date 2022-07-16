@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 28 Linear Regression Inference | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="28.1 Objectives Given a simple linear regression model, conduct inference on the coefficients \(\beta_0\) and \(\beta_1\). Given a simple linear regression model, calculate the predicted response...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 28 Linear Regression Inference | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="28.1 Objectives Given a simple linear regression model, conduct inference on the coefficients \(\beta_0\) and \(\beta_1\). Given a simple linear regression model, calculate the predicted response...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 28 Linear Regression Inference | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="28.1 Objectives Given a simple linear regression model, conduct inference on the coefficients \(\beta_0\) and \(\beta_1\). Given a simple linear regression model, calculate the predicted response...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="active" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="LRINF" class="section level1" number="28">
+<h1>
+<span class="header-section-number">28</span> Linear Regression Inference<a class="anchor" aria-label="anchor" href="#LRINF"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-26" class="section level2" number="28.1">
+<h2>
+<span class="header-section-number">28.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-26"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Given a simple linear regression model, conduct inference on the coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p></li>
+<li><p>Given a simple linear regression model, calculate the predicted response for a given value of the predictor.</p></li>
+<li><p>Build and interpret confidence and prediction intervals for values of the response variable.</p></li>
+</ol>
+</div>
+<div id="homework-27" class="section level2" number="28.2">
+<h2>
+<span class="header-section-number">28.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-27"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-27" class="section level3" number="28.2.1">
+<h3>
+<span class="header-section-number">28.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-27"><i class="fas fa-link"></i></a>
+</h3>
+<p>We noticed that the 95% prediction interval was much wider than the 95% confidence interval. In words, explain why this is.</p>
+<p>The two intervals are describing different parameters. A 95% confidence interval is describing the <em>mean</em> value of the response at a particular value of the predictor. On the other hand, a 95% prediction interval is describing an <em>individual</em> value of the response at a particular value of the predictor. There will be more uncertainty around an individual value than the overall mean.</p>
+</div>
+<div id="problem-2-25" class="section level3" number="28.2.2">
+<h3>
+<span class="header-section-number">28.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-25"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Beer and blood alcohol content</strong></p>
+<p>Many people believe that gender, weight, drinking habits, and many other factors are much more important in predicting blood alcohol content (BAC) than simply considering the number of drinks a person consumed. Here we examine data from sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer. These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (BAC) in grams of alcohol per deciliter of blood. The data is in the <code>bac.csv</code> file under the <code>data</code> folder.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Create a scatterplot for cans of beer and blood alcohol level.</li>
+</ol>
+<div class="sourceCode" id="cb679"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/bac.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of cans of beer"</span>,y<span class="op">=</span><span class="st">"BAC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="28-Linear-Regression-Inference-Solutions_files/figure-html/unnamed-chunk-2-1.png" width="672"></div>
+<p>We put BAC as the response since it is more natural to predict BAC from the number of cans of beer consumed. Also notice that the number of cans of beers is really a discrete variable as we can only have whole numbers.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Describe the relationship between the number of cans of beer and BAC.</li>
+</ol>
+<p>The relationship appears to be strong, positive and linear. There is one potential outlier, the student who had 9 cans of beer. We will discuss outliers in the next lesson.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Write the equation of the regression line. Interpret the slope and intercept in context.</li>
+</ol>
+<div class="sourceCode" id="cb681"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span>,data<span class="op">=</span><span class="va">bac</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bac_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = bac ~ beers, data = bac)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.027118 -0.017350  0.001773  0.008623  0.041027 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.012701   0.012638  -1.005    0.332    
+## beers        0.017964   0.002402   7.480 2.97e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.02044 on 14 degrees of freedom
+## Multiple R-squared:  0.7998, Adjusted R-squared:  0.7855 
+## F-statistic: 55.94 on 1 and 14 DF,  p-value: 2.969e-06</code></pre>
+<p><span class="math display">\[\text{BAC} = -0.0127 + 0.0180 \times \text{beers} \]</span>
+Slope: For each additional can of beer consumed, the model predicts an additional 0.0180 grams per deciliter BAC on average.</p>
+<p>Intercept: Students who don’t have any beer are expected to have a blood alcohol content of -0.0127. This value could be interpreted as how much BAC drops in the time between drinking the beers and when BAC is measured. But it also could be that the intercept is really zero but our estimate is different because of variability in our estimator.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Do the data provide strong evidence that drinking more cans of beer is associated with an increase in blood alcohol? State the null and alternative hypotheses, report the p-value, and state your conclusion.</li>
+</ol>
+<p><span class="math inline">\(H_0\)</span>: The true slope coefficient of number of beers is zero (<span class="math inline">\(\beta_1 = 0\)</span>).<br><span class="math inline">\(H_a\)</span>: The true slope coefficient of number of beers is greater than zero (<span class="math inline">\(\beta_1 &gt; 0\)</span>).</p>
+<p>The p-value for the two-sided alternative hypothesis (<span class="math inline">\(\beta_1 \neq 0\)</span>) is approximately 0. (Note that this output doesn’t mean the p-value is exactly zero, only that when rounded to four decimal places it is zero.) Therefore the p-value for the one-sided hypothesis will also be very small, it is one half of the p-value reported in the <code>R</code> output. With such a small p-value, we reject <span class="math inline">\(H_0\)</span> and conclude that the data provide convincing evidence that number of cans of beer consumed and blood alcohol content are positively correlated and the true slope parameter is indeed greater than 0.</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Build a 95% confidence interval for the slope and interpret it in the context of your hypothesis test from part d. </li>
+</ol>
+<p>We need a lower confidence bound since the alternative is <span class="math inline">\(\beta_1 &gt; 0\)</span>. For a 95% lower confidence bound, we need at 90% confidence interval and then just ignore the upper value.</p>
+<div class="sourceCode" id="cb684"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">bac_mod</span>,level<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                     5 %        95 %
+## (Intercept) -0.03495916 0.009557957
+## beers        0.01373362 0.022193906</code></pre>
+<p>We are 95% confident that the true value of the slope is greater than 0.014. This bound does not contain 0, so it appears that number of beers and BAC are linearly related in a positive direction. Notice the confidence interval for the intercept does include zero as we discussed above.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Suppose we visit a bar, ask people how many drinks they have had, and also take their BAC. Do you think the relationship between number of drinks and BAC would be as strong as the relationship found in the Ohio State study?</li>
+</ol>
+<p>It would probably be weaker. This study had people of very similar ages, and they also had identical drinks. In bars and elsewhere, drinks vary widely in the amount of alcohol they contain.</p>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Predict the average BAC after two beers and build a 90% confidence interval around that prediction.</li>
+</ol>
+<div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_bac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>beers<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">bac_mod</span>, newdata <span class="op">=</span> <span class="va">new_bac</span>, interval <span class="op">=</span> <span class="st">'confidence'</span>,level<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          fit         lwr       upr
+## 1 0.02322692 0.008308537 0.0381453</code></pre>
+<ol start="8" style="list-style-type: lower-alpha">
+<li>Repeat except build a 90% prediction interval and interpret.</li>
+</ol>
+<div class="sourceCode" id="cb688"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">bac_mod</span>, newdata <span class="op">=</span> <span class="va">new_bac</span>, interval <span class="op">=</span> <span class="st">'prediction'</span>,level<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          fit        lwr        upr
+## 1 0.02322692 -0.0157444 0.06219824</code></pre>
+<p>We are 90% confident that the BAC of a student who has two beers will be between -.016 and 0.062. Notice that this interval contains an unrealistic level of BAC for the lower limit. If you were briefing this you would make sure to note this. This is because we are using a model based on the normal distribution. A bootstrap may not have this problem. If you truncate the lower level to 0, you have to be careful about claiming 90% coverage.</p>
+<ol style="list-style-type: lower-roman">
+<li>Plot the data points with a regression line, confidence band, and prediction band.</li>
+</ol>
+<div class="sourceCode" id="cb690"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of cans of beers"</span>,y<span class="op">=</span><span class="st">"BAC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_lm</span><span class="op">(</span>stat<span class="op">=</span><span class="st">"lm"</span>,interval<span class="op">=</span><span class="st">"confidence"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_lm</span><span class="op">(</span>stat<span class="op">=</span><span class="st">"lm"</span>,interval<span class="op">=</span><span class="st">"prediction"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="28-Linear-Regression-Inference-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+</div>
+<div id="problem-3-20" class="section level3" number="28.2.3">
+<h3>
+<span class="header-section-number">28.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-20"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suppose I build a regression fitting a response variable to one predictor variable. I build a 95% confidence interval on <span class="math inline">\(\beta_1\)</span> and find that it contains 0, meaning that a slope of 0 is feasible. Does this mean that the response and the predictor are independent?</p>
+<p>No. It merely means that my best guess is that the two variables are <em>linearly uncorrelated</em>. They could be related another way (quadratically, for example), but still result in an estimated slope close to 0.</p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></div>
+<div class="next"><a href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#LRINF"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="nav-link" href="#objectives-26"><span class="header-section-number">28.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-27"><span class="header-section-number">28.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-27"><span class="header-section-number">28.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-25"><span class="header-section-number">28.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-20"><span class="header-section-number">28.2.3</span> Problem 3</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

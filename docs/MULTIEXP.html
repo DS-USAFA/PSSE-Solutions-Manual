@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 15 Multivariate Expectation | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="15.1 Objectives Given a joint pmf/pdf, obtain means and variances of random variables and functions of random variables. Define the terms covariance and correlation, and given a joint pmf/pdf,...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 15 Multivariate Expectation | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="15.1 Objectives Given a joint pmf/pdf, obtain means and variances of random variables and functions of random variables. Define the terms covariance and correlation, and given a joint pmf/pdf,...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 15 Multivariate Expectation | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="15.1 Objectives Given a joint pmf/pdf, obtain means and variances of random variables and functions of random variables. Define the terms covariance and correlation, and given a joint pmf/pdf,...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="active" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="MULTIEXP" class="section level1" number="15">
+<h1>
+<span class="header-section-number">15</span> Multivariate Expectation<a class="anchor" aria-label="anchor" href="#MULTIEXP"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-14" class="section level2" number="15.1">
+<h2>
+<span class="header-section-number">15.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-14"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Given a joint pmf/pdf, obtain means and variances of random variables and functions of random variables.</p></li>
+<li><p>Define the terms <em>covariance</em> and <em>correlation</em>, and given a joint pmf/pdf, obtain the covariance and correlation between two random variables.</p></li>
+<li><p>Given a joint pmf/pdf, determine whether random variables are <em>independent</em> of one another.</p></li>
+<li><p>Find conditional expectations.</p></li>
+</ol>
+</div>
+<div id="homework-14" class="section level2" number="15.2">
+<h2>
+<span class="header-section-number">15.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-14"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-14" class="section level3" number="15.2.1">
+<h3>
+<span class="header-section-number">15.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-14"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be continuous random variables with joint pdf:
+<span class="math display">\[
+f_{X,Y}(x,y)=x + y
+\]</span></p>
+<p>where <span class="math inline">\(0 \leq x \leq 1\)</span> and <span class="math inline">\(0 \leq y \leq 1\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{E}(X)\)</span> and <span class="math inline">\(\mbox{E}(Y)\)</span>. We will use the marginal pdfs found in the Application 14 solution.</li>
+</ol>
+<p><span class="math display">\[
+\mbox{E}(X)=\int_0^1 x\left(x+\frac{1}{2}\right)\mathop{}\!\mathrm{d}x=\frac{x^3}{3}+\frac{x^2}{4}\bigg|_0^1=\frac{1}{3}+\frac{1}{4}=\frac{7}{12}=0.583
+\]</span>
+Or numerically:</p>
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">}</span> <span class="co"># "x" is vector</span></span>
+<span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## $integral
+## [1] 0.5833333
+## 
+## $error
+## [1] 1.110223e-16
+## 
+## $functionEvaluations
+## [1] 17
+## 
+## $returnCode
+## [1] 0</code></pre>
+<p><span class="math display">\[
+\mbox{E}(Y)=\int_0^1 y\left(y+\frac{1}{2}\right)\mathop{}\!\mathrm{d}y = 0.583
+\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{Var}(X)\)</span> and <span class="math inline">\(\mbox{Var}(Y)\)</span>.</li>
+</ol>
+<p><span class="math display">\[
+\mbox{Var}(X)=\mbox{E}(X^2)-\mbox{E}(X)^2
+\]</span>
+<span class="math display">\[
+\mbox{E}(X^2)=\int_0^1 x^2\left(x+\frac{1}{2}\right)\mathop{}\!\mathrm{d}x = \frac{x^4}{4}+\frac{x^3}{6}\bigg|_0^1=\frac{1}{ 4}+\frac{1}{6}=\frac{5}{12}=0.417
+\]</span>
+As a check:</p>
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">}</span> <span class="co"># "x" is vector</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">integral</span>,<span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.417</code></pre>
+<p>So, <span class="math inline">\(\mbox{Var}(X)=0.417-0.583^2=0.076\)</span>.</p>
+<p>Similarly, <span class="math inline">\(\mbox{Var}(Y)=0.076\)</span>.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{Cov}(X,Y)\)</span> and <span class="math inline">\(\rho\)</span>. Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> independent?
+<span class="math display">\[
+\mbox{Cov}(X,Y)=\mbox{E}(XY)-\mbox{E}(X)\mbox{E}(Y)
+\]</span>
+<span class="math display">\[
+\mbox{E}(XY)=\int_0^1\int_0^1 xy(x+y)\mathop{}\!\mathrm{d}y \mathop{}\!\mathrm{d}x = \int_0^1 \frac{x^2y^2}{2}+\frac{xy^3}{3}\bigg|_0^1 \mathop{}\!\mathrm{d}x = \int_0^1 \frac{x^2}{2}+\frac{x}{3}\mathop{}\!\mathrm{d}x
+\]</span>
+<span class="math display">\[
+=\frac{x^3}{6}+\frac{x^2}{6}\bigg|_0^1=\frac{1}{ 3}=0.333
+\]</span>
+</li>
+</ol>
+<p>As a check:</p>
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">*</span><span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">}</span> <span class="co"># "x" is vector</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">integral</span>,<span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.333</code></pre>
+<p>So,
+<span class="math display">\[
+\mbox{Cov}(X,Y)=\frac{1}{3}-\left(\frac{7}{12}\right)^2=-0.007
+\]</span></p>
+<p><span class="math display">\[
+\rho=\frac{\mbox{Cov}(X,Y)}{\sqrt{\mbox{Var}(X)\mbox{Var}(Y)}}=\frac{-0.007}{\sqrt{0.076\times0.076}}=-0.0909
+\]</span></p>
+<p>As a check:</p>
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">-</span><span class="fl">0.007</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">.076</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -0.09210526</code></pre>
+<p>Using exact values:</p>
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">-</span><span class="op">(</span><span class="fl">7</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="fl">5</span><span class="op">/</span><span class="fl">12</span><span class="op">-</span><span class="op">(</span><span class="fl">7</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] -0.09090909</code></pre>
+<p>With a non-zero covariance, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{Var}(3X+2Y)\)</span>.
+<span class="math display">\[
+\mbox{Var}(3X+2Y)=\mbox{Var}(3X)+\mbox{Var}(2Y)+2\mbox{Cov}(3X,2Y)=
+\]</span>
+<span class="math display">\[
+9\mbox{Var}(X)+4\mbox{Var}(Y)+12\mbox{Cov}(X,Y) =
+\]</span>
+<span class="math display">\[
+9*0.076+4*0.076+12*-0.007 = 0.910
+\]</span>
+</li>
+</ol>
+</div>
+<div id="problem-2-14" class="section level3" number="15.2.2">
+<h3>
+<span class="header-section-number">15.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-14"><i class="fas fa-link"></i></a>
+</h3>
+<p>Optional - not difficult but does have small Calc III idea. Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be continuous random variables with joint pmf:
+<span class="math display">\[
+f_{X,Y}(x,y)=1
+\]</span></p>
+<p>where <span class="math inline">\(0 \leq x \leq 1\)</span> and <span class="math inline">\(0 \leq y \leq 2x\)</span>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{E}(X)\)</span> and <span class="math inline">\(\mbox{E}(Y)\)</span>.
+<span class="math display">\[
+\mbox{E}(X)=\int_0^1 x\cdot 2x\mathop{}\!\mathrm{d}x = \frac{2x^3}{3}\bigg|_0^1=0.667
+\]</span>
+</li>
+</ol>
+<p><span class="math display">\[
+\mbox{E}(Y)=\int_0^2 y\left(1-\frac{y}{2}\right)\mathop{}\!\mathrm{d}y = \frac{y^2}{2}-\frac{y^3}{6}\bigg|_0^2=2-\frac{8}{ 6}=0.667
+\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{Var}(X)\)</span> and <span class="math inline">\(\mbox{Var}(Y)\)</span>.
+<span class="math display">\[
+\mbox{E}(X^2)=\int_0^1 x^2\cdot 2x\mathop{}\!\mathrm{d}x = \frac{x^4}{2}\bigg|_0^1=0.5
+\]</span>
+</li>
+</ol>
+<p>So, <span class="math inline">\(\mbox{Var}(X)=0.5-\left(\frac{2}{3}\right)^2=\frac{1}{ 18}=0.056\)</span></p>
+<p><span class="math display">\[
+\mbox{E}(Y^2)=\int_0^2 y^2\left(1-\frac{y}{2}\right)\mathop{}\!\mathrm{d}y = \frac{y^3}{3}-\frac{y^4}{8}\bigg|_0^2=\frac{8}{ 3}-2=0.667
+\]</span></p>
+<p>So, <span class="math inline">\(\mbox{Var}(Y)=\frac{2}{ 3}-\left(\frac{2}{3}\right)^2=\frac{2}{9}=0.222\)</span></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{Cov}(X,Y)\)</span> and <span class="math inline">\(\rho\)</span>. Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> independent?</li>
+</ol>
+<p><span class="math display">\[
+\mbox{E}(XY)=\int_0^1\int_0^{2x} xy\mathop{}\!\mathrm{d}y \mathop{}\!\mathrm{d}x = \int_0^1 \frac{xy^2}{2}\bigg|_0^{2x}\mathop{}\!\mathrm{d}x = \int_0^1 2x^3\mathop{}\!\mathrm{d}x = \frac{x^4}{2}\bigg|_0^1=\frac{1}{2}
+\]</span></p>
+<p>So,
+<span class="math display">\[
+\mbox{Cov}(X,Y)=\frac{1}{2}-\frac{2}{3}\frac{2}{3}=\frac{1}{18}=0.056
+\]</span></p>
+<p><span class="math display">\[
+\rho=\frac{\mbox{Cov}(X,Y)}{ \sqrt{\mbox{Var}(X)\mbox{Var}(Y)}}=\frac{\frac{1}{ 18}}{\sqrt{\frac{1}{18}\frac{2}{9}}}=0.5
+\]</span></p>
+<p><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> appear to be positively correlated (thus not independent).</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Find <span class="math inline">\(\mbox{Var}\left(\frac{X}{2}+2Y\right)\)</span>.
+<span class="math display">\[
+\mbox{Var}\left(\frac{X}{2}+2Y\right) = \frac{1}{ 4}\mbox{Var}(X)+4\mbox{Var}(Y)+2\mbox{Cov}(X,Y)=\frac{1}{72}+\frac{8}{ 9}+\frac{1}{9}=1.014
+\]</span>
+</li>
+</ol>
+</div>
+<div id="problem-3-11" class="section level3" number="15.2.3">
+<h3>
+<span class="header-section-number">15.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-11"><i class="fas fa-link"></i></a>
+</h3>
+<p>Suppose <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <em>independent</em> random variables. Show that <span class="math inline">\(\mbox{E}(XY)=\mbox{E}(X)\mbox{E}(Y)\)</span>.</p>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\mbox{Cov}(X,Y)=0\)</span>. So,
+<span class="math display">\[
+\mbox{Cov}(X,Y)=\mbox{E}(XY)-\mbox{E}(X)\mbox{E}(Y)=0
+\]</span></p>
+<p>Thus,
+<span class="math display">\[
+\mbox{E}(XY)=\mbox{E}(X)\mbox{E}(Y)
+\]</span></p>
+</div>
+<div id="problem-4-6" class="section level3" number="15.2.4">
+<h3>
+<span class="header-section-number">15.2.4</span> Problem 4<a class="anchor" aria-label="anchor" href="#problem-4-6"><i class="fas fa-link"></i></a>
+</h3>
+<p>You are playing a game with a friend. Each of you roll a fair sided die and record the result.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Write the joint probability mass function.</li>
+</ol>
+<p>Let <span class="math inline">\(X\)</span> be the number on your die and <span class="math inline">\(Y\)</span> be the number on your friend’s die.</p>
+<p><span class="math display">\[
+\begin{array}{cc|ccc} &amp; &amp; &amp;\textbf{X} &amp; \\
+&amp; &amp; 1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 \\
+&amp;\hline  1 &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} \\
+&amp; 2 &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} \\
+\textbf{Y}&amp; 3 &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} \\
+&amp; 4 &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} \\
+&amp; 5 &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} \\
+&amp; 6 &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36} &amp; \frac{1}{36}  \\
+\end{array}
+\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Find the expected value of the product of your score and your friend’s score.</li>
+</ol>
+<p>To find <span class="math inline">\(E[XY]\)</span>, we determine all 36 values of the product of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and multiply by the associated probabilities. Since the probabilities are all equal, we will take the <span class="math inline">\(\frac{1}{36}\)</span> out of the summation. Now</p>
+<p><span class="math display">\[E[XY]=\frac{1}{36}(1+2+3+4+5+6+2+4+\]</span>
+<span class="math display">\[6+8+10+12+3+6+9+12+15+18+4+8+12+16+20+24+\]</span>
+<span class="math display">\[5+10+15+20+25+30+6+12+18+24+30+36)\]</span>
+<span class="math display">\[=12.25\]</span></p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Verify the previous part using simulation.</li>
+</ol>
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1012</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">100000</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,size<span class="op">=</span><span class="fl">2</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prod<span class="op">=</span><span class="va">V1</span><span class="op">*</span><span class="va">V2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>Expec<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">prod</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      Expec
+## 1 12.25016</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Using simulation, find the expected value of the maximum number on the two roles.</li>
+</ol>
+<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">100000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,size<span class="op">=</span><span class="fl">2</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>Expec<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">max</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    Expec
+## 1 4.4737</code></pre>
+</div>
+<div id="problem-5-4" class="section level3" number="15.2.5">
+<h3>
+<span class="header-section-number">15.2.5</span> Problem 5<a class="anchor" aria-label="anchor" href="#problem-5-4"><i class="fas fa-link"></i></a>
+</h3>
+<p>A miner is trapped in a mine containing three doors. The first door leads to a tunnel that takes him to safety after two hours of travel. The second door leads to a tunnel that returns him to the mine after three hours of travel. The third door leads to a tunnel that returns him to his mine after five hours. Assuming that the miner is at all times equally likely to choose any one of the doors, yes a bad assumption but it makes for a nice problem, what is the expected length of time until the miner reaches safety?</p>
+<p>Simulating this is a little more challenging because we need a conditional but we try it first before going to the mathematical solution.</p>
+<p>Let’s write a function that takes a vector and returns the sum of the values up to the first time the number 2 appears, we are using the time values as our sample space. Anytime you are repeating something more than 5 times, it might make sense to write a function.</p>
+<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">miner_time</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">x</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">total</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">total</span><span class="op">[</span><span class="va">index</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">113</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">miner_time</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">5</span><span class="op">)</span>,size<span class="op">=</span><span class="fl">20</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>Exp<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">miner_time</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##       Exp
+## 1 10.0092</code></pre>
+<p>Now let’s find it mathematically.</p>
+<p>Let <span class="math inline">\(X\)</span> be the time it takes and <span class="math inline">\(Y\)</span> the door. Then we have</p>
+<p><span class="math display">\[E[X] = E[E[X|Y]] \]</span>
+<span class="math display">\[ = \frac{1}{3}E[X|Y=1]+\frac{1}{3}E[X|Y=2]+\frac{1}{3}E[X|Y=3]\]</span>
+Now if door 2 is selected
+<span class="math display">\[E[X|Y=2]=E[X]+3\]</span>
+since the miner will travel for 3 hours and then be back at the starting point.</p>
+<p>Likewise if door 3 is select
+<span class="math display">\[E[X|Y=2]=E[X]+5\]</span>
+So
+<span class="math display">\[ E[x]= \frac{1}{3}2+\frac{1}{3}\left( E[X]+3 \right)+\frac{1}{3}\left( E[X]+5 \right)\]</span></p>
+<p><span class="math display">\[E[x] -  \frac{2}{3}E[X] = \frac{2}{3}+\frac{3}{3}+\frac{5}{3}\]</span>
+<span class="math display">\[\frac{1}{3}E[X]=\frac{10}{3}\]</span></p>
+<p><span class="math display">\[E[X]=10\]</span></p>
+</div>
+<div id="problem-6-3" class="section level3" number="15.2.6">
+<h3>
+<span class="header-section-number">15.2.6</span> Problem 6<a class="anchor" aria-label="anchor" href="#problem-6-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>ADVANCED: Let <span class="math inline">\(X_1,X_2,...,X_n\)</span> be independent, identically distributed random variables. (This is often abbreviated as “iid”). Each <span class="math inline">\(X_i\)</span> has mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> (i.e., for all <span class="math inline">\(i\)</span>, <span class="math inline">\(\mbox{E}(X_i)=\mu\)</span> and <span class="math inline">\(\mbox{Var}(X_i)=\sigma^2\)</span>).</p>
+<p>Let <span class="math inline">\(S=X_1+X_2+...+X_n=\sum_{i=1}^n X_i\)</span>. And let <span class="math inline">\(\bar{X}={\sum_{i=1}^n \frac{X_i}{n}}\)</span>.</p>
+<p>Find <span class="math inline">\(\mbox{E}(S)\)</span>, <span class="math inline">\(\mbox{Var}(S)\)</span>, <span class="math inline">\(\mbox{E}(\bar{X})\)</span> and <span class="math inline">\(\mbox{Var}(\bar{X})\)</span>.
+<span class="math display">\[
+\mbox{E}(S)=\mbox{E}(X_1+X_2+...+X_n)=\mbox{E}(X_1)+\mbox{E}(X_2)+...+\mbox{E}(X_n)=\mu+\mu+...+\mu=n\mu
+\]</span></p>
+<p>Since the <span class="math inline">\(X_i\)</span>s are all independent:
+<span class="math display">\[
+\mbox{Var}(S)=\mbox{Var}(X_1+X_2+...+X_n)=\mbox{Var}(X_1)+\mbox{Var}(X_2)+...+\mbox{Var}(X_n)=n\sigma^2
+\]</span></p>
+<p><span class="math display">\[
+\mbox{E}(\bar{X})=\frac{1}{n}\mbox{E}(X_1+X_2+...+X_n)=\frac{1}{n}n\mu=\mu
+\]</span>
+<span class="math display">\[
+\mbox{Var}(\bar{X})=\frac{1}{n^2}\mbox{Var}(X_1+X_2+...+X_n)=\frac{1}{n^2}n\sigma^2=\frac{\sigma^2}{n}
+\]</span></p>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></div>
+<div class="next"><a href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#MULTIEXP"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="nav-link" href="#objectives-14"><span class="header-section-number">15.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-14"><span class="header-section-number">15.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-14"><span class="header-section-number">15.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-14"><span class="header-section-number">15.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-11"><span class="header-section-number">15.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-4-6"><span class="header-section-number">15.2.4</span> Problem 4</a></li>
+<li><a class="nav-link" href="#problem-5-4"><span class="header-section-number">15.2.5</span> Problem 5</a></li>
+<li><a class="nav-link" href="#problem-6-3"><span class="header-section-number">15.2.6</span> Problem 6</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

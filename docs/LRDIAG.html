@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 29 Linear Regression Diagnostics | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="29.1 Objectives Obtain and interpret \(R\)-squared and the \(F\)-statistic. Use R to evaluate the assumptions of a linear model. Identify and explain outliers and leverage points.  29.2 Homework ...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 29 Linear Regression Diagnostics | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="29.1 Objectives Obtain and interpret \(R\)-squared and the \(F\)-statistic. Use R to evaluate the assumptions of a linear model. Identify and explain outliers and leverage points.  29.2 Homework ...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 29 Linear Regression Diagnostics | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="29.1 Objectives Obtain and interpret \(R\)-squared and the \(F\)-statistic. Use R to evaluate the assumptions of a linear model. Identify and explain outliers and leverage points.  29.2 Homework ...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="active" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="LRDIAG" class="section level1" number="29">
+<h1>
+<span class="header-section-number">29</span> Linear Regression Diagnostics<a class="anchor" aria-label="anchor" href="#LRDIAG"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-27" class="section level2" number="29.1">
+<h2>
+<span class="header-section-number">29.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-27"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Obtain and interpret <span class="math inline">\(R\)</span>-squared and the <span class="math inline">\(F\)</span>-statistic.</p></li>
+<li><p>Use <code>R</code> to evaluate the assumptions of a linear model.</p></li>
+<li><p>Identify and explain <em>outliers</em> and <em>leverage points</em>.</p></li>
+</ol>
+</div>
+<div id="homework-28" class="section level2" number="29.2">
+<h2>
+<span class="header-section-number">29.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-28"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-28" class="section level3" number="29.2.1">
+<h3>
+<span class="header-section-number">29.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-28"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Identify relationships</strong></p>
+<p>For each of the six plots, identify the strength of the relationship (e.g. weak, moderate, or strong) in the data and whether fitting a linear model would be reasonable. When we ask about the strength of the relationship, we mean:</p>
+<ul>
+<li>is there a relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> and</li>
+<li>does that relationship explain most of the variance?</li>
+</ul>
+<div class="figure">
+<span style="display:block;" id="fig:hw1"></span>
+<img src="figures/association1.png" alt="Homework problem 1." width="33%"><img src="figures/association2.png" alt="Homework problem 1." width="33%"><img src="figures/association3.png" alt="Homework problem 1." width="33%"><img src="figures/association4.png" alt="Homework problem 1." width="33%"><img src="figures/association5.png" alt="Homework problem 1." width="33%"><img src="figures/association6.png" alt="Homework problem 1." width="33%"><p class="caption">
+Figure 29.1: Homework problem 1.
+</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li>Strong relationship, but a straight line would not fit the data.<br>
+</li>
+<li>Strong relationship, and a linear fit would be reasonable.<br>
+</li>
+<li>Weak relationship, and trying a linear fit would be reasonable.<br>
+</li>
+<li>Moderate relationship, but a straight line would not fit the data.<br>
+</li>
+<li>Strong relationship, and a linear fit would be reasonable.<br>
+</li>
+<li>Weak relationship because a change in <span class="math inline">\(x\)</span> does not cause a change in <span class="math inline">\(y\)</span> even though the points would cluster around a horizontal line. Trying a linear fit would be reasonable.</li>
+</ol>
+</div>
+<div id="problem-2-26" class="section level3" number="29.2.2">
+<h3>
+<span class="header-section-number">29.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-26"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Beer and blood alcohol content</strong></p>
+<p>We will use the blood alcohol content data again. As a reminder this is the description of the data: <em>Many people believe that gender, weight, drinking habits, and many other factors are much more important in predicting blood alcohol content (BAC) than simply considering the number of drinks a person consumed. Here we examine data from sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer. These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (BAC) in grams of alcohol per deciliter of blood.</em></p>
+<p>The data is in the <code>bac.csv</code> file under the <code>data</code> folder.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Obtain and interpret <span class="math inline">\(R\)</span>-squared for this model.</li>
+</ol>
+<div class="sourceCode" id="cb691"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac</span><span class="op">&lt;-</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/bac.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb692"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of cans of beer"</span>,y<span class="op">=</span><span class="st">"BAC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-2-1.png" width="672"></div>
+<div class="sourceCode" id="cb693"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span>,data<span class="op">=</span><span class="va">bac</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb694"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bac_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = bac ~ beers, data = bac)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.027118 -0.017350  0.001773  0.008623  0.041027 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.012701   0.012638  -1.005    0.332    
+## beers        0.017964   0.002402   7.480 2.97e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.02044 on 14 degrees of freedom
+## Multiple R-squared:  0.7998, Adjusted R-squared:  0.7855 
+## F-statistic: 55.94 on 1 and 14 DF,  p-value: 2.969e-06</code></pre>
+<p>The <span class="math inline">\(R\)</span>-squared is 0.7998, this means that almost 80% of the variance in blood alcohol content is explained by the number of beers consumed. This is not surprising. The remaining variance may be due to measurement errors, differences in the students, and environmental impacts.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Evaluate the assumptions of this model. Do we have anything to be concerned about?</li>
+</ol>
+<div class="sourceCode" id="cb696"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
+<p>The fit is pretty good, there is one data point that is an outlier, the student that drank 9 beers.</p>
+<div class="sourceCode" id="cb697"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<div class="sourceCode" id="cb698"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bac</span></span></code></pre></div>
+<pre><code>## # A tibble: 16 x 3
+##    student beers   bac
+##      &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1       1     5 0.1  
+##  2       2     2 0.03 
+##  3       3     9 0.19 
+##  4       4     8 0.12 
+##  5       5     3 0.04 
+##  6       6     7 0.095
+##  7       7     3 0.07 
+##  8       8     5 0.06 
+##  9       9     3 0.02 
+## 10      10     5 0.05 
+## 11      11     4 0.07 
+## 12      12     6 0.1  
+## 13      13     5 0.085
+## 14      14     7 0.09 
+## 15      15     1 0.01 
+## 16      16     4 0.05</code></pre>
+<p>The 3rd, 7th, and 10th data points stand out. This data set is too small to make any decisions about normality. It is suspect though.</p>
+<div class="sourceCode" id="cb700"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<p>We have higher variance at the higher number of beers. Again this appears to be caused by the small number of data points and the influence of observation number 3.</p>
+<div class="sourceCode" id="cb701"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<p>The points we’re looking for(or not looking for) are values in the upper right or lower right corners, which are outside the red dashed Cook’s distance line. These are points that would be influential in the model and removing them would likely noticeably alter the regression results. Now we see that observation 3 has extreme leverage on the model. Removing it would potentially drastically alter the model.</p>
+<p>To learn more about measures of influence, see <a href="https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html" class="uri">https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html</a></p>
+</div>
+<div id="problem-3-21" class="section level3" number="29.2.3">
+<h3>
+<span class="header-section-number">29.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-21"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Outliers</strong></p>
+<p>Identify the outliers in the scatterplots shown below and determine what type of outliers they are. Explain your reasoning. The labels are off so treat the bottom row as (d), (e), and (f).</p>
+<div class="figure">
+<span style="display:block;" id="fig:hw3"></span>
+<img src="figures/outInf1.png" alt="Homework problem 3." width="33%"><img src="figures/outLev1.png" alt="Homework problem 3." width="33%"><img src="figures/outOut1.png" alt="Homework problem 3." width="33%"><img src="figures/outInf2.png" alt="Homework problem 3." width="33%"><img src="figures/outInf3.png" alt="Homework problem 3." width="33%"><img src="figures/outOut2.png" alt="Homework problem 3." width="33%"><p class="caption">
+Figure 29.2: Homework problem 3.
+</p>
+</div>
+<ol style="list-style-type: lower-alpha">
+<li>The outlier is located in the bottom right corner of the plot. If we were to exclude this point from the analysis, the slope of the regression line would be notably affected, which means this is a high-leverage and influential point.<br>
+</li>
+<li>The outlier is located in the bottom right corner of the plot. It is a point with high leverage since it is horizontally away from the center of the data, but it is not influential since the regression line would change little if it was removed. It is also an outlier in the response but would have a small residual.<br>
+</li>
+<li>The outlier is located in the center and top of the plot. Though the point is unlike the rest of the data, it is not a high-leverage point since it is not far on the x-axis from the center of the data. This also means it is not an influential point since its presence has little influence on the slope of the regression line.<br>
+</li>
+<li>The outlier is in the upper-left corner. Since it is horizontally far from the center of the data, it is an high leverage point. Additionally, since the fit of the regression line is greatly influenced by this point, it is a influential point.<br>
+</li>
+<li>The outlier is located in the lower-left corner. It is horizontally far from the rest of the data, so it is a high-leverage point. The regression line also would fall relatively far from this point if the fit excluded this point, meaning the outlier is influential.<br>
+</li>
+<li>The outlier is in the upper-middle of the plot. Since it is near the horizontal center of the data, it is not a high-leverage point. This means it also will have little or no influence on the slope of the regression line.</li>
+</ol>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></div>
+<div class="next"><a href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#LRDIAG"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="nav-link" href="#objectives-27"><span class="header-section-number">29.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-28"><span class="header-section-number">29.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-28"><span class="header-section-number">29.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-26"><span class="header-section-number">29.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-21"><span class="header-section-number">29.2.3</span> Problem 3</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

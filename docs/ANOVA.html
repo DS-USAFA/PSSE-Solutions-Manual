@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 23 Analysis of Variance | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="23.1 Objectives Conduct and interpret a hypothesis test for equality of two or more means using both permutation and the \(F\) distribution. Know and check the assumptions for ANOVA.  23.2...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 23 Analysis of Variance | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="23.1 Objectives Conduct and interpret a hypothesis test for equality of two or more means using both permutation and the \(F\) distribution. Know and check the assumptions for ANOVA.  23.2...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 23 Analysis of Variance | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="23.1 Objectives Conduct and interpret a hypothesis test for equality of two or more means using both permutation and the \(F\) distribution. Know and check the assumptions for ANOVA.  23.2...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="active" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="ANOVA" class="section level1" number="23">
+<h1>
+<span class="header-section-number">23</span> Analysis of Variance<a class="anchor" aria-label="anchor" href="#ANOVA"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-21" class="section level2" number="23.1">
+<h2>
+<span class="header-section-number">23.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-21"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Conduct and interpret a hypothesis test for equality of two or more means using both permutation and the <span class="math inline">\(F\)</span> distribution.</p></li>
+<li><p>Know and check the assumptions for ANOVA.</p></li>
+</ol>
+</div>
+<div id="homework-22" class="section level2" number="23.2">
+<h2>
+<span class="header-section-number">23.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-22"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-22" class="section level3" number="23.2.1">
+<h3>
+<span class="header-section-number">23.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-22"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Golf balls</strong></p>
+<p>Repeat the analysis of the golf ball problem from earlier this semester.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Load the data and tally the data into a table. The data is in <code>golf_balls.csv</code>.</li>
+</ol>
+<div class="sourceCode" id="cb505"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">golf_balls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/golf_balls.csv"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">golf_balls</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 x 1
+##   number
+##    &lt;dbl&gt;
+## 1      3
+## 2      2
+## 3      1
+## 4      4
+## 5      4
+## 6      3</code></pre>
+<div class="sourceCode" id="cb508"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>,data<span class="op">=</span><span class="va">golf_balls</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## number
+##   1   2   3   4 
+## 137 138 107 104</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Using the function <code>chisq.test</code> conduct a hypothesis test of equally likely distribution of balls. You may have to read the help menu.</li>
+</ol>
+<div class="sourceCode" id="cb510"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>,data<span class="op">=</span><span class="va">golf_balls</span><span class="op">)</span>,p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>,<span class="fl">.25</span>,<span class="fl">.25</span>,<span class="fl">.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  tally(~number, data = golf_balls)
+## X-squared = 8.4691, df = 3, p-value = 0.03725</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Repeat part b. but assume balls with the numbers 1 and 2 occur 30% of the time and balls with 3 and 4 occur 20%.</li>
+</ol>
+<div class="sourceCode" id="cb512"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>,data<span class="op">=</span><span class="va">golf_balls</span><span class="op">)</span>,p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.3</span>,<span class="fl">.3</span>,<span class="fl">.2</span>,<span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  tally(~number, data = golf_balls)
+## X-squared = 2.4122, df = 3, p-value = 0.4914</code></pre>
+</div>
+<div id="problem-2-22" class="section level3" number="23.2.2">
+<h3>
+<span class="header-section-number">23.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-22"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Bootstrap hypothesis testing</strong></p>
+<p>Repeat the analysis of the MLB data from the lesson but this time generate a bootstrap distribution of the <span class="math inline">\(F\)</span> statistic.</p>
+<p>First, read in the data.</p>
+<div class="sourceCode" id="cb514"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mlb_obp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/mlb_obp.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Convert <code>position</code> to a factor.</p>
+<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mlb_obp</span> <span class="op">&lt;-</span> <span class="va">mlb_obp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>position<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">position</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Summarize the data.</p>
+<div class="sourceCode" id="cb516"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">obp</span><span class="op">~</span><span class="va">position</span>,data<span class="op">=</span><span class="va">mlb_obp</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   position   min      Q1 median      Q3   max      mean         sd   n missing
+## 1        C 0.219 0.30000 0.3180 0.35700 0.405 0.3226154 0.04513175  39       0
+## 2       DH 0.287 0.31625 0.3525 0.36950 0.412 0.3477857 0.03603669  14       0
+## 3       IF 0.174 0.30800 0.3270 0.35275 0.437 0.3315260 0.03709504 154       0
+## 4       OF 0.265 0.31475 0.3345 0.35300 0.411 0.3342500 0.02944394 120       0</code></pre>
+<p>We need a function to resample the data, we will use the <code><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample()</a></code> from the <code>mosaic</code> package.</p>
+<div class="sourceCode" id="cb518"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb519"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_boot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">obp</span><span class="op">~</span><span class="va">position</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="va">meansq</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">/</span><span class="va">meansq</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">541</span><span class="op">)</span></span>
+<span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">f_boot</span><span class="op">(</span><span class="va">mlb_obp</span><span class="op">)</span></span></code></pre></div>
+<p>Let’s plot our sampling distribution.</p>
+<div class="sourceCode" id="cb521"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">f_boot</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling distribution of F test statistic"</span>,</span>
+<span>          x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-ANOVA-Solutions_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+<p>Now the confidence interval for the F-statistic is:</p>
+<div class="sourceCode" id="cb522"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">f_boot</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          lower    upper central.p
+## 2.5% 0.3546682 8.724895      0.95</code></pre>
+<p>We are 95% confident that the <span class="math inline">\(F\)</span> statistic is in the interval <span class="math inline">\((0.35,8.72)\)</span> which includes 1 so we fail to reject the null hypothesis of equal means. Remember under the null hypothesis the ratio of the variance between means to the pooled variance within categories should be 1.</p>
+</div>
+<div id="problem-3-17" class="section level3" number="23.2.3">
+<h3>
+<span class="header-section-number">23.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-17"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Test of variance</strong></p>
+<p>We have not performed a test of variance so we will create our own.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Using the MLB from the lesson, subset on <code>IF</code> and <code>OF</code>.</li>
+</ol>
+<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mlb_prob3</span> <span class="op">&lt;-</span> <span class="va">mlb_obp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">|</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mlb_prob3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  position      obp        
+##  IF:154   Min.   :0.1740  
+##  OF:120   1st Qu.:0.3100  
+##           Median :0.3310  
+##           Mean   :0.3327  
+##           3rd Qu.:0.3530  
+##           Max.   :0.4370</code></pre>
+<p>The function <code><a href="https://rdrr.io/r/base/droplevels.html">droplevels()</a></code> gets rid of <code>C</code> and <code>DH</code> in the factor levels.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Create a side-by-side boxplot.</li>
+</ol>
+<div class="sourceCode" id="cb527"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mlb_prob3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="va">obp</span><span class="op">~</span><span class="va">position</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-ANOVA-Solutions_files/figure-html/unnamed-chunk-16-1.png" width="672"></div>
+<p>The hypotheses are:<br><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\sigma^2_{IF}=\sigma^2{OF}\)</span>. There is no difference in the variance of on base percentage for infielders and outfielders.<br><span class="math inline">\(H_A\)</span>: <span class="math inline">\(\sigma^2_{IF}\neq \sigma^2_{OF}\)</span>. There is a difference in variances.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Use the differences in sample standard deviations as your test statistic. Using a permutation test, find the p-value and discuss your decision.</li>
+</ol>
+<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mlb_prob3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">position</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+##   position   stat
+##   &lt;fct&gt;     &lt;dbl&gt;
+## 1 IF       0.0371
+## 2 OF       0.0294</code></pre>
+<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="va">mlb_prob3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">obs</span></span></code></pre></div>
+<pre><code>## [1] 0.007651101</code></pre>
+<p>Let’s write a function to shuffle the position.</p>
+<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">perm_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>position<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle</a></span><span class="op">(</span><span class="va">position</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">443</span><span class="op">)</span></span>
+<span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">perm_stat</span><span class="op">(</span><span class="va">mlb_prob3</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">perm_stat</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept<span class="op">=</span><span class="va">obs</span>,color<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Sampling distribution of difference in variances"</span>,</span>
+<span>          subtitle<span class="op">=</span><span class="st">"Randomization permutation test"</span>,</span>
+<span>          x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-ANOVA-Solutions_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
+<p>The p-value is</p>
+<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/prop.html">prop1</a></span><span class="op">(</span><span class="op">~</span><span class="op">(</span><span class="va">perm_stat</span><span class="op">&gt;=</span><span class="va">obs</span><span class="op">)</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  prop_TRUE 
+## 0.04395604</code></pre>
+<p>This is a two sided test since we did not know in advance which variance would be larger. We reject the hypothesis of equal variance but the p-value is too close to the significance level. The conclusion is suspect. We need more data.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Create a bootstrap distribution of the differences in sample standard deviations, and report a 95% confidence interval. Compare with part c. </li>
+</ol>
+<p>Let’s write a function.</p>
+<div class="sourceCode" id="cb537"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">var_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">827</span><span class="op">)</span></span>
+<span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">var_stat</span><span class="op">(</span><span class="va">mlb_prob3</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">var_stat</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept<span class="op">=</span><span class="va">obs</span>,color<span class="op">=</span><span class="st">"red"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling of difference in variances"</span>,</span>
+<span>          x<span class="op">=</span><span class="st">"Difference in variances"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-ANOVA-Solutions_files/figure-html/unnamed-chunk-25-1.png" width="672"></div>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></div>
+<div class="next"><a href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ANOVA"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="nav-link" href="#objectives-21"><span class="header-section-number">23.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-22"><span class="header-section-number">23.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-22"><span class="header-section-number">23.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-22"><span class="header-section-number">23.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-17"><span class="header-section-number">23.2.3</span> Problem 3</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

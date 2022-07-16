@@ -24,7 +24,7 @@ a. Using the documentation for the `mammals` data set, report the units for the 
 ?mammals
 ```
 
-```{r}
+```{r eval=FALSE}
 help(mammals)
 ```
 

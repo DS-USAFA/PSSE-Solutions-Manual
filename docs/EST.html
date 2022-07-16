@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 17 Estimation Methods | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="17.1 Objectives Obtain a method of moments estimate of a parameter or set of parameters. Given a random sample from a distribution, obtain the likelihood function. Obtain a maximum likelihood...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 17 Estimation Methods | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="17.1 Objectives Obtain a method of moments estimate of a parameter or set of parameters. Given a random sample from a distribution, obtain the likelihood function. Obtain a maximum likelihood...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 17 Estimation Methods | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="17.1 Objectives Obtain a method of moments estimate of a parameter or set of parameters. Given a random sample from a distribution, obtain the likelihood function. Obtain a maximum likelihood...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="active" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="EST" class="section level1" number="17">
+<h1>
+<span class="header-section-number">17</span> Estimation Methods<a class="anchor" aria-label="anchor" href="#EST"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-16" class="section level2" number="17.1">
+<h2>
+<span class="header-section-number">17.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-16"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Obtain a method of moments estimate of a parameter or set of parameters.</p></li>
+<li><p>Given a random sample from a distribution, obtain the likelihood function.</p></li>
+<li><p>Obtain a maximum likelihood estimate of a parameter or set of parameters.</p></li>
+<li><p>Determine if an estimator is unbiased.</p></li>
+</ol>
+</div>
+<div id="homework-16" class="section level2" number="17.2">
+<h2>
+<span class="header-section-number">17.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-16"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-16" class="section level3" number="17.2.1">
+<h3>
+<span class="header-section-number">17.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-16"><i class="fas fa-link"></i></a>
+</h3>
+<p>In the chapter notes, we found that if we take a sample from the uniform distribution <span class="math inline">\(\textsf{Unif}(0,\theta)\)</span>, the method of moments estimate of <span class="math inline">\(\theta\)</span> is <span class="math inline">\(\hat{\theta}_{MoM}=2\bar{x}\)</span>. Suppose our sample consists of the following values:
+<span class="math display">\[
+0.2 \hspace{0.4cm} 0.9 \hspace{0.4cm} 1.9 \hspace{0.4cm} 2.2 \hspace{0.4cm} 4.7 \hspace{0.4cm} 5.1
+\]</span></p>
+<ol style="list-style-type: lower-alpha">
+<li>What is <span class="math inline">\(\hat{\theta}_{MoM}\)</span> for this sample?</li>
+</ol>
+<div class="sourceCode" id="cb337"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>,<span class="fl">0.9</span>,<span class="fl">1.9</span>,<span class="fl">2.2</span>,<span class="fl">4.7</span>,<span class="fl">5.1</span><span class="op">)</span></span>
+<span><span class="va">thetamom</span><span class="op">&lt;-</span><span class="fl">2</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="va">thetamom</span></span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>What is wrong with this estimate?</li>
+</ol>
+<p>For our distribution <span class="math inline">\(\theta\)</span> is the upper bound or largest value for the random variable. The estimate for <span class="math inline">\(\theta\)</span> is 5, which is an impossible value for <span class="math inline">\(\theta\)</span>, since one of our observations (5.1) is beyond this value.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Show that this estimator is unbiased.</li>
+</ol>
+<p>We need to show that
+<span class="math display">\[
+E\left( \hat{\theta}_{MoM} \right) = \theta
+\]</span>
+We proceed as follows
+<span class="math display">\[
+E \left(2\bar{X} \right) = 2 E\left( \sum{\frac{X_i}{n}} \right) = \frac{2}{n} E\left( \sum{X_i} \right)
+\]</span>
+<span class="math display">\[
+=\frac{2}{n}  \sum{E\left(X_i \right)} =\frac{2}{n}\sum{\frac{\theta}{2}}=\frac{n\theta}{n}=\theta
+\]</span>
+Notice that in performing this derivation, we treated <span class="math inline">\(X\)</span> as a random variable and not as <span class="math inline">\(x\)</span>, a data value.</p>
+<div style="page-break-after: always;"></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>ADVANCED: Use simulation in <code>R</code> to find out how often the method of moment estimator is less the maximum observed value, (<span class="math inline">\(\hat{\theta}_{MoM} &lt; \max x\)</span>). Report an answer for various sizes of samples. You can just pick an arbitrary value for <span class="math inline">\(\theta\)</span> when you sample from the uniform. However, the minimum must be 0.</li>
+</ol>
+<p>Let’s start by writing code for one sample size and then generalize. This function will take as input the number of data points, sample that many points from a uniform with a max of 5, and then return a logical value comparing the method of moments estimate to the observed maximum. The choice of a maximum value for the uniform distribution is arbitrary.</p>
+<div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">check</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span>,max<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="fl">2</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">&lt;</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">max</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Let’s test the function.</p>
+<div class="sourceCode" id="cb340"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">3030</span><span class="op">)</span></span>
+<span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>,max<span class="op">=</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">temp</span></span></code></pre></div>
+<pre><code>##  [1] 1.048619 2.370056 0.675677 2.434443 2.994015 3.930865 4.708367 1.645806
+##  [9] 2.592365 3.664424</code></pre>
+<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 5.212927</code></pre>
+<p>Reset the seed and run the function, we should get FALSE.</p>
+<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">3030</span><span class="op">)</span></span>
+<span><span class="fu">check</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Now let’s repeat the test 10000 find the proportion of times the method of moments estimator is unrealistic.</p>
+<div class="sourceCode" id="cb346"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">check</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="fu">mean</span><span class="op">(</span><span class="va">check</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.285</code></pre>
+<p>Let’s make <code>check</code> a vectorized function for we can run for many sample sizes.</p>
+<div class="sourceCode" id="cb348"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">check</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">check</span><span class="op">)</span></span></code></pre></div>
+<p>Run 1000 replicates for each sample size. The rest of the code gets my data frame in the proper shape.</p>
+<div class="sourceCode" id="cb349"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_data</span><span class="op">&lt;-</span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">check</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">200</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span><span class="op">(</span><span class="va">mean</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,names_to <span class="op">=</span> <span class="st">"Sample"</span>,values_to <span class="op">=</span> <span class="st">"Percent"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Sample<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">200</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>A quick look at the data.</p>
+<div class="sourceCode" id="cb350"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   Sample Percent
+##    &lt;dbl&gt;   &lt;dbl&gt;
+## 1     10   0.282
+## 2     15   0.358
+## 3     20   0.362
+## 4     25   0.362
+## 5     30   0.398
+## 6     35   0.389</code></pre>
+<p>Now we can plot the results of sample size versus</p>
+<div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_line</span><span class="op">(</span><span class="va">Percent</span><span class="op">~</span><span class="va">Sample</span>,xlab<span class="op">=</span><span class="st">"Sample Size"</span>,title<span class="op">=</span><span class="st">"Percent When Estimator is Invalid"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span>theme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="17-Estimation-Methods-Solutions_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<p>Here is more traditional, old school <code>R</code> code.</p>
+<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simn</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">y</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="fl">1000</span>,<span class="op">{</span></span>
+<span>    <span class="va">x</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span>    <span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">&lt;</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="fu">mean</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">t</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">200</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">persim</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">t</span>,<span class="va">simn</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">t</span>,<span class="va">persim</span>,type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="17-Estimation-Methods-Solutions_files/figure-html/lesson20b-1.png" width="672"></div>
+</div>
+<div id="problem-2-16" class="section level3" number="17.2.2">
+<h3>
+<span class="header-section-number">17.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-16"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let <span class="math inline">\(x_1,x_2,...,x_n\)</span> be a simple random sample from an exponentially distributed population with parameter <span class="math inline">\(\lambda\)</span>. Find <span class="math inline">\(\hat{\lambda}_{MoM}\)</span>.</p>
+<p>Recall that <span class="math inline">\(\mbox{E}(X)={1\over \lambda}\)</span>. Setting this equal to the sample moment <span class="math inline">\(\bar{x}\)</span> and solving for <span class="math inline">\(\lambda\)</span> yields the method of moment estimator. Thus,
+<span class="math display">\[
+\hat{\lambda}_{MoM}={1\over \bar{x}}
+\]</span></p>
+</div>
+<div id="problem-3-13" class="section level3" number="17.2.3">
+<h3>
+<span class="header-section-number">17.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-13"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let <span class="math inline">\(x_1,x_2,...,x_n\)</span> be an iid random sample from an exponentially distributed population with parameter <span class="math inline">\(\lambda\)</span>. Find <span class="math inline">\(\hat{\lambda}_{MLE}\)</span>.</p>
+<p>Recall that
+<span class="math display">\[
+f_X(x;\lambda)=\lambda e^{-\lambda x}
+\]</span></p>
+<p>So the likelihood function is:
+<span class="math display">\[
+L(\lambda;\boldsymbol{x})=\prod_{i=1}^n \lambda e^{-\lambda x_i}=\lambda^n e^{-\lambda\sum x_i}
+\]</span></p>
+<p>And the log-likelihood function is:
+<span class="math display">\[
+l(\lambda;\boldsymbol{x})=n\log \lambda - \lambda \sum x_i
+\]</span></p>
+<p>Taking the derivative with respect to <span class="math inline">\(\lambda\)</span> and setting equal to 0:
+<span class="math display">\[
+{\mathop{}\!\mathrm{d}l(\lambda;\boldsymbol{x})\over \mathop{}\!\mathrm{d}\lambda}={n\over \lambda}-\sum x_i =0
+\]</span></p>
+<p>Note that <span class="math inline">\({\mathop{}\!\mathrm{d}^2 l(\lambda;\boldsymbol{x})\over\mathop{}\!\mathrm{d}\lambda^2}=-{n\over \lambda^2}&lt;0\)</span>, so <span class="math inline">\(l\)</span> is always concave down. Thus, any optimum found is a maximum.</p>
+<p>So,
+<span class="math display">\[
+\hat{\lambda}_{MLE}={n\over \sum x_i}={1\over \bar{x}}
+\]</span></p>
+</div>
+<div id="problem-4-8" class="section level3" number="17.2.4">
+<h3>
+<span class="header-section-number">17.2.4</span> Problem 4<a class="anchor" aria-label="anchor" href="#problem-4-8"><i class="fas fa-link"></i></a>
+</h3>
+<p>It is mathematically difficult to determine if the estimators found in questions 2 and 3 are unbiased. Since the sample mean is in the denominator; mathematically we may have to work with the joint pdf. So instead, use simulation to get an sense of whether the method of moments estimator for the exponential distribution is unbaised.</p>
+<p>We need to sample data from an exponential and then compare the the reciprocal of the mean to the parameter.</p>
+<div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">630</span><span class="op">)</span></span>
+<span><span class="fl">1</span><span class="op">/</span><span class="fu">mean</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">1000</span>,rate<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 10.09422</code></pre>
+<p>This is close, maybe we just got lucky. Let’s repeat many times.</p>
+<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu">mean</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">1000</span>,rate<span class="op">=</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="17-Estimation-Methods-Solutions_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+<p>Looks like it has the potential to be unbiased. We would need to investigate other values for <span class="math inline">\(\lambda\)</span>.</p>
+</div>
+<div id="problem-5-6" class="section level3" number="17.2.5">
+<h3>
+<span class="header-section-number">17.2.5</span> Problem 5<a class="anchor" aria-label="anchor" href="#problem-5-6"><i class="fas fa-link"></i></a>
+</h3>
+<p>Find a maximum likelihood estimator for <span class="math inline">\(\theta\)</span> when <span class="math inline">\(X\sim\textsf{Unif}(0,\theta)\)</span>. Compare this to the method of moments estimator we found. Hint: Do not take the derivative of the likelihood function.</p>
+<p><span class="math display">\[
+L(\theta;\boldsymbol{x})=\frac{1}{\theta^n}, \hspace{0.5cm} \mbox{only if all }x_i\leq \theta
+\]</span></p>
+<p>A better way to write this is so as to see the answer is to let <span class="math inline">\(M =max(x_i)\)</span>, then:</p>
+<p><span class="math display">\[
+L(\theta;\boldsymbol{x})=\left\{\begin{array}{ll} 0, &amp; \theta &lt; M= max(x_i) \\
+\frac{1}{\theta^n}, &amp; \theta \geq M = max(x_i) \\
+\end{array}\right.
+\]</span>
+Figure <a href="TRANS.html#fig:fig1">16.1</a> is a plot of this likelihood function and you can see that the maximum occurs at the maximum observed data point.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:fig1"></span>
+<img src="figures/L_theta.png" alt="A graph of the likelihood function" width="576"><p class="caption">
+Figure 16.1: A graph of the likelihood function
+</p>
+</div>
+<p>Recall that <span class="math inline">\(f(x_i;\theta)={1\over \theta}\)</span> if <span class="math inline">\(x_i\in [0,\theta]\)</span> and 0 elsewhere. And since the likelihood function is simply the product of these pdfs, if any <span class="math inline">\(x_i\)</span> is beyond <span class="math inline">\(\theta\)</span>, then the entire likelihood function is 0.</p>
+<p>You can picture <span class="math inline">\(L\)</span> as a decreasing function of <span class="math inline">\(\theta\)</span>, but remembering that <span class="math inline">\(L\)</span> takes the value 0 if <span class="math inline">\(\theta\)</span> is smaller than at least one <span class="math inline">\(x_i\)</span>. Thus, <span class="math inline">\(L\)</span> achieves its maximum at <span class="math inline">\(\theta=\max x_i\)</span>.</p>
+<p>This estimate is more intuitive than the method of moments estimate (<span class="math inline">\(2\bar{x}\)</span>). The method of moments estimate is sometimes not feasible. Meanwhile, the MLE (<span class="math inline">\(\max x_i\)</span>) is always feasible.</p>
+
+</div>
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></div>
+<div class="next"><a href="CS3.html"><span class="header-section-number">18</span> Case Study</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#EST"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li><a class="nav-link" href="#objectives-16"><span class="header-section-number">17.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-16"><span class="header-section-number">17.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-16"><span class="header-section-number">17.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-16"><span class="header-section-number">17.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-13"><span class="header-section-number">17.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-4-8"><span class="header-section-number">17.2.4</span> Problem 4</a></li>
+<li><a class="nav-link" href="#problem-5-6"><span class="header-section-number">17.2.5</span> Problem 5</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

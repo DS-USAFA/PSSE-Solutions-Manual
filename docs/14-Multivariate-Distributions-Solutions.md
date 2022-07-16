@@ -1,0 +1,332 @@
+# Multivariate Distributions {#MULTIDISTS}
+
+
+## Objectives
+
+1) Define (and distinguish between) the terms *joint probability mass/density function*, *marginal pmf/pdf*, and *conditional pmf/pdf*.  
+
+2) Given a joint pmf/pdf, obtain the marginal and conditional pmfs/pdfs.  
+
+3) Use joint, marginal and conditional pmfs/pdfs to obtain probabilities.  
+
+
+## Homework  
+
+### Problem 1
+
+Let $X$ and $Y$ be continuous random variables with joint pdf: 
+$$
+f_{X,Y}(x,y)=x + y
+$$
+
+where $0 \leq x \leq 1$ and $0 \leq y \leq 1$. 
+
+a. Verify that $f$ is a valid pdf. 
+$$
+\int_0^1\int_0^1 x+y\diff y \diff x = \int_0^1 xy + \frac{y^2}{2}\bigg|_0^1 \diff x = \int_0^1 x+\frac{1}{2}\diff x = \frac{x^2}{2}+\frac{x}{2}\bigg|_0^1=1
+$$
+
+Or
+
+
+```r
+library(cubature) # load the package "cubature"
+f <- function(x) { (x[1] + x[2]) } # "x" is vector
+adaptIntegrate(f, lowerLimit = c(0, 0), upperLimit = c(1, 1))
+```
+
+```
+## $integral
+## [1] 1
+## 
+## $error
+## [1] 0
+## 
+## $functionEvaluations
+## [1] 17
+## 
+## $returnCode
+## [1] 0
+```
+
+b. Find the marginal pdfs of $X$ and $Y$. 
+$$
+f_X(x)=\int_0^1 x+y\diff y = xy + \frac{y^2}{2}\bigg|_0^1 =  x+\frac{1}{2}
+$$
+where $0\leq x \leq 1$. 
+
+Similarly, $f_Y(y)=y+\frac{1}{2}$ for $0 \leq y \leq 1$. 
+
+c. Find the conditional pdfs of $X|Y=y$ and $Y|X=x$. 
+$$
+f_{X|Y=y}(x)=\frac{x+y}{y+\frac{1}{2}}
+$$
+where $0\leq x \leq 1$. 
+
+Similarly, $f_{Y|X=x}(y)=\frac{x+y}{x+\frac{1}{2}}$ for $0\leq y \leq 1$. 
+
+d. Find the following probabilities: $\Prob(X<0.5)$; $\Prob(Y>0.8)$; $\Prob(X<0.2,Y\geq 0.75)$; $\Prob(X<0.2|Y\geq 0.75)$; $\Prob(X<0.2|Y= 0.25)$; Optional - $\Prob(X\leq Y)$. 
+
+$$
+\Prob(X<0.5)=\int_0^{0.5} x+\frac{1}{2}\diff x = \frac{x^2}{2}+\frac{x}{2}\bigg|_0^{0.5}=0.375
+$$
+
+
+```r
+integrate(function(x)(x+1/2),0,1/2)
+```
+
+```
+## 0.375 with absolute error < 4.2e-15
+```
+
+Or using multivariate integration, integrate out $y$.
+
+
+```r
+adaptIntegrate(f, lowerLimit = c(0, 0), upperLimit = c(1/2, 1))
+```
+
+```
+## $integral
+## [1] 0.375
+## 
+## $error
+## [1] 5.551115e-17
+## 
+## $functionEvaluations
+## [1] 17
+## 
+## $returnCode
+## [1] 0
+```
+
+
+$$
+\Prob(Y>0.8)=\int_{0.8}^1 y+\frac{1}{2}\diff y = \frac{y^2}{2}+\frac{y}{2}\bigg|_{0.8}^1=1-0.72=0.28
+$$
+
+```r
+adaptIntegrate(f, lowerLimit = c(0, 0.8), upperLimit = c(1, 1))
+```
+
+```
+## $integral
+## [1] 0.28
+## 
+## $error
+## [1] 5.551115e-17
+## 
+## $functionEvaluations
+## [1] 17
+## 
+## $returnCode
+## [1] 0
+```
+
+
+$$
+\Prob(X<0.2,Y\geq 0.75)=\int_0^{0.2}\int_{0.75}^1 x+y\diff y \diff x= \int_0^{0.2} xy+\frac{y^2}{2}\bigg|_{0.75}^1\diff x 
+$$
+$$
+=\int_0^{0.2} x+\frac{1}{2}-\frac{3x}{4}-\frac{9}{32}\diff x = \int_0^{0.2} \frac{x}{4}+\frac{7}{32}\diff x = \frac{x^2}{8}+\frac{7x}{32}\bigg|_0^{0.2}=0.04875
+$$
+
+```r
+adaptIntegrate(f, lowerLimit = c(0, 0.75), upperLimit = c(0.2, 1))
+```
+
+```
+## $integral
+## [1] 0.04875
+## 
+## $error
+## [1] 0
+## 
+## $functionEvaluations
+## [1] 17
+## 
+## $returnCode
+## [1] 0
+```
+
+
+$$
+\Prob(X<0.2|Y\geq 0.75)=\frac{\Prob(X<0.2,Y\geq 0.75)}{\Prob(Y\geq 0.75)}=\frac{0.04875}{\int_{0.75}^1 y+\frac{1}{2}\diff y}=\frac{0.04875}{0.34375} \approx 0.142
+$$
+
+For 
+$$
+\Prob(X<0.2|Y= 0.25) 
+$$
+we need 
+
+$$
+f_{X|Y=.25}(x)=\frac{x+y}{y+\frac{1}{2}}\bigg|_{y=0.25}=\frac{x+.25}{.25+\frac{1}{2}}=\frac{x+.25}{.75}=\frac{4x+1}{3}
+$$
+
+$$
+\Prob(X<0.2|Y= 0.25) =  \int_{0}^{0.2} \frac{4x+1}{3} \diff x
+$$
+$$
+=\frac{1}{3}\left( 2x^2 +x \right) \bigg|_0^{0.2} = \frac{1}{3}\left( 2\cdot0.2^2 +0.2 \right) \approx 0.0933
+$$
+
+
+
+```r
+f2 <- function(x) { (4*x[1] + 1)/3 } # "x" is vector
+adaptIntegrate(f2, lowerLimit = c(0), upperLimit = c(0.2))
+```
+
+```
+## $integral
+## [1] 0.09333333
+## 
+## $error
+## [1] 1.036208e-15
+## 
+## $functionEvaluations
+## [1] 15
+## 
+## $returnCode
+## [1] 0
+```
+
+
+Optional
+
+$$
+\Prob(X\leq Y)=\int_0^1\int_0^y x+y \diff x \diff y = \int_0^1 xy+\frac{x^2}{2}\bigg|_0^y \diff x = \int_0^1 \frac{3y^2}{2}\diff y = \frac{y^3}{2}\bigg|_0^1 = \frac{1}{2}
+$$
+
+### Problem 2  
+
+In the Notes, we saw an example where $f_X(x)=f_{X|Y=y}(x)$ and $f_Y(y)=f_{Y|X=x}(y)$. This is not common and is important. What does this imply about $X$ and $Y$?  
+
+Since the conditional density function is always equal to the marginal, it means that $X$ and $Y$ are independent of one another. Also, if the conditioning variable does not appear in the conditional density function and the domain of the joint density is rectangular, the bounds of the two variables are constants, the random variables are independent. The variables in the previous problem are dependent, look at the conditional density functions to see that the conditional density depends on the conditioned variable.
+
+### Problem 3
+
+ADVANCED: Recall on an earlier assignment, we came up with random variables to describe timeliness at an airport. Suppose over the course of 210 days, on each day we recorded the number of customer complaints regarding timeliness. Also on each day, we recorded the weather (our airport is located somewhere without snow and without substantial wind). The data are displayed below. 
+
+$$
+\begin{array}{cc|ccc} & & &\textbf{Weather Status} &
+\\ & & \mbox{Clear} & \mbox{Light Rain} & \mbox{Rain}  \\
+&\hline 0 & 28 & 11 & 4  \\
+\textbf{num complaints} & 1 & 18 & 15 & 8 \\
+& 2 & 17 & 25 & 12  \\
+& 3 & 13 & 15 & 16  \\
+& 4 & 8 & 8 & 10 \\
+& 5 & 0 & 1 & 1 \\
+\end{array} 
+$$
+
+First, define two random variables for this scenario. One of them (# of complaints) is essentially already a random variable. For the other (weather status) you will need to assign a number to each status. 
+
+a. Use the table above to build an empirical joint pmf of the two random variables. 
+
+We will simply label the weather random variable as 0, 1, 2. We convert to probabilities by dividing by 210.
+
+$$
+\begin{array}{cc|ccc} & & &\textbf{Weather Status} &
+\\ & & \mbox{Clear} & \mbox{Light Rain} & \mbox{Rain}  \\
+&\hline 0 & 0.133 & 0.052 & 0.019  \\
+\textbf{num complaints} & 1 & 0.086 & 0.071 & 0.038  \\
+& 2 & 0.081 & 0.119 & 0.057  \\
+& 3 & 0.062 & 0.071 & 0.076  \\
+& 4 & 0.038 & 0.038 & 0.048 \\
+& 5 & 0 & 0.005 & 0.005 \\
+\end{array} 
+$$
+
+b. Find the marginal pmfs of each random variable. 
+$$
+f_X(x)=\left\{\begin{array}{ll} 0.400, & x=0 \\
+0.357, & x=1 \\
+0.243, & x=2 \\
+0, & \mbox{otherwise} 
+\end{array}\right.
+$$
+$$
+f_Y(y)=\left\{\begin{array}{ll} 0.205, & y=0 \\
+0.195, & y=1 \\
+0.257, & y=2 \\
+0.210, & y=3 \\
+0.124, & y=4 \\
+0.010, & y=5 \\
+0, & \mbox{otherwise} 
+\end{array}\right.
+$$  
+
+c. Find the probability of fewer than 3 complaints. 
+
+$$
+\Prob(Y<3)=0.205+0.195+0.257=0.657
+$$
+
+d. Find the probability of fewer than 3 complaints given there is no rain. 
+$$
+\Prob(Y<3|X=0)=\frac{0.133+0.086+0.081}{0.4}=0.75
+$$
+
+### Problem 4
+
+**Optional for those of you that like Calc III and want a challenge.**
+
+Let $X$ and $Y$ be continuous random variables with joint pmf: 
+$$
+f_{X,Y}(x,y)=1
+$$
+
+where $0 \leq x \leq 1$ and $0 \leq y \leq 2x$. 
+
+a. Verify that $f$ is a valid pdf. 
+$$
+\int_0^1 \int_0^{2x} 1 \diff y \diff x = \int_0^1 y\bigg|_0^{2x}\diff x = \int_0^1 2x\diff x = x^2\bigg|_0^1 = 1
+$$
+
+b. Find the marginal pdfs of $X$ and $Y$. 
+$$
+f_X(x)=\int_0^{2x} 1 \diff y = y\bigg|_0^{2x}=2x
+$$
+where $0\leq x \leq 1$. 
+
+$$
+f_Y(y)=\int_{y/2}^1 1 \diff x = x\bigg|_{y/2}^1 = 1-\frac{y}{2}
+$$
+where $0 \leq y \leq 2$. 
+
+c. Find the conditional pdfs of $X|Y=y$ and $Y|X=x$. 
+$$
+f_{X|Y=y}(x)=\frac{1}{1-\frac{y}{2}}=\frac{2}{2-y} 
+$$
+where $y/2 \leq x \leq 1$. 
+
+$$
+f_{Y|X=x}(y)=\frac{1}{2x}
+$$
+where $0\leq y \leq 2x$. 
+
+d. Find the following probabilities: $\Prob(X<0.5)$; $\Prob(Y>1)$; $\Prob(X<0.5,Y\leq 0.8)$; $\Prob(X<0.5|Y= 0.8)$; Optional $\Prob(Y\leq 1-X)$. (It would probably help to draw some pictures.)
+$$
+\Prob(X<0.5)=\int_0^{0.5} 2x \diff x = x^2\bigg|_0^{0.5}=0.25
+$$
+$$
+\Prob(Y>1)=\int_1^2 1-\frac{y}{2}\diff y = y-\frac{y^2}{4}\bigg|_1^2 = 1-\frac{3}{4}=0.25
+$$
+$$
+\Prob(X<0.5,Y\leq 0.8)=\int_0^{0.4}\int_0^{2x} 1 \diff y \diff x + \int_{0.4}^{0.5}\int_0^{0.8} 1 \diff y \diff x = 0.16+0.08=0.24
+$$
+$$
+\Prob(X<0.5|Y= 0.8)=\int_{0.4}^{0.5} \frac{2}{2-0.8}\diff x = \frac{5x}{3}\bigg|_{0.4}^{0.5}=0.1667
+$$
+$$
+\Prob(Y\leq 1-X)=\int_0^{1/3}\int_0^{2x} 1 \diff y \diff x + \int_{1/3}^1\int_0^{1-x}1 \diff y \diff x = \int_0^{1/3}2x\diff x + \int_{1/3}^1 1-x\diff x
+$$
+$$
+=\frac{1}{9}+\left(x-\frac{x^2}{2}\right)_{1/3}^1=\frac{1}{9}+\frac{1}{2}-\frac{1}{3}+\frac{1}{18} = \frac{1}{3}
+$$
+
+
+

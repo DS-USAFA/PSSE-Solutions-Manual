@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 31 Multiple Linear Regression | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="31.1 Objectives Create and interpret a model with multiple predictors and check assumptions. Generate and interpret confidence intervals for estimates. Explain adjusted \(R^2\) and...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 31 Multiple Linear Regression | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="31.1 Objectives Create and interpret a model with multiple predictors and check assumptions. Generate and interpret confidence intervals for estimates. Explain adjusted \(R^2\) and...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 31 Multiple Linear Regression | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="31.1 Objectives Create and interpret a model with multiple predictors and check assumptions. Generate and interpret confidence intervals for estimates. Explain adjusted \(R^2\) and...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="active" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="LRMULTI" class="section level1" number="31">
+<h1>
+<span class="header-section-number">31</span> Multiple Linear Regression<a class="anchor" aria-label="anchor" href="#LRMULTI"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-29" class="section level2" number="31.1">
+<h2>
+<span class="header-section-number">31.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-29"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Create and interpret a model with multiple predictors and check assumptions.</p></li>
+<li><p>Generate and interpret confidence intervals for estimates.</p></li>
+<li><p>Explain adjusted <span class="math inline">\(R^2\)</span> and multi-collinearity.</p></li>
+<li><p>Interpret regression coefficients for a linear model with multiple predictors.</p></li>
+<li><p>Build and interpret models with higher order terms.</p></li>
+</ol>
+</div>
+<div id="homework-30" class="section level2" number="31.2">
+<h2>
+<span class="header-section-number">31.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-30"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-30" class="section level3" number="31.2.1">
+<h3>
+<span class="header-section-number">31.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-30"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <code>mtcars</code> dataset contains average mileage (mpg) and other information about specific makes and models of cars. (This dataset is built-in to <code>R</code>; for more information about this dataset, reference the documentation with <code><a href="https://rdrr.io/r/datasets/mtcars.html">?mtcars</a></code>).</p>
+<ol style="list-style-type: lower-alpha">
+<li>Build and interpret the coefficients of a model fitting <code>mpg</code> against displacement (<code>disp</code>), horsepower (<code>hp</code>), rear axle ratio (<code>drat</code>), and weight in 1000 lbs (<code>wt</code>).</li>
+</ol>
+<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cars_mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="va">disp</span><span class="op">+</span><span class="va">hp</span><span class="op">+</span><span class="va">drat</span><span class="op">+</span><span class="va">wt</span>,data<span class="op">=</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">cars_mod</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp + hp + drat + wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.5077 -1.9052 -0.5057  0.9821  5.6883 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 29.148738   6.293588   4.631  8.2e-05 ***
+## disp         0.003815   0.010805   0.353  0.72675    
+## hp          -0.034784   0.011597  -2.999  0.00576 ** 
+## drat         1.768049   1.319779   1.340  0.19153    
+## wt          -3.479668   1.078371  -3.227  0.00327 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.602 on 27 degrees of freedom
+## Multiple R-squared:  0.8376, Adjusted R-squared:  0.8136 
+## F-statistic: 34.82 on 4 and 27 DF,  p-value: 2.704e-10</code></pre>
+<p><span class="math display">\[
+\mbox{E}(\text{mpg})=29.15+0.004*\text{disp}-0.035*\text{hp}+1.768*\text{drat}-3.480*\text{wt}
+\]</span></p>
+<p>Each coefficient represents the expected increase in <code>mpg</code> for a unit increase in the respective variable, leaving all other variables constant.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Given your model, what is the expected, average, mpg for a vehicle with a displacement of 170, a horsepower of 100, a <code>drat</code> of 3.80 and a wt of 2,900 lbs. Construct a 95% confidence interval and prediction interval for that expected mpg.</li>
+</ol>
+<div class="sourceCode" id="cb745"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cars_mod</span>,newdata<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>disp<span class="op">=</span><span class="fl">170</span>,hp<span class="op">=</span><span class="fl">100</span>,drat<span class="op">=</span><span class="fl">3.8</span>,wt<span class="op">=</span><span class="fl">2.9</span><span class="op">)</span>,interval<span class="op">=</span><span class="st">"confidence"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 22.94652 21.76569 24.12735</code></pre>
+<div class="sourceCode" id="cb747"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cars_mod</span>,newdata<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>disp<span class="op">=</span><span class="fl">170</span>,hp<span class="op">=</span><span class="fl">100</span>,drat<span class="op">=</span><span class="fl">3.8</span>,wt<span class="op">=</span><span class="fl">2.9</span><span class="op">)</span>,interval<span class="op">=</span><span class="st">"prediction"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 22.94652 17.47811 28.41494</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Repeat part (b) with a bootstrap for the confidence interval.</li>
+</ol>
+<div class="sourceCode" id="cb749"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">732</span><span class="op">)</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="va">disp</span><span class="op">+</span><span class="va">hp</span><span class="op">+</span><span class="va">drat</span><span class="op">+</span><span class="va">wt</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   Intercept          disp          hp      drat        wt    sigma r.squared
+## 1  20.28185 -0.0017783926 -0.02620557 2.8897199 -2.016023 2.300320 0.8210210
+## 2  33.66818 -0.0128734640 -0.01960700 0.3309526 -2.862143 2.102123 0.8760470
+## 3  25.54583 -0.0001983653 -0.03743247 2.1905290 -2.392723 2.814197 0.7947977
+## 4  33.22436  0.0112562822 -0.04151242 1.4796584 -4.557451 2.699223 0.8523512
+## 5  25.96975 -0.0002882344 -0.03093247 2.3689688 -2.861715 2.670069 0.8643060
+## 6  34.17742  0.0054509451 -0.04085537 0.9019272 -3.975107 2.562486 0.8377108
+##          F numdf dendf .row .index
+## 1 30.96393     4    27    1      1
+## 2 47.70611     4    27    1      2
+## 3 26.14436     4    27    1      3
+## 4 38.96659     4    27    1      4
+## 5 42.99429     4    27    1      5
+## 6 34.84241     4    27    1      6</code></pre>
+<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pred<span class="op">=</span><span class="va">Intercept</span><span class="op">+</span><span class="va">disp</span><span class="op">*</span><span class="fl">170</span><span class="op">+</span><span class="va">hp</span><span class="op">*</span><span class="fl">100</span><span class="op">+</span><span class="va">drat</span><span class="op">*</span><span class="fl">3.8</span><span class="op">+</span><span class="va">wt</span><span class="op">*</span><span class="fl">2.9</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">pred</span>,data<span class="op">=</span><span class="va">.</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##         lower    upper central.p
+## 2.5% 21.76703 24.15803      0.95</code></pre>
+</div>
+<div id="problem-2-28" class="section level3" number="31.2.2">
+<h3>
+<span class="header-section-number">31.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-28"><i class="fas fa-link"></i></a>
+</h3>
+<p>Is that the best model for predicting mpg? Try a variety of different models. You could explore higher order terms or even interactions. One place to start is by using the <code><a href="https://rdrr.io/r/graphics/pairs.html">pairs()</a></code> function on <code>mtcars</code> to plot a large pairwise scatterplot. How high could you get adjusted <span class="math inline">\(R\)</span>-squared? Keep in mind that is only one measure of fit.</p>
+<p>Answers will vary, but we tried this and got 0.8694.</p>
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">~</span><span class="va">disp</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">disp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="va">hp</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">hp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="va">wt</span>,data<span class="op">=</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp + I(disp^2) + hp + I(hp^2) + wt, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.1591 -1.4907 -0.3903  1.5851  3.7795 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.440e+01  2.639e+00  16.823 1.71e-15 ***
+## disp        -4.532e-02  2.131e-02  -2.127 0.043100 *  
+## I(disp^2)    8.844e-05  3.315e-05   2.668 0.012967 *  
+## hp          -8.652e-02  3.813e-02  -2.269 0.031813 *  
+## I(hp^2)      1.585e-04  8.932e-05   1.775 0.087666 .  
+## wt          -3.517e+00  8.874e-01  -3.963 0.000515 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.178 on 26 degrees of freedom
+## Multiple R-squared:  0.8904, Adjusted R-squared:  0.8694 
+## F-statistic: 42.26 on 5 and 26 DF,  p-value: 1.129e-11</code></pre>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></div>
+<div class="next"><a href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#LRMULTI"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="nav-link" href="#objectives-29"><span class="header-section-number">31.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-30"><span class="header-section-number">31.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-30"><span class="header-section-number">31.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-28"><span class="header-section-number">31.2.2</span> Problem 2</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

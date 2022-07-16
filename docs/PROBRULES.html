@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 8 Probability Rules | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="8.1 Objectives Define and use properly in context all new terminology related to probability, including: sample space, outcome, event, subset, intersection, union, complement, probability,...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 8 Probability Rules | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="8.1 Objectives Define and use properly in context all new terminology related to probability, including: sample space, outcome, event, subset, intersection, union, complement, probability,...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 8 Probability Rules | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="8.1 Objectives Define and use properly in context all new terminology related to probability, including: sample space, outcome, event, subset, intersection, union, complement, probability,...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="active" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="PROBRULES" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Probability Rules<a class="anchor" aria-label="anchor" href="#PROBRULES"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-7" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-7"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Define and use properly in context all new terminology related to probability, including: <em>sample space</em>, <em>outcome</em>, <em>event</em>, <em>subset</em>, <em>intersection</em>, <em>union</em>, <em>complement</em>, <em>probability</em>, <em>mutually exclusive</em>, <em>exhaustive</em>, <em>independent</em>, <em>multiplication rule</em>, <em>permutation</em>, <em>combination</em>.</p></li>
+<li><p>Apply basic probability and counting rules to find probabilities.</p></li>
+<li><p>Describe the basic axioms of probability.</p></li>
+<li><p>Use <code>R</code> to calculate and simulate probabilities of events.</p></li>
+</ol>
+</div>
+<div id="homework-7" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-7"><i class="fas fa-link"></i></a>
+</h2>
+<div id="problem-1-7" class="section level3" number="8.2.1">
+<h3>
+<span class="header-section-number">8.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-7"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> be events such that <span class="math inline">\(\mbox{P}(A)=0.5\)</span>, <span class="math inline">\(\mbox{P}(B)=0.3\)</span>, and <span class="math inline">\(\mbox{P}(C)=0.4\)</span>. Also, we know that <span class="math inline">\(\mbox{P}(A \cap B)=0.2\)</span>, <span class="math inline">\(\mbox{P}(B \cap C)=0.12\)</span>, <span class="math inline">\(\mbox{P}(A \cap C)=0.1\)</span>, and <span class="math inline">\(\mbox{P}(A \cap B \cap C)=0.05\)</span>. Find the following:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><span class="math inline">\(\mbox{P}(A\cup B)\)</span>
+<span class="math display">\[
+\mbox{P}(A\cup B) = \mbox{P}(A)+\mbox{P}(B)-\mbox{P}(A\cap B)= 0.5+0.3-0.2 = 0.6
+\]</span></p></li>
+<li><p><span class="math inline">\(\mbox{P}(A\cup B \cup C)\)</span>
+<span class="math display">\[
+\mbox{P}(A\cup B \cup C) = \mbox{P}(A)+\mbox{P}(B)+\mbox{P}(C)-\mbox{P}(A\cap B)-\mbox{P}(A\cap C)-\mbox{P}(B\cap C)+\mbox{P}(A\cap B \cap C)
+\]</span>
+<span class="math display">\[
+= 0.5+0.3+0.4-0.2-0.12-0.1+0.05 = 0.83
+\]</span></p></li>
+<li><p><span class="math inline">\(\mbox{P}(B'\cap C')\)</span>
+<span class="math display">\[
+\mbox{P}(B'\cap C')=\mbox{P}((B\cup C)') = 1-\mbox{P}(B\cup C) = 1-[\mbox{P}(B)+\mbox{P}(C)-\mbox{P}(B\cap C)]
+\]</span>
+<span class="math display">\[
+= 1-(0.3+0.4-0.12) = 0.42
+\]</span></p></li>
+<li><p><span class="math inline">\(\mbox{P}(A\cup (B\cap C))\)</span>
+<span class="math display">\[
+\mbox{P}(A\cup (B\cap C)) = \mbox{P}(A)+\mbox{P}(B\cap C) -\mbox{P}(A\cap B \cap C) = 0.5+0.12-0.05 = 0.57
+\]</span></p></li>
+<li><p><span class="math inline">\(\mbox{P}((A\cup B \cup C)\cap (A\cap B \cap C)')\)</span>
+<span class="math display">\[
+\mbox{P}((A\cup B \cup C)\cap (A\cap B \cap C)')=\mbox{P}(A\cup B \cup C)-\mbox{P}(A\cap B \cap C) = 0.83-0.05 = 0.78
+\]</span></p></li>
+</ol>
+</div>
+<div id="problem-2-7" class="section level3" number="8.2.2">
+<h3>
+<span class="header-section-number">8.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-7"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the example of the family in the reading. What is the probability that the family has at least one boy?<br><span class="math display">\[
+\mbox{P}(\mbox{at least one boy})=1-\mbox{P}(\mbox{no boys})=1-\mbox{P}(\mbox{GGG})=1-\frac{1}{8} = 0.875
+\]</span></p>
+</div>
+<div id="problem-3-5" class="section level3" number="8.2.3">
+<h3>
+<span class="header-section-number">8.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-5"><i class="fas fa-link"></i></a>
+</h3>
+<p>The Birthday Problem Revisited.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Suppose there are <span class="math inline">\(n=20\)</span> students in a classroom. My birthday, the instructor, is April 3rd. What is the probability that at least one student shares my birthday? Assume only 365 days in a year and assume that all birthdays are equally likely.</li>
+</ol>
+<p><span class="math display">\[
+\mbox{P}(\mbox{at least one other person shares my bday})=1-\mbox{P}(\mbox{no one else has my bday}) =
+\]</span></p>
+<p><span class="math display">\[
+1-\left( \frac{364}{365}\right)^{20} = 0.0534
+\]</span></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>In <code>R</code>, find the probability that at least one other person shares my birthday for each value of <span class="math inline">\(n\)</span> from 1 to 300. Plot these probabilities with <span class="math inline">\(n\)</span> on the <span class="math inline">\(x\)</span>-axis and probability on the <span class="math inline">\(y\)</span>-axis. At what value of <span class="math inline">\(n\)</span> would the probability be at least 50%?</li>
+</ol>
+<p>Generalizing,
+<span class="math display">\[
+\mbox{P}(\mbox{at least one other person shares my bday})=1-\mbox{P}(\mbox{no one else has my bday}) = 1-\left( \frac{364}{365}\right)^{n}
+\]</span></p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span><span class="op">&lt;-</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span></span>
+<span><span class="va">mybday</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">1</span><span class="op">-</span><span class="op">(</span><span class="fl">364</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">^</span><span class="va">x</span></span>
+<span><span class="va">mybday</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">mybday</span><span class="op">)</span></span></code></pre></div>
+<p>Check our function.</p>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mybday</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.05339153</code></pre>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gf_line</span><span class="op">(</span><span class="fu">mybday</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">~</span> <span class="va">n</span>,</span>
+<span>        xlab<span class="op">=</span><span class="st">"Number of People"</span>,</span>
+<span>        ylab<span class="op">=</span><span class="st">"Probability of Match"</span>,</span>
+<span>        title<span class="op">=</span><span class="st">"Probability of at least 1 person matching my birthday"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="va">theme_bw</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="08-Probability-Rules-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu">mybday</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">prob</span><span class="op">&gt;=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271
+## [20] 272 273 274 275 276 277 278 279 280 281 282 283 284 285 286 287 288 289 290
+## [39] 291 292 293 294 295 296 297 298 299 300</code></pre>
+<p>So 253 people.</p>
+</div>
+<div id="problem-4-1" class="section level3" number="8.2.4">
+<h3>
+<span class="header-section-number">8.2.4</span> Problem 4<a class="anchor" aria-label="anchor" href="#problem-4-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Thinking of the cards again. Answer the following questions:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Define two events that are mutually exclusive.</li>
+</ol>
+<p>The first card drawn is red.<br>
+The first card drawn is black.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Define two events that are independent.</li>
+</ol>
+<p>The first card drawn is black.<br>
+The first card drawn is a face card.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Define an event and its complement.</li>
+</ol>
+<p>The first card drawn is less than 5.<br>
+The first card drawn is equal to or more than 5.</p>
+</div>
+<div id="problem-5-1" class="section level3" number="8.2.5">
+<h3>
+<span class="header-section-number">8.2.5</span> Problem 5<a class="anchor" aria-label="anchor" href="#problem-5-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the license plate example from the reading.</p>
+<ol style="list-style-type: lower-alpha">
+<li>What is the probability that a license plate contains <strong>exactly</strong> one “B”?</li>
+</ol>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#fourth spot</span></span>
+<span><span class="va">num4</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">1</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span></span>
+<span></span>
+<span><span class="co">#fifth spot</span></span>
+<span><span class="va">num5</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">1</span><span class="op">*</span><span class="fl">25</span></span>
+<span></span>
+<span><span class="co">#sixth spot</span></span>
+<span><span class="va">num6</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">1</span></span>
+<span></span>
+<span><span class="va">denom</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">26</span><span class="op">*</span><span class="fl">26</span><span class="op">*</span><span class="fl">26</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">num4</span><span class="op">+</span><span class="va">num5</span><span class="op">+</span><span class="va">num6</span><span class="op">)</span><span class="op">/</span><span class="va">denom</span></span></code></pre></div>
+<pre><code>## [1] 0.1066796</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>What is the probability that a license plate contains <strong>at least one</strong> “B”?</li>
+</ol>
+<p><span class="math display">\[
+1-\mbox{P}(\mbox{no B's})
+\]</span></p>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">num0</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span></span>
+<span><span class="fl">1</span><span class="op">-</span><span class="va">num0</span><span class="op">/</span><span class="va">denom</span></span></code></pre></div>
+<pre><code>## [1] 0.1110036</code></pre>
+</div>
+<div id="problem-6" class="section level3" number="8.2.6">
+<h3>
+<span class="header-section-number">8.2.6</span> Problem 6<a class="anchor" aria-label="anchor" href="#problem-6"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the party example in the reading.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Suppose 8 people showed up to the party dressed as zombies. What is the probability that all three awards are won by people dressed as zombies?
+<span class="math display">\[
+\frac{8\cdot 7 \cdot 6}{25\cdot 24 \cdot 23}
+\]</span>
+</li>
+</ol>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fl">8</span><span class="op">*</span><span class="fl">7</span><span class="op">*</span><span class="fl">6</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">25</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">23</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.02434783</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>What is the probability that zombies win “most creative” and “funniest” but not “scariest”?
+<span class="math display">\[
+\frac{8 \cdot 17 \cdot 7}{25 \cdot 24 \cdot 23}
+\]</span>
+</li>
+</ol>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fl">8</span><span class="op">*</span><span class="fl">17</span><span class="op">*</span><span class="fl">7</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">25</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">23</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.06898551</code></pre>
+</div>
+<div id="problem-7" class="section level3" number="8.2.7">
+<h3>
+<span class="header-section-number">8.2.7</span> Problem 7<a class="anchor" aria-label="anchor" href="#problem-7"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider the cards example from the reading.</p>
+<ol style="list-style-type: lower-alpha">
+<li>How many ways can we obtain a “two pairs” (2 of one number, 2 of another, and the final different)?</li>
+</ol>
+<p>We have to pick the rank of the two pairs.</p>
+<p><span class="math display">\[\binom{13}{2}\]</span>
+Notice here the order doesn’t matter because a pair of Kings and 4s is the same as a pair of 4s and Kings. This is different from the full house example. Make sure you understand this point.</p>
+<p>Now we have to pick two of the fours cards for each rank</p>
+<p><span class="math display">\[\binom{4}{2}\binom{4}{2}\]</span></p>
+<p>And finally we need the last card to come from the 44 remaining cards so that we don’t get a full house.</p>
+<p><span class="math inline">\(\binom{44}{1}\)</span></p>
+<p>Putting it all together:</p>
+<p><span class="math inline">\(\binom{13}{2}\binom{4}{2}\binom{4}{2}\binom{44}{1}\)</span></p>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">13</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">44</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 123552</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>What is the probability of drawing a “four of a kind” (four cards of the same value)?</li>
+</ol>
+<p><span class="math display">\[
+\mbox{P}(\mbox{4 of a kind})=\frac{\binom{13}{1}\binom{4}{4}\binom{48}{1}}{\binom{52}{5}}
+\]</span></p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fl">13</span><span class="op">*</span><span class="fl">1</span><span class="op">*</span><span class="fl">48</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">52</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.000240096</code></pre>
+</div>
+<div id="problem-8" class="section level3" number="8.2.8">
+<h3>
+<span class="header-section-number">8.2.8</span> Problem 8<a class="anchor" aria-label="anchor" href="#problem-8"><i class="fas fa-link"></i></a>
+</h3>
+<p>Advanced Question: Consider rolling 5 dice. What is the <strong>probability</strong> of a pour resulting in a full house?</p>
+<p>First pick the value for the three of a kind, there are 6. Then pick the value from the remaining 5 for the two of a kind. This is actually a permutation. There are 30 distinct “flavors” of full house (three 1’s &amp; two 2’s, three 1’s &amp; two 3’s, etc.). In the reading we did this as
+<span class="math display">\[
+\binom{6}{1} \times \binom{5}{1}
+\]</span>
+We now have the 5 dice. We have to select three to have the same value and the order doesn’t matter since they are the same value. Thus we multiple by <span class="math inline">\(\binom{5}{3}\)</span>. Divide this by the total distinct ways the dice could have landed (assuming order matters).
+<span class="math display">\[
+\mbox{P}(\mbox{full house}) = \frac{30 \times \frac{5!}{3!2!}}{6^5}
+\]</span>
+<span class="math display">\[
+\mbox{P}(\mbox{full house}) = \frac{\binom{6}{1} \times \binom{5}{1} \times \binom{5}{3}}{6^5}
+\]</span></p>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">30</span><span class="op">*</span><span class="fl">10</span><span class="op">/</span><span class="op">(</span><span class="fl">6</span><span class="op">^</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.03858025</code></pre>
+<p>Simulating is tough so let’s write some code that may help.</p>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">23</span><span class="op">)</span></span>
+<span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,size<span class="op">=</span><span class="fl">5</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">temp</span></span></code></pre></div>
+<pre><code>## 
+## 1 3 4 5 
+## 1 2 1 1</code></pre>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
+<span><span class="va">temp</span></span></code></pre></div>
+<pre><code>## temp
+## 1 2 
+## 3 2</code></pre>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Let’s write a function.</p>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">full_house</span> <span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">full_house</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">751</span><span class="op">)</span></span>
+<span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">full_house</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,size<span class="op">=</span><span class="fl">5</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">mean</span><span class="op">(</span><span class="op">~</span><span class="va">full_house</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.039</code></pre>
+
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="CS2.html"><span class="header-section-number">7</span> Case Study</a></div>
+<div class="next"><a href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#PROBRULES"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="nav-link" href="#objectives-7"><span class="header-section-number">8.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-7"><span class="header-section-number">8.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-7"><span class="header-section-number">8.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-7"><span class="header-section-number">8.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-5"><span class="header-section-number">8.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-4-1"><span class="header-section-number">8.2.4</span> Problem 4</a></li>
+<li><a class="nav-link" href="#problem-5-1"><span class="header-section-number">8.2.5</span> Problem 5</a></li>
+<li><a class="nav-link" href="#problem-6"><span class="header-section-number">8.2.6</span> Problem 6</a></li>
+<li><a class="nav-link" href="#problem-7"><span class="header-section-number">8.2.7</span> Problem 7</a></li>
+<li><a class="nav-link" href="#problem-8"><span class="header-section-number">8.2.8</span> Problem 8</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

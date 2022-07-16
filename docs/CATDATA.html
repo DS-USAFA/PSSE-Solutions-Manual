@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 6 Categorical Data | Solutions for Probability and Statistics - MASTER version</title>
+<meta name="author" content="Matthew Davis">
+<meta name="author" content="Brianna Hitt">
+<meta name="author" content="Kenneth Horton">
+<meta name="author" content="Bradley Warner">
+<meta name="description" content="6.1 Objectives Define and use properly in context all new terminology, to include: factor, contingency table, marginal counts, joint counts, frequency table, relative frequency table, bar plot,...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="Chapter 6 Categorical Data | Solutions for Probability and Statistics - MASTER version">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/figures/CoverSol2.png">
+<meta property="og:description" content="6.1 Objectives Define and use properly in context all new terminology, to include: factor, contingency table, marginal counts, joint counts, frequency table, relative frequency table, bar plot,...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 6 Categorical Data | Solutions for Probability and Statistics - MASTER version">
+<meta name="twitter:description" content="6.1 Objectives Define and use properly in context all new terminology, to include: factor, contingency table, marginal counts, joint counts, frequency table, relative frequency table, bar plot,...">
+<meta name="twitter:image" content="/figures/CoverSol2.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Solutions for Probability and Statistics - MASTER version</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Preface</a></li>
+<li class="book-part">Descriptive Statistical Modeling</li>
+<li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
+<li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
+<li><a class="" href="ODCP.html"><span class="header-section-number">3</span> Overview of Data Collection Principles</a></li>
+<li><a class="" href="STUDY.html"><span class="header-section-number">4</span> Studies</a></li>
+<li><a class="" href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></li>
+<li><a class="active" href="CATDATA.html"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li class="book-part">Probability Modeling</li>
+<li><a class="" href="CS2.html"><span class="header-section-number">7</span> Case Study</a></li>
+<li><a class="" href="PROBRULES.html"><span class="header-section-number">8</span> Probability Rules</a></li>
+<li><a class="" href="CONDPROB.html"><span class="header-section-number">9</span> Conditional Probability</a></li>
+<li><a class="" href="RANDVAR.html"><span class="header-section-number">10</span> Random Variables</a></li>
+<li><a class="" href="CONRANDVAR.html"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
+<li><a class="" href="DISCRETENAMED.html"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
+<li><a class="" href="CONTNNAMED.html"><span class="header-section-number">13</span> Named Continuous Distributions</a></li>
+<li><a class="" href="MULTIDISTS.html"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
+<li><a class="" href="MULTIEXP.html"><span class="header-section-number">15</span> Multivariate Expectation</a></li>
+<li><a class="" href="TRANS.html"><span class="header-section-number">16</span> Transformations</a></li>
+<li><a class="" href="EST.html"><span class="header-section-number">17</span> Estimation Methods</a></li>
+<li class="book-part">Statistical Modeling</li>
+<li><a class="" href="CS3.html"><span class="header-section-number">18</span> Case Study</a></li>
+<li><a class="" href="HYPTESTSIM.html"><span class="header-section-number">19</span> Hypothesis Testing with Simulation</a></li>
+<li><a class="" href="HYPTESTDIST.html"><span class="header-section-number">20</span> Hypothesis Testing with Known Distributions</a></li>
+<li><a class="" href="HYPTESTCLT.html"><span class="header-section-number">21</span> Hypothesis Testing with the Central Limit Theorem</a></li>
+<li><a class="" href="ADDTESTS.html"><span class="header-section-number">22</span> Additional Hypothesis Tests</a></li>
+<li><a class="" href="ANOVA.html"><span class="header-section-number">23</span> Analysis of Variance</a></li>
+<li><a class="" href="CI.html"><span class="header-section-number">24</span> Confidence Intervals</a></li>
+<li><a class="" href="BOOT.html"><span class="header-section-number">25</span> Bootstrap</a></li>
+<li class="book-part">Predictive Statistical Modeling</li>
+<li><a class="" href="CS4.html"><span class="header-section-number">26</span> Case Study</a></li>
+<li><a class="" href="LRBASICS.html"><span class="header-section-number">27</span> Linear Regression Basics</a></li>
+<li><a class="" href="LRINF.html"><span class="header-section-number">28</span> Linear Regression Inference</a></li>
+<li><a class="" href="LRDIAG.html"><span class="header-section-number">29</span> Linear Regression Diagnostics</a></li>
+<li><a class="" href="LRSIM.html"><span class="header-section-number">30</span> Simulation-Based Linear Regression</a></li>
+<li><a class="" href="LRMULTI.html"><span class="header-section-number">31</span> Multiple Linear Regression</a></li>
+<li><a class="" href="LOGREG.html"><span class="header-section-number">32</span> Logistic Regression</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="CATDATA" class="section level1" number="6">
+<h1>
+<span class="header-section-number">6</span> Categorical Data<a class="anchor" aria-label="anchor" href="#CATDATA"><i class="fas fa-link"></i></a>
+</h1>
+<div id="objectives-5" class="section level2" number="6.1">
+<h2>
+<span class="header-section-number">6.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-5"><i class="fas fa-link"></i></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li><p>Define and use properly in context all new terminology, to include: <em>factor</em>, <em>contingency table</em>, <em>marginal counts</em>, <em>joint counts</em>, <em>frequency table</em>, <em>relative frequency table</em>, <em>bar plot</em>, <em>conditioning</em>, <em>segmented bar plot</em>, <em>mosaic plot</em>, <em>pie chart</em>, <em>side-by-side box plot</em>, <em>density plot</em>.</p></li>
+<li><p>In <code>R</code>, generate tables for categorical variable(s).</p></li>
+<li><p>In <code>R</code>, generate appropriate graphical summaries of categorical and numerical variables.</p></li>
+<li><p>Interpret and explain output both graphically and numerically.</p></li>
+</ol>
+</div>
+<div id="homework-5" class="section level2" number="6.2">
+<h2>
+<span class="header-section-number">6.2</span> Homework<a class="anchor" aria-label="anchor" href="#homework-5"><i class="fas fa-link"></i></a>
+</h2>
+<p>Make sure your plots have a title and the axes are labeled.</p>
+<div id="problem-1-5" class="section level3" number="6.2.1">
+<h3>
+<span class="header-section-number">6.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-5"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Views on immigration</strong>. 910 randomly sampled registered voters from Tampa, FL were asked if they thought workers who have illegally entered the US should be (i) allowed to keep their jobs and apply for US citizenship, (ii) allowed to keep their jobs as temporary guest workers but not allowed to apply for US citizenship, or (iii) lose their jobs and have to leave the country.</p>
+<p>The data is in the <code>openintro</code> package in the <code>immigration</code> data object.</p>
+<ol style="list-style-type: lower-alpha">
+<li>How many levels of <em>political</em> are there?</li>
+</ol>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">immigration</span><span class="op">$</span><span class="va">political</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "conservative" "liberal"      "moderate"</code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">immigration</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## categorical variables:  
+##        name  class levels   n missing
+## 1  response factor      4 910       0
+## 2 political factor      3 910       0
+##                                    distribution
+## 1 Leave the country (38.5%) ...                
+## 2 conservative (40.9%), moderate (39.9%) ...</code></pre>
+<p>There are three levels for <code>political</code>: conservative, liberal, and moderate.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Create a table using <code>tally</code>. Note: a table showing overall proportions or percents may be most helpful for parts c) through e).</li>
+</ol>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">response</span> <span class="op">+</span> <span class="va">political</span>, data <span class="op">=</span> <span class="va">immigration</span>, </span>
+<span>            format <span class="op">=</span> <span class="st">"percent"</span>, margins <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                        political
+## response                conservative liberal moderate  Total
+##   Apply for citizenship         6.26   11.10    13.19  30.55
+##   Guest worker                 13.30    3.08    12.42  28.79
+##   Leave the country            19.67    4.95    13.85  38.46
+##   Not sure                      1.65    0.11     0.44   2.20
+##   Total                        40.88   19.23    39.89 100.00</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>What percent of these Tampa, FL voters identify themselves as conservatives?</li>
+</ol>
+<p>From the table, 40.88% of voters identify themselves as conservatives (left column total).</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>What percent of these Tampa, FL voters are in favor of the citizenship option?</li>
+</ol>
+<p>Again, from the table, 30.55% of the voters favor the citizenship option (top row total).</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>What percent of these Tampa, FL voters identify themselves as conservatives and are in favor of the citizenship option?</li>
+</ol>
+<p>From the table, 6.26% of the voters are conservative and favor the citizenship option.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>What percent of these Tampa, FL voters who identify themselves as conservatives are also in favor of the citizenship option? What percent of moderates and liberal share this view?</li>
+</ol>
+<p>We need a different table for this question. We want the percentages of <code>response</code> within each <code>political</code> category.</p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="va">response</span> <span class="op">~</span> <span class="va">political</span>, data <span class="op">=</span> <span class="va">immigration</span>, </span>
+<span>            format <span class="op">=</span> <span class="st">"percent"</span>, margins <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                        political
+## response                conservative liberal moderate
+##   Apply for citizenship        15.32   57.71    33.06
+##   Guest worker                 32.53   16.00    31.13
+##   Leave the country            48.12   25.71    34.71
+##   Not sure                      4.03    0.57     1.10
+##   Total                       100.00  100.00   100.00</code></pre>
+<p>Of the conservative voters, 15.32% are in favor of the citizenship option. The numbers are 57.71% for liberals and 33.06% for moderates.</p>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Create a stacked bar chart to reflect your work in part f).</li>
+</ol>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">immigration</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_props</span><span class="op">(</span><span class="op">~</span><span class="va">political</span>, fill <span class="op">=</span> <span class="op">~</span><span class="va">response</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Tampa Florida Voter Views on Illegal Immigrant Workers"</span>,</span>
+<span>          subtitle <span class="op">=</span> <span class="st">"Broken down by political views"</span>, </span>
+<span>          x <span class="op">=</span> <span class="st">"Political View"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Categorical-Data-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<ol start="8" style="list-style-type: lower-alpha">
+<li>Using your plot, do political ideology and views on immigration appear to be independent? Explain your reasoning.</li>
+</ol>
+<p>The percentages of Tampa, FL voters who are in favor of illegal immigrants working in the US being allowed to stay and apply for citizenship are quite different depending on the voter’s political view. Therefore, the two variables appear to be dependent.</p>
+</div>
+<div id="problem-2-5" class="section level3" number="6.2.2">
+<h3>
+<span class="header-section-number">6.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-5"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Views on the DREAM Act</strong>. The same survey from Exercise 1 also asked respondents if they support the DREAM Act, a proposed law which would provide a path to citizenship for people brought illegally to the US as children.</p>
+<p>The data is in the <strong>openintro</strong> package in the <code>dream</code> data object.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Create a <em>mosaic</em> plot of political view versus stance on the DREAM Act.</li>
+</ol>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">vcd</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://friendly.github.io/vcdExtra/">vcdExtra</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/vcd/man/mosaic.html">mosaic</a></span><span class="op">(</span><span class="va">stance</span> <span class="op">~</span> <span class="va">ideology</span>, data <span class="op">=</span> <span class="va">dream</span>, </span>
+<span>       sub <span class="op">=</span> <span class="st">"Voter views on illegal worker status"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Categorical-Data-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Based on the mosaic plot, are views on the DREAM Act and political ideology independent?</li>
+</ol>
+<p>The vertical locations at which the ideological groups break into the Yes, No, and Not Sure categories differ, which indicates the variables are dependent.</p>
+</div>
+<div id="problem-3-4" class="section level3" number="6.2.3">
+<h3>
+<span class="header-section-number">6.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-4"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Heart transplants</strong>. The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable <em>transplant</em> indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. Another variable called <em>survived</em> was used to indicate whether or not the patient was alive at the end of the study.</p>
+<p>The data is in the <code>openintro</code> package and is called <code>heart_transplant</code>.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Create a <strong>mosaic</strong> plot of treatment versus survival status.</li>
+</ol>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/vcd/man/mosaic.html">mosaic</a></span><span class="op">(</span><span class="va">survived</span> <span class="op">~</span> <span class="va">transplant</span>, data <span class="op">=</span> <span class="va">heart_transplant</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Categorical-Data-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Based on the mosaic plot, is survival independent of whether or not the patient got a transplant? Explain your reasoning.</li>
+</ol>
+<p>The proportion of patients who are alive at the end of the study is higher in the treatment group than in the control group. These data suggest that survival is dependent on whether or not the patient got a transplant.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Create side-by-side boxplots of survival time for the control and treatment groups.</li>
+</ol>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">heart_transplant</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="va">survtime</span> <span class="op">~</span> <span class="va">transplant</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Survival times for tranplant experiment"</span>,</span>
+<span>          sub <span class="op">=</span> <span class="st">"Treatment group had the transplant"</span>,</span>
+<span>          x <span class="op">=</span> <span class="st">"Tranplant"</span>, y <span class="op">=</span> <span class="st">"Survival time in days"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="06-Categorical-Data-Solutions_files/figure-html/unnamed-chunk-10-1.png" width="672"></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>What do the box plots suggest about the efficacy (effectiveness) of transplants?</li>
+</ol>
+<p>The shape of the distribution of survival times in both groups is right skewed, with one very clear outlier for the control group and other possible outliers in both groups on the high end. The median survival time for the control group is much lower than the median survival time for the treatment group; patients who got a transplant typically lived longer. Tying this together with the much lower variability in the control group, evident by a much smaller IQR than the treatment group (about 50 days versus 500 days), we can see that patients who did not get a heart transplant tended to consistently die quite early relative to those who did have a transplant. Overall, very few patients without transplants made it beyond a year while nearly half of the transplant patients survived at least one year. It should also be noted that while the first and third quartiles of the treatment group are higher than those for the control group, the IQR for the treatment group is also much bigger, indicating that there is more variability in survival times in the treatment group.</p>
+
+</div>
+</div>
+</div>
+
+
+
+  <div class="chapter-nav">
+<div class="prev"><a href="NUMDATA.html"><span class="header-section-number">5</span> Numerical Data</a></div>
+<div class="next"><a href="CS2.html"><span class="header-section-number">7</span> Case Study</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#CATDATA"><span class="header-section-number">6</span> Categorical Data</a></li>
+<li><a class="nav-link" href="#objectives-5"><span class="header-section-number">6.1</span> Objectives</a></li>
+<li>
+<a class="nav-link" href="#homework-5"><span class="header-section-number">6.2</span> Homework</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#problem-1-5"><span class="header-section-number">6.2.1</span> Problem 1</a></li>
+<li><a class="nav-link" href="#problem-2-5"><span class="header-section-number">6.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-4"><span class="header-section-number">6.2.3</span> Problem 3</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
