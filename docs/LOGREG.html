@@ -144,11 +144,11 @@
 <ol style="list-style-type: lower-alpha">
 <li>Explore the data by making histograms of the quantitative variables, and bar charts of the discrete variables. Are there any outliers that are likely to have a very large influence on the logistic regression model?</li>
 </ol>
-<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb745"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/possum.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">pop</span>,<span class="va">sex</span>,<span class="va">head_l</span>,<span class="va">skull_w</span>,<span class="va">total_l</span>,<span class="va">tail_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pop<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span>,sex<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb757"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb746"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">possum</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## categorical variables:  
@@ -162,49 +162,49 @@
 ## 2 skull_w numeric 50.0 54.975  56.35 58.100  68.6 56.88365 3.113426 104       0
 ## 3 total_l numeric 75.0 84.000  88.00 90.000  96.5 87.08846 4.310549 104       0
 ## 4  tail_l numeric 32.0 35.875  37.00 38.000  43.0 37.00962 1.959518 104       0</code></pre>
-<div class="sourceCode" id="cb759"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_props</span><span class="op">(</span><span class="op">~</span><span class="va">pop</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
-<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb749"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_props</span><span class="op">(</span><span class="op">~</span><span class="va">sex</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Gender"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
-<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">head_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
-<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb751"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">skull_w</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
-<div class="sourceCode" id="cb763"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">total_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-7-1.png" width="672"></div>
-<div class="sourceCode" id="cb764"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb753"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="op">~</span><span class="va">tail_l</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
 <p>There are some potential outliers for skull width but otherwise not much concern.</p>
-<div class="sourceCode" id="cb765"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html">pairs</a></span><span class="op">(</span><span class="va">possum</span><span class="op">[</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,lower.panel <span class="op">=</span> <span class="va">panel.smooth</span><span class="op">)</span></span></code></pre></div>
 <p><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672">
 We can see that <code>head_l</code> is correlated with the other three variables. This will cause some multicollinearity problems.</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Build a logistic regression model with all the variable. Report a summary of the model.</li>
 </ol>
-<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb755"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">pop</span><span class="op">==</span><span class="st">"Vic"</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">possum</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb767"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">possum_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -232,7 +232,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## AIC: 84.155
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<div class="sourceCode" id="cb769"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">possum_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>##                  2.5 %      97.5 %
@@ -246,9 +246,9 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <li>Using the p-values decide if you want to remove a variable(S) and if so build that model.</li>
 </ol>
 <p>Let’s remove <code>head_l</code> first.</p>
-<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">possum_mod_red</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">pop</span><span class="op">==</span><span class="st">"Vic"</span><span class="op">~</span><span class="va">sex</span><span class="op">+</span><span class="va">skull_w</span><span class="op">+</span><span class="va">total_l</span><span class="op">+</span><span class="va">tail_l</span>,data<span class="op">=</span><span class="va">possum</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">possum_mod_red</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -280,7 +280,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol start="4" style="list-style-type: lower-alpha">
 <li>For any variable you decide to remove, build a 95% confidence interval for the parameter.</li>
 </ol>
-<div class="sourceCode" id="cb775"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb764"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">possum_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>##                  2.5 %      97.5 %
@@ -292,10 +292,10 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## tail_l      -2.7170468 -1.23231969</code></pre>
 <p>We are 95% confident that the true slope coefficient for <code>head_l</code> is between -0.44 and 0.108.</p>
 <p>The bootstrap is not working for this problem. It may be that we have convergence issues when we resample the data. This is a reminder that we need to be careful and not just run methods without checking results. Here is the code:</p>
-<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb767"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">952</span><span class="op">)</span></span>
 <span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">pop</span><span class="op">==</span><span class="st">"Vic"</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">possum</span><span class="op">)</span>,family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb779"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb768"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##     Intercept          sexm        head_l       skull_w       total_l
 ## 1 -1184.61875  2.122389e+01  3.861561e+00  2.749263e+00  7.274005e+00
@@ -304,14 +304,14 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 4   -25.18662 -1.852185e+01  2.097593e+01 -1.353619e+01  1.483815e+01
 ## 5   -26.56607 -1.398995e-14 -2.258909e-14  6.528545e-15  2.388756e-14
 ## 6 -1025.00035  6.159665e+01  2.526181e+01 -2.032143e+01  1.438639e+01</code></pre>
-<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb770"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">head_l</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling distribtuion"</span>,</span>
 <span>          x<span class="op">=</span><span class="st">"sex paramater estimate"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
-<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb771"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">head_l</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          lower    upper central.p
 ## 2.5% -122.7029 63.61867      0.95</code></pre>
@@ -333,7 +333,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <li>Suppose we see a brushtail possum at a zoo in the US, and a sign says the possum had been captured in the wild in Australia, but it doesn’t say which part of Australia. However, the sign does indicate that the possum is male, its skull is about 63 mm wide, its tail is 37 cm long, and its total length is 83 cm. What is the reduced model’s computed probability that this possum is from Victoria? How confident are you in the model’s accuracy of this probability calculation?</li>
 </ol>
 <p>Let’s predict the outcome. We use <code>response</code> for the type to put the answer in the form of a probability. See the help menu on <code>predict.glm</code> for more information.</p>
-<div class="sourceCode" id="cb784"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">possum_mod_red</span>,newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>sex<span class="op">=</span><span class="st">"m"</span>,skull_w<span class="op">=</span><span class="fl">63</span>,tail_l<span class="op">=</span><span class="fl">37</span>,total_l<span class="op">=</span><span class="fl">83</span><span class="op">)</span>,</span>
 <span>        type<span class="op">=</span><span class="st">"response"</span>,se.fit <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## $fit
@@ -348,7 +348,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## [1] 1</code></pre>
 <p>While the probability, 0.006, is very near zero, we have not run diagnostics on the model. We should also have a little skepticism that the model will hold for a possum found in a US zoo. However, it is encouraging that the possum was caught in the wild.</p>
 <p>As a rough sense of the accuracy, we will use the standard error. The errors are really binomial but we are trying to use a normal approximation. If you remember back to our block on probability, with such a low probability, this assumption of normality is suspect. However, we will use it to give us an upper bound.</p>
-<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb775"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.0062</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">1.96</span><span class="op">*</span><span class="fl">.008</span></span></code></pre></div>
 <pre><code>## [1] -0.00948  0.02188</code></pre>
 <p>So at most, the probability of the possum being from Victoria is 2%.</p>
@@ -365,9 +365,9 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol style="list-style-type: lower-alpha">
 <li>Build a logistic regression model to predict <code>Acceptance</code> from <code>GPA</code> and `Sex.</li>
 </ol>
-<div class="sourceCode" id="cb788"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb777"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MedGPA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/MedGPA.csv"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb789"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">MedGPA</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 55
 ## Columns: 11
@@ -382,9 +382,9 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## $ BS         &lt;dbl&gt; 9, 12, 9, 10, 11, 10, 11, 9, 11, 10, 11, 8, 10, 10, 7, 10, ~
 ## $ MCAT       &lt;dbl&gt; 38, 45, 33, 40, 35, 36, 40, 39, 35, 34, 39, 31, 35, 32, 32,~
 ## $ Apps       &lt;dbl&gt; 5, 3, 19, 5, 11, 5, 5, 7, 5, 11, 6, 9, 5, 8, 15, 6, 6, 1, 5~</code></pre>
-<div class="sourceCode" id="cb791"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">med_mod</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">GPA</span><span class="op">+</span><span class="va">Sex</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb792"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">med_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -412,7 +412,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Generate a 95% confidence interval for the coefficient associated with <code>GPA</code>.</li>
 </ol>
-<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb783"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">med_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>##                   2.5 %    97.5 %
@@ -420,18 +420,18 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## GPA         -10.2977983 -3.007544
 ## SexM         -0.1720454  2.697436</code></pre>
 <p>Let’s try the bootstrap for this problem.</p>
-<div class="sourceCode" id="cb797"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">819</span><span class="op">)</span></span>
 <span><span class="va">results_med</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">GPA</span><span class="op">+</span><span class="va">Sex</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">MedGPA</span><span class="op">)</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
-<div class="sourceCode" id="cb799"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb788"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results_med</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">GPA</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling distribtuion"</span>,</span>
 <span>          x<span class="op">=</span><span class="st">"GPA paramater estimate"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="32-Logistic-Regression-Solutions_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
-<div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb789"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">GPA</span>,data<span class="op">=</span><span class="va">results_med</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##         lower     upper central.p
 ## 2.5% -14.2047 -3.213036      0.95</code></pre>
@@ -439,9 +439,9 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Fit a model with a polynomial of degree 2 in the <code>GPA</code>. Drop <code>Sex</code> from the model. Does a quadratic fit improve the model?</li>
 </ol>
-<div class="sourceCode" id="cb802"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb791"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">med_mod2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">GPA</span>,<span class="fl">2</span><span class="op">)</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb803"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb792"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">med_mod2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -471,21 +471,21 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Fit a model with just <code>GPA</code> and interpret the coefficient.</li>
 </ol>
-<div class="sourceCode" id="cb805"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">GPA</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
 ##   term        estimate std.error statistic  p.value
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)    19.2       5.63      3.41 0.000644
 ## 2 GPA            -5.45      1.58     -3.45 0.000553</code></pre>
-<div class="sourceCode" id="cb807"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb796"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5.454166</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.004278444</code></pre>
 <p>An increase of 1 in a student’s GPA decreases the odds of being denied acceptance by 0.00428. Remember that this is not a probability. As a reminder an odds of <span class="math inline">\(\frac{1}{2}\)</span> means the probability of success is <span class="math inline">\(\frac{1}{3}\)</span>. An odds of 1 means a probability of success of <span class="math inline">\(\frac{1}{2}\)</span>. Assume the initial odds are 1 if the odds are now 0.00428 smaller, then the probability of success is <span class="math inline">\(\frac{428}{10428}\)</span> or 0.04. The probability decreased by an order of magnitude.</p>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Try to add different predictors to come up with your best model. Do not use Acceptance and MCAT in the model.</li>
 </ol>
-<div class="sourceCode" id="cb809"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb798"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
@@ -502,7 +502,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 8 BS          0.00490 0.0392
 ## 9 Apps        0.728   1</code></pre>
 <p>Let’s take out <code>VR</code>.</p>
-<div class="sourceCode" id="cb811"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
@@ -518,7 +518,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 7 BS          0.00476 0.0333
 ## 8 Apps        0.742   0.742</code></pre>
 <p>Now let’s take out <code>Apps</code>.</p>
-<div class="sourceCode" id="cb813"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb802"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span>,data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>,<span class="va">p.value</span>,<span class="va">p.adj</span><span class="op">)</span></span></code></pre></div>
@@ -533,7 +533,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 6 WS          0.0385  0.133 
 ## 7 BS          0.00477 0.0286</code></pre>
 <p>Next, let’s remove <code>BCPM</code>.</p>
-<div class="sourceCode" id="cb815"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb804"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span><span class="op">-</span><span class="va">BCPM</span>,</span>
 <span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -548,7 +548,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 5 WS          0.0401  0.0901 
 ## 6 BS          0.00537 0.0269</code></pre>
 <p>Now <code>WS</code>.</p>
-<div class="sourceCode" id="cb817"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb806"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span><span class="op">-</span><span class="va">BCPM</span><span class="op">-</span><span class="va">WS</span>,</span>
 <span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -562,7 +562,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 4 PS          0.0634   0.0732 
 ## 5 BS          0.0100   0.0401</code></pre>
 <p>Maybe <code>PS</code>.</p>
-<div class="sourceCode" id="cb819"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb808"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">Acceptance</span><span class="op">-</span><span class="va">MCAT</span><span class="op">-</span><span class="va">VR</span><span class="op">-</span><span class="va">Apps</span><span class="op">-</span><span class="va">BCPM</span><span class="op">-</span><span class="va">WS</span><span class="op">-</span><span class="va">PS</span>,</span>
 <span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>p.adj<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/p.adjust.html">p.adjust</a></span><span class="op">(</span><span class="va">p.value</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -578,10 +578,10 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Generate a confusion matrix for the best model you have developed.</li>
 </ol>
-<div class="sourceCode" id="cb821"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb810"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">med_mod2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">Sex</span><span class="op">+</span><span class="va">GPA</span><span class="op">+</span><span class="va">BS</span>,</span>
 <span>         data<span class="op">=</span><span class="va">MedGPA</span>,family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb822"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb811"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">med_mod2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -608,7 +608,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## AIC: 48.835
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<div class="sourceCode" id="cb824"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb813"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">med_mod2</span>,type.predict <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>actual<span class="op">=</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">'Accept =='</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>result<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">.fitted</span><span class="op">&gt;</span><span class="fl">0.5</span><span class="op">)</span>,</span>
@@ -622,7 +622,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Find a 95% confidence interval for the probability a female student with a 3.5 GPA, a <code>BCPM</code> of 3.8, a verbal reasoning score of 10, a physical sciences score of 9, a writing sample score of 8, a biological score of 10, a MCAT score of 40, and who applied to 5 medical schools.</li>
 </ol>
-<div class="sourceCode" id="cb826"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb815"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">med_mod2</span>,newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Sex<span class="op">=</span><span class="st">"F"</span>,</span>
 <span>                                      GPA<span class="op">=</span><span class="fl">3.5</span>,</span>
 <span>                                      BS<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,</span>
@@ -637,17 +637,17 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 
 ## $residual.scale
 ## [1] 1</code></pre>
-<div class="sourceCode" id="cb828"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb817"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.2130332</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fl">1.96</span><span class="op">*</span><span class="fl">.1122277</span></span></code></pre></div>
 <pre><code>## [1] -0.006933092  0.432999492</code></pre>
 <p>For a female students with a GPA of 3.5 and a biological score of 10, we are 95% confident that the probability of being denied acceptance to medical school is between 0 and .433.</p>
 <p>Let’s try a bootstrap.</p>
-<div class="sourceCode" id="cb830"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb819"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">729</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Accept</span><span class="op">==</span><span class="st">"D"</span><span class="op">~</span><span class="va">Sex</span><span class="op">+</span><span class="va">GPA</span><span class="op">+</span><span class="va">BS</span>,</span>
 <span>                      data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">MedGPA</span><span class="op">)</span>,</span>
 <span>                      family<span class="op">=</span><span class="va">binomial</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb831"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb820"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##    Intercept       SexM        GPA         BS .row .index
 ## 1  204.23984  20.701630  -4.547781 -20.801516    1      1
@@ -656,10 +656,10 @@ We can see that <code>head_l</code> is correlated with the other three variables
 ## 4 1104.42269 105.236280 -90.461857 -86.132398    1      4
 ## 5   25.37989   1.139262  -3.729948  -1.331750    1      5
 ## 6   26.58307   3.197072  -3.426165  -1.772581    1      6</code></pre>
-<div class="sourceCode" id="cb833"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb822"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results_pred</span> <span class="op">&lt;-</span> <span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pred<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">Intercept</span><span class="op">+</span><span class="fl">3.5</span><span class="op">*</span><span class="va">GPA</span><span class="op">+</span><span class="fl">10</span><span class="op">*</span><span class="va">BS</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb834"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb823"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">pred</span>,data<span class="op">=</span><span class="va">results_pred</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##            lower     upper central.p
 ## 2.5% 7.77316e-10 0.5032905      0.95</code></pre>
@@ -698,7 +698,7 @@ We can see that <code>head_l</code> is correlated with the other three variables
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

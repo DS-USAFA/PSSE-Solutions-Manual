@@ -68,6 +68,10 @@ Use the difference in sample standard deviations as your test statistic. Using a
 
 a. Using the MLB from the lesson, subset on `IF` and `OF`.  
 
+```{r message=FALSE}
+mlb_obp <- read_csv("data/mlb_obp.csv")
+```
+
 ```{r}
 mlb_prob3 <- mlb_obp %>%
   filter(position=="IF"|position=="OF") %>%
@@ -372,6 +376,16 @@ results %>%
   gf_theme(theme_classic()) %>%
   gf_labs(title="Randomization sampling distribution of mean of differences in price",
           x="Mean of price difference")
+```
+
+We need our observed test statistic to calculate a $p$-value. 
+
+```{r}
+obs_stat<- textbooks %>%
+  summarise(obs_diff=mean(diff)) %>%
+  pull(obs_diff)
+
+obs_stat
 ```
 
 ```{r}

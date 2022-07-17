@@ -136,8 +136,7 @@
 <h3>
 <span class="header-section-number">18.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-17"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Side effects of Avandia</strong></p>
-<p>Rosiglitazone is the active ingredient in the controversial type~2 diabetes medicine Avandia and has been linked to an increased risk of serious cardiovascular problems such as stroke, heart failure, and death. A common alternative treatment is pioglitazone, the active ingredient in a diabetes medicine called Actos. In a nationwide retrospective observational study of 227,571 Medicare beneficiaries aged 65 years or older, it was found that 2,593 of the 67,593 patients using rosiglitazone and 5,386 of the 159,978 using pioglitazone had serious cardiovascular problems. These data are summarized in the contingency table below.</p>
+<p><strong>Side effects of Avandia</strong>. Rosiglitazone is the active ingredient in the controversial type~2 diabetes medicine Avandia and has been linked to an increased risk of serious cardiovascular problems such as stroke, heart failure, and death. A common alternative treatment is pioglitazone, the active ingredient in a diabetes medicine called Actos. In a nationwide retrospective observational study of 227,571 Medicare beneficiaries aged 65 years or older, it was found that 2,593 of the 67,593 patients using rosiglitazone and 5,386 of the 159,978 using pioglitazone had serious cardiovascular problems. These data are summarized in the contingency table below.</p>
 <p><span class="math display">\[
 \begin{array}{ccc|cc|c} &amp; &amp; &amp;\textbf{Cardiovascular} &amp; \textbf{problems} &amp;
 \\&amp; &amp;       &amp; Yes   &amp; No        &amp; Total \\
@@ -150,7 +149,7 @@
 <ol style="list-style-type: lower-alpha">
 <li>Since more patients on pioglitazone had cardiovascular problems (5,386 vs. 2,593), we can conclude that the rate of cardiovascular problems for those on a pioglitazone treatment is higher.</li>
 </ol>
-<p>False. Instead of comparing counts, we should compare percentages.</p>
+<p>False. Instead of comparing counts, we should compare percentages. We then see that more patients on rosiglitazone had cardiovascular problems (3.8% vs. 3.4%).</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>The data suggest that diabetic patients who are taking rosiglitazone are more likely to have cardiovascular problems since the rate of incidence was (2,593 / 67,593 = 0.038) 3.8% for patients on this treatment, while it was only (5,386 / 159,978 = 0.034) 3.4% for patients on pioglitazone.</li>
 </ol>
@@ -163,14 +162,12 @@
 <li>Based on the information provided so far, we cannot tell if the difference between the rates of incidences is due to a relationship between the two variables or due to chance.</li>
 </ol>
 <p>True.</p>
-<div style="page-break-after: always;"></div>
 </div>
 <div id="problem-2-17" class="section level3" number="18.2.2">
 <h3>
 <span class="header-section-number">18.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-17"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Heart transplants</strong></p>
-<p>The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. Another variable called was used to indicate whether or not the patient was alive at the end of the study.</p>
+<p><strong>Heart transplants</strong>. The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. Another variable called was used to indicate whether or not the patient was alive at the end of the study.</p>
 <p>In the study, of the 34 patients in the control group, 4 were alive at the end of the study. Of the 69 patients in the treatment group, 24 were alive. The contingency table below summarizes these results.</p>
 <p><span class="math display">\[
 \begin{array}{ccc|cc|c} &amp; &amp; &amp;\textbf{Group} &amp;  &amp;
@@ -220,7 +217,7 @@ to chance and the heart transplant is effective.</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>The paragraph below describes the set up for such approach, if we were to do it without using statistical software. Fill in the blanks with a number or phrase, whichever is appropriate.</li>
 </ol>
-<p>We write <em>alive</em> on <strong>28</strong> cards representing patients who were alive at the end of the study, and <em>dead</em> on <strong>75</strong> cards representing patients who were not. Then, we shuffle these cards and split them into two groups: one group of size <strong>69</strong> representing treatment, and another group of size <strong>34</strong> representing control. We calculate the difference between the proportion of <em>dead</em> cards in the control and treatment groups (control - treatment), this is just so we have positive observed value, and record this value. We repeat this many times to build a distribution centered at <strong>zero</strong>. Lastly, we calculate the fraction of simulations where the simulated differences in proportions are <strong>0.23</strong> or <strong>greater</strong>. If this fraction of simulations, the empirical p-value, is low, we conclude that it is unlikely to have observed such an outcome by chance and that the null hypothesis should be rejected in favor of the alternative.</p>
+<p>We write <em>alive</em> on <strong>28</strong> cards representing patients who were alive at the end of the study, and <em>dead</em> on <strong>75</strong> cards representing patients who were not. Then, we shuffle these cards and split them into two groups: one group of size <strong>69</strong> representing treatment, and another group of size <strong>34</strong> representing control. We calculate the difference between the proportion of <em>dead</em> cards in the control and treatment groups (control - treatment), this is just so we have positive observed value, and record this value. We repeat this many times to build a distribution centered at <strong>zero</strong>. Lastly, we calculate the fraction of simulations where the simulated differences in proportions are <strong>0.23</strong> or <strong>greater</strong>. If this fraction of simulations, the empirical <span class="math inline">\(p\)</span>-value, is low, we conclude that it is unlikely to have observed such an outcome by chance and that the null hypothesis should be rejected in favor of the alternative.</p>
 <p>Next we will perform the simulation and use results to decide the effectiveness of the transplant program.</p>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Find observed value of the test statistic, which we decided to use the difference in proportions.</li>
@@ -251,14 +248,14 @@ to chance and the heart transplant is effective.</p>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="18-Hypothesis-Testing-Case-Study-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
 <ol start="7" style="list-style-type: lower-alpha">
-<li>Find p-value. Think carefully about what more extreme would mean.</li>
+<li>Find <span class="math inline">\(p\)</span>-value. Think carefully about what more extreme would mean.</li>
 </ol>
 <div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>p_value <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">diffprop</span><span class="op">&gt;=</span><span class="va">obs</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   p_value
 ## 1   0.011</code></pre>
-<p>If we wanted to use a <code>hypergeometric</code>. We could use any of the cell in the table. We will use the upper left. More extreme would be 4 or fewer in the control group being alive. We get a similar p-value.</p>
+<p>If we wanted to use a <code>hypergeometric</code>. We could use any of the cell in the table. We will use the upper left. More extreme would be 4 or fewer in the control group being alive. We get a similar <span class="math inline">\(p\)</span>-value.</p>
 <div class="sourceCode" id="cb370"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">outcome</span><span class="op">+</span><span class="va">group</span>,data<span class="op">=</span><span class="va">heart</span>,margins <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group
@@ -307,7 +304,7 @@ to chance and the heart transplant is effective.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-16.</p>
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

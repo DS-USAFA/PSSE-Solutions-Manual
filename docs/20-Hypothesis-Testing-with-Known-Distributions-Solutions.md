@@ -33,7 +33,7 @@ a. What are the hypotheses?
 $H_0$: Yawning is not contagious, someone in the group yawning does not impact the percentage of the group that yawns.   
 $H_A$: Yawning does have an impact, it is contagious. If someone yawns then you are more likely to yawn.  
 
-b. Calculate the observed statistic, pick a cell.
+b. Choose a cell, and calculate the observed statistic.
 
 
 ```r
@@ -84,7 +84,7 @@ tally(~outcome+group,data=yawn,margins = TRUE)
 
 The random variable is the number of control patients that yawned from a population of 16 control patients, 34 treatment patients, where a total of 14 yawned.
 
-c. Find the p-value using the hypergeometric distribution.
+c. Find the $p$-value using the hypergeometric distribution.
 
 In this case we want to find $\Prob(X \leq 4)$ and double it since it is a two-sided test.
 
@@ -98,7 +98,7 @@ phyper(4,16,34,14)
 ## [1] 0.5127818
 ```
 
-Doubling this will take us above 1, which is not valid. You might have seen this when we did the randomization test for this problem in a previous lesson. Again, since the hypergeometric is not symmetrical, we can't just double the p-value from the one-sided test. We could simply report the result as $\approx 1$. If we look at a plot of the pmf, see the figure, you see that $X=4$ is the highest probability outcome. Thus the p-value is 1 if we sum all the values less than or equal to $P(X=4)$. 
+Doubling this will take us above 1, which is not valid. You might have seen this when we did the randomization test for this problem in a previous lesson. Again, since the hypergeometric is not symmetrical, we can't just double the $p$-value from the one-sided test. We could simply report the result as $\approx 1$. If we look at a plot of the pmf, see the figure, you see that $X=4$ is the highest probability outcome. Thus the $p$-value is 1 if we sum all the values less than or equal to $P(X=4)$. 
 
 
 
@@ -165,11 +165,13 @@ gf_dist("hyper",m=16,n=34,k=14) %>%
 
 e. Determine the conclusion of the hypothesis test.  
 
-Since p-value, 1, is high, larger than 0.05, we fail to reject the null hypothesis of yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
+Since $p$-value, 1, is high, larger than 0.05, we fail to reject the null hypothesis of yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
 
 f. Compare your results with the randomization test. 
 
 This result is essentially the same as the randomization test.
+
+
 
 ### Problem 2  
 
@@ -226,7 +228,7 @@ obs
 ## [1] 17.5
 ```
 
-c. Determine the p-value. 
+c. Determine the $p$-value. 
 
 
 
@@ -261,13 +263,13 @@ prop1(~(max>=obs),data=results)
 
 d. Draw a conclusion.   
 
-Since this p-value is larger than 0.05, we do not reject the null hypothesis. That is, based on our data, we do not find statistically significant evidence against the claim that the number on the golf balls are equally likely. 
+Since this $p$-value is larger than 0.05, we do not reject the null hypothesis. That is, based on our data, we do not find statistically significant evidence against the claim that the number on the golf balls are equally likely. 
+
+
 
 ### Problem 3 
 
-Body Temperature
-
-Shoemaker^[L. Shoemaker Allen (1996) What's Normal? – Temperature, Gender, and Heart Rate, Journal of Statistics Education, 4:2] cites a paper from the American Medical Association^[Mackowiak, P. A., Wasserman, S. S., and Levine, M. M. (1992), "A Critical Appraisal of 98.6 Degrees F, the Upper Limit of the Normal Body Temperature, and Other Legacies of Carl Reinhold August Wunderlich," Journal of the American Medical Association, 268, 1578-1580.] that questions conventional wisdom that the average body temperature of a human is 98.6. One of the main points of the original article – the traditional mean of 98.6 is, in essence, 100 years out of date. The authors cite problems with Wunderlich's original methodology, diurnal fluctuations (up to 0.9 degrees F per day), and unreliable thermometers. The authors believe the average temperature is less than 98.6. Test the hypothesis.
+**Body Temperature**. Shoemaker^[L. Shoemaker Allen (1996) What's Normal? – Temperature, Gender, and Heart Rate, Journal of Statistics Education, 4:2] cites a paper from the American Medical Association^[Mackowiak, P. A., Wasserman, S. S., and Levine, M. M. (1992), "A Critical Appraisal of 98.6 Degrees F, the Upper Limit of the Normal Body Temperature, and Other Legacies of Carl Reinhold August Wunderlich," Journal of the American Medical Association, 268, 1578-1580.] that questions conventional wisdom that the average body temperature of a human is 98.6. One of the main points of the original article – the traditional mean of 98.6 is, in essence, 100 years out of date. The authors cite problems with Wunderlich's original methodology, diurnal fluctuations (up to 0.9 degrees F per day), and unreliable thermometers. The authors believe the average temperature is less than 98.6. Test the hypothesis.
 
 a. State the null and alternative hypotheses.  
 
@@ -363,9 +365,9 @@ temperature %>%
 
 Therefore we have a total 44 subjects whose temperature was greater than 98.6 and 86 who had a temperature less than 98.6
 
-e. Determine the p-value.  
+e. Determine the $p$-value.  
 
-Out of 130 subjects, 86 had a temperature less than 98.6 and 44 had a temperature greater. We can use either number to determine a p-value. If the null hypothesis were true, then the probability of 86 or more, this is more extreme under that alternative hypothesis, is
+Out of 130 subjects, 86 had a temperature less than 98.6 and 44 had a temperature greater. We can use either number to determine a $p$-value. If the null hypothesis were true, then the probability of 86 or more, this is more extreme under that alternative hypothesis, is
 
 
 ```r
@@ -387,9 +389,9 @@ pbinom(44,130,.5)
 ## [1] 0.0001447744
 ```
 
-Our p-value is 0.00014.
+Our $p$-value is 0.00014.
 
-Some other choices are to drop the 10 data points equal to 98.6. We should always be careful about deleting data. We could be extremely conservative and move all 10 points to greater than 98.6 and if we still reject, we will comfortable about our conclusion. Finally, we could randomly assign each point to one side or the other. You can check the p-values for each of these methods.  
+Some other choices are to drop the 10 data points equal to 98.6. We should always be careful about deleting data. We could be extremely conservative and move all 10 points to greater than 98.6 and if we still reject, we will comfortable about our conclusion. Finally, we could randomly assign each point to one side or the other. You can check the $p$-values for each of these methods.  
 
 f. Draw a conclusion.
 
@@ -398,5 +400,5 @@ Based on our data, if the true mean body temperature is 98.6, then the probabili
 
 This is a clever way to test the claim. Make sure you understand how we solved. In the coming lessons we will show you alternative ways to attack the problem. We made it into a binomial random variable. The only assumption is independence and symmetry.
 
-Notice that by descritizing this problem, we are taking information away. However, the p-value is still small.
+Notice that by descritizing this problem, we are taking information away. However, the $p$-value is still small.
 

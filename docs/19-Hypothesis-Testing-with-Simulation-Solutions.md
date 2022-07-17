@@ -106,7 +106,7 @@ obs
 ##  -2.3459
 ```
 
-c. Determine the p-value.   
+c. Determine the $p$-value.   
 
 
 ```r
@@ -142,19 +142,17 @@ prop1(~(diffmean<=obs),data=results)
 ## 0.00459954
 ```
 
-The p-value is much smaller! The test statistic matters in terms of efficiency of the testing procedure.
+The $p$-value is much smaller! The test statistic matters in terms of efficiency of the testing procedure.
 
 d. Draw a conclusion.    
 
 Based on our data, if there were really no difference in the distribution of lengths of commercials in 30 minute shows between basic and premium channels then the probability of finding our observed difference of means is 0.005. Since this is less than our significance level of 0.05, we reject the null in favor of the alternative that the basic channel has longer commercials.
 
-\pagebreak
+
 
 ### Problem 2
 
-**Is yawning contagious?**
-
-An experiment conducted by the *MythBusters*, a science entertainment TV program on the Discovery Channel, tested if a person can be subconsciously influenced into yawning if another person near them yawns. 50 people were randomly assigned to two groups: 34 to a group where a person near them yawned (treatment) and 16 to a group where there wasn't a person yawning near them (control). The following table shows the results of this experiment. 
+**Is yawning contagious?**. An experiment conducted by the *MythBusters*, a science entertainment TV program on the Discovery Channel, tested if a person can be subconsciously influenced into yawning if another person near them yawns. 50 people were randomly assigned to two groups: 34 to a group where a person near them yawned (treatment) and 16 to a group where there wasn't a person yawning near them (control). The following table shows the results of this experiment. 
 
 $$
 \begin{array}{ccc|cc|c} & & &\textbf{Group} &  &
@@ -236,9 +234,9 @@ obs
 ## -0.04411765
 ```
 
-Notice that it is negative. If it had been positive, then we would not even need the next step; we would fail to reject the null because the p-value would be much larger than 0.05. Think about this and make sure you understand.
+Notice that it is negative. If it had been positive, then we would not even need the next step; we would fail to reject the null because the $p$-value would be much larger than 0.05. Think about this and make sure you understand.
 
-c. Estimate the p-value using randomization.
+c. Estimate the $p$-value using randomization.
 
 
 ```r
@@ -256,7 +254,7 @@ prop1(~(diffprop<=obs),data=results)
 ## 0.5140486
 ```
 
-This is a large p-value. Notice that if we were doing a two-sided hypothesis test, then doubling the p-value would exceed 1. Since a p-value is a probability, this is not possible and so we would report a p-value of approximately 1. The reason is that the sampling distribution is not symmetrical. We can see this if we plot the hypergeometric distribution for this problem.
+This is a large $p$-value. Notice that if we were doing a two-sided hypothesis test, then doubling the $p$-value would exceed 1. Since a $p$-value is a probability, this is not possible and so we would report a $p$-value of approximately 1. The reason is that the sampling distribution is not symmetrical. We can see this if we plot the hypergeometric distribution for this problem.
 
 
 ```r
@@ -286,7 +284,7 @@ results %>%
 
 e. Determine the conclusion of the hypothesis test.
 
-Since p-value, 0.54, is high, larger than 0.05, we fail to reject the null hypothesis of yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
+Since $p$-value, 0.54, is high, larger than 0.05, we fail to reject the null hypothesis of yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
 
 f. The traditional belief is that yawning is contagious -- one yawn can lead to another yawn, which might lead to another, and so on. In this exercise, there was the option of selecting a one-sided or two-sided test. Which would you recommend (or which did you choose)? Justify your answer in 1-3 sentences.
 
