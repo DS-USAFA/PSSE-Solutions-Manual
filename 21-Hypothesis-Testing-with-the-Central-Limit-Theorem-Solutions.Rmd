@@ -109,14 +109,13 @@ favstats(~mean|n,data=final_results) %>%
    select(mean,sd,n)
 ```
 
-
-
 All results were as expected. As $n$ increased, the variance of the sample mean decreased. 
+
+
 
 ### Problem 2
 
 The nutrition label on a bag of potato chips says that a one ounce (28 gram) serving of potato chips has 130 calories and contains ten grams of fat, with three grams of saturated fat. A random sample of 35 bags yielded a sample mean of 134 calories with a standard deviation of 17 calories. Is there evidence that the nutrition label does not provide an accurate measure of calories in the bags of potato chips? The conditions necessary for applying the normal model have been checked and are satisfied.
-
 
 The question has been framed in terms of two possibilities: the nutrition label accurately lists the correct average calories per bag of chips or it does not, which may be framed as a hypothesis test.
 
@@ -136,10 +135,13 @@ The distribution of the test statistic is $t$ with 34 degrees of freedom.
 The observed average is $\bar{x} = 134$ and the standard error may be calculated as $SE = \frac{17}{\sqrt{35}} = 2.87$. 
 
 We can compute a test statistic as the t score:
+
 $$
 t = \frac{134 - 130}{2.87} = 1.39
 $$
-d. Calculate a p-value.  
+
+
+d. Calculate a $p$-value.  
 
 The upper-tail area is 0.0823, 
 
@@ -154,125 +156,73 @@ or
 ```
 
 
-so the p-value is $2 \times 0.0823 = 0.1646$. 
+so the $p$-value is $2 \times 0.0823 = 0.1646$. 
 
 e. Draw a conclusion.
 
-Since the p-value is larger than 0.05, we do not reject the null hypothesis. That is, there is not enough evidence to show the nutrition label has incorrect information.
+Since the $p$-value is larger than 0.05, we do not reject the null hypothesis. That is, there is not enough evidence to show the nutrition label has incorrect information.
 
 #### Extra material
 
-If we had used a normal model based on the CLT our p-value would have been close to the value from the $t$ because our sample size is large.
+If we had used a normal model based on the CLT our $p$-value would have been close to the value from the $t$ because our sample size is large.
 
 ```{r}
 pnorm(1.39,lower.tail = F)
 ```
 
 
+
+
 ### Problem 3
 
-Exploration of the chi-squared and $t$ distributions. 
+**Find the $p$-value**. An independent random sample is selected from an approximately normal population with an unknown standard deviation. Find the $p$-value for the given set of hypotheses and $T$ test statistic. Also determine if the null hypothesis would be rejected at $\alpha = 0.05$.
 
-a. In `R`, plot the pdf of a random variable with the chi-squared distribution with 1 degree of freedom. On the same plot, include the pdfs with degrees of freedom of 5, 10 and 50. Describe how the behavior of the pdf changes with increasing degrees of freedom. 
-
-
-
-
-
+a. $H_{A}: \mu > \mu_{0}$, $n = 11$, $T = 1.91$  
 
 ```{r}
-gf_dist("chisq",df=1,col=1) %>%
-   gf_dist("chisq",df=5,col=2) %>%
-   gf_dist("chisq",df=10,col=3) %>%
-   gf_dist("chisq",df=50,col=4) %>%
-   gf_lims(y=c(0,.25)) %>%
-   gf_labs(y="f(x)") %>%
-   gf_theme(theme_classic()) 
-```  
+1-pt(1.91,10)
+```
 
-The "bump" moves to the rights as the degrees of freedom increase.
+The $p$-value is less than 0.05, reject the null hypothesis.
 
-The plot should have a legend, but I could not find a way to do it within `ggformula` so here it is in `ggplot`.
+b. $H_{A}: \mu < \mu_{0}$, $n = 17$, $T = - 3.45$  
 
 ```{r}
-ggplot(data = data.frame(x = c(0, 75)), aes(x)) +
-  stat_function(fun = dchisq, n = 101, 
-                args = list(df = 1),
-                mapping=aes(col="myline1")) + 
-  stat_function(fun = dchisq, n = 101, 
-                args = list(df = 5),
-                mapping=aes(col="myline2")) + 
-  stat_function(fun = dchisq, n = 101, 
-                args = list(df = 10),
-                mapping=aes(col="myline3")) +    
-   stat_function(fun = dchisq, n = 101, 
-                args = list(df = 50),
-                mapping=aes(col="myline4")) + 
-   ylab("") +
-  scale_y_continuous(breaks = NULL) +
-   theme_classic()+
-scale_colour_manual(name="Legend",
-    values=c(myline1="black", 
-             myline2="red",
-             myline3="green",
-             myline4="blue"),
-    labels=c("df=1","df=5","df=10","df=50"))
+pt(-3.45,16)
 ```
 
-b. Repeat part (a) with the $t$ distribution. Add the pdf of a standard normal random variable as well. What do you notice? 
+The $p$-value is less than 0.05, reject the null hypothesis.
 
-```{r warning=FALSE}
-gf_dist("t",df=1,col="black") %>%
-   gf_dist("t",df=5,col="red") %>%
-   gf_dist("t",df=10,col="green") %>%
-   gf_dist("t",df=50,col="blue") %>%
-   gf_dist("norm",lty=2,lwd=1.5) %>%
-   gf_lims(x=c(-4,4)) %>%
-   gf_labs(y="f(x)") %>%
-   gf_theme(theme_classic()) 
-```
-
-As degrees of freedom increases, the $t$-distribution approaches the standard normal distribution. 
+c. $H_{A}: \mu \ne \mu_{0}$, $n = 7$, $T = 0.83$  
 
 ```{r}
-ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
-  stat_function(fun = dt, n = 101, 
-                args = list(df = 1),
-                mapping=aes(col="myline1")) + 
-  stat_function(fun = dt, n = 101, 
-                args = list(df = 5),
-                mapping=aes(col="myline2")) + 
-  stat_function(fun = dt, n = 101, 
-                args = list(df = 10),
-                mapping=aes(col="myline3")) +    
-   stat_function(fun = dt, n = 101, 
-                args = list(df = 50),
-                mapping=aes(col="myline4")) + 
-   stat_function(fun = dnorm, n = 101, 
-                args = list(mean=0,sd=1),
-                linetype="dashed",
-                mapping=aes(col="myline5")) + 
-   ylab("") +
-  scale_y_continuous(breaks = NULL) +
-   theme_classic()+
-scale_colour_manual(name="Legend",
-    values=c(myline1="black", 
-             myline2="red",
-             myline3="green",
-             myline4="blue",
-             myline5="grey"),
-    labels=c("df=1","df=5","df=10","df=50","Normal"))
+2*(1-pt(0.83,6))
 ```
+
+The $p$-value is greater than 0.05, fail to reject the null hypothesis.
+
+d. $H_{A}: \mu > \mu_{0}$, $n = 28$, $T = 2.13$  
+
+```{r}
+1-pt(2.13,27)
+```
+
+The $p$-value is less than 0.05, reject the null hypothesis.
+
+
+
 
 ### Problem 4  
 
-\indent 4. In this lesson, we have used the expression *degrees of freedom* a lot. What does this expression mean? When we have sample of size $n$, why are there $n-1$ degrees of freedom for the $t$ distribution? Give a short concise answer (about one paragraph). You will likely have to do a little research on your own.  
+In this lesson, we have used the expression *degrees of freedom* a lot. What does this expression mean? When we have sample of size $n$, why are there $n-1$ degrees of freedom for the $t$ distribution? Give a short concise answer (about one paragraph). You will likely have to do a little research on your own.  
 
 Answers will vary. One possible explanation is that the degrees of freedom represents the number of independent pieces of information. For example, you'll notice that in order to get an unbiased estimate of $\sigma^2$, we have to divide by $n-1$. This is because in order to estimate $\sigma^2$, we need to first estimate $\mu$, which is done by obtaining the sample mean. Once we know the sample mean, we only have $n-1$ pieces of independent information. For example, suppose we have a sample of size 10, and we know the sample mean. Once we are given the first 9 observations, we know exactly what the 10th observation must be. 
 
+
+
 ### Problem 5
 
-\indent 5. Deborah Toohey is running for Congress, and her campaign manager claims she has more than 50\% support from the district's electorate. Ms. Toohey's opponent claimed that Ms. Toohey has **less** than 50\%. Set up a hypothesis test to evaluate who is right.
+Deborah Toohey is running for Congress, and her campaign manager claims she has more than 50\% support from the district's electorate. Ms. Toohey's opponent claimed that Ms. Toohey has **less** than 50\%. Set up a hypothesis test to evaluate who is right.
 
 a. Should we run a one-sided or two-sided hypothesis test?
 
@@ -303,9 +253,9 @@ A newspaper collects a simple random sample of 500 likely voters in the district
 The test statistic is $\bar{x}=0.52$
 
 
-f. Calculate a p-value.
+f. Calculate a $p$-value.
 
-Based on the normal model, we can compute a one-sided p-value and then double to get the correct p-value.
+Based on the normal model, we can compute a one-sided $p$-value and then double to get the correct $p$-value.
 
 The standard error can be computed. The null value is used again here, because this is a hypothesis test for a single proportion with the specified value for the probability of success. 
 
@@ -319,4 +269,6 @@ $$SE = \sqrt{\frac{p_0\times (1-p_0)}{n}} = \sqrt{\frac{0.5\times (1-0.5)}{500}}
 
 g. Draw a conclusion.
 
-Because the p-value is larger than 0.05, we do not reject the null hypothesis, and we do not find convincing evidence to support the campaign manager's claim.
+Because the $p$-value is larger than 0.05, we do not reject the null hypothesis, and we do not find convincing evidence to support the campaign manager's claim.
+
+

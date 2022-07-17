@@ -17,9 +17,7 @@
 
 ### Problem 1  
 
-**Golf balls**   
-
-Repeat the analysis of the golf ball problem from earlier this semester.
+**Golf balls**. Repeat the analysis of the golf ball problem from earlier in the book. This time, we'll compare the observed proportions to a distribution, sometimes called a chi-squared goodness-of-fit test.  
 
 
 a. Load the data and tally the data into a table. The data is in `golf_balls.csv`.  
@@ -46,83 +44,27 @@ chisq.test(tally(~number,data=golf_balls),p=c(.25,.25,.25,.25))
 ```
 
 
-c. Repeat part b. but assume balls with the numbers 1 and 2 occur 30\% of the time and balls with 3 and 4 occur 20\%. 
+c. Repeat part b), but assume balls with the numbers 1 and 2 occur 30\% of the time and balls with 3 and 4 occur 20\%. 
 
 ```{r}
 chisq.test(tally(~number,data=golf_balls),p=c(.3,.3,.2,.2))
 ```
 
+d. Repeat part c), but use a randomization test this time. You should use $\chi^2$, the chi-squared test statistic, as your test statistic.  
 
-### Problem 2
-
-**Bootstrap hypothesis testing**  
-
-Repeat the analysis of the MLB data from the lesson but this time generate a bootstrap distribution of the $F$ statistic.
-
-First, read in the data.
-
-```{r message=FALSE}
-mlb_obp <- read_csv("data/mlb_obp.csv")
-```
-
-Convert `position` to a factor.
-
-```{r}
-mlb_obp <- mlb_obp %>%
-  mutate(position=as.factor(position))
-```
-
-Summarize the data.
-
-```{r}
-favstats(obp~position,data=mlb_obp)
-```
-
-We need a function to resample the data, we will use the `resample()` from the `mosaic` package.
+###### ADD ANSWER HERE ######
 
 
-```{r}
-library(broom)
-```
+### Problem 2 
 
-```{r}
-f_boot <- function(x){
-  aov(obp~position,data=resample(x)) %>%
-  tidy() %>%
-  summarize(stat=meansq[1]/meansq[2]) %>%
-  pull()
-}
-```
+**Test of variance**. We have not performed a test of variance so we will create our own. Use the `mlb_obp_subset` data set, with only the `IF` and `OF` positions, to conduct a test of equality of two variances. The hypotheses are: 
 
+$H_0:\ \sigma^2_{IF} = \sigma^2_{OF}$. There is no difference in the variance of on-base percentage for infielders and outfielders.  
 
-```{r cache=TRUE}
-set.seed(541)
-results<-do(1000)*f_boot(mlb_obp)
-```
+$H_A:\ \sigma^2_{IF} \neq \sigma^2_{OF}$. There is a difference in variances.  
 
-Let's plot our sampling distribution.
+Use the difference in sample standard deviations as your test statistic. Using a randomization test, find the $p$-value and discuss your decision. Make sure to include all steps of a hypothesis test.  
 
-```{r}
-results %>%
-  gf_histogram(~f_boot,fill="cyan",color="black") %>%
-  gf_theme(theme_classic()) %>%
-  gf_labs(title="Bootstrap sampling distribution of F test statistic",
-          x="Test statistic")
-```  
-
-Now the confidence interval for the F-statistic is:
-
-```{r}
-cdata(~f_boot,data=results)
-```
-
-We are 95\% confident that the $F$ statistic is in the interval $(0.35,8.72)$ which includes 1 so we fail to reject the null hypothesis of equal means. Remember under the null hypothesis the ratio of the variance between means to the pooled variance within categories should be 1. 
-
-### Problem 3  
-
-**Test of variance**
-
-We have not performed a test of variance so we will create our own.
 
 a. Using the MLB from the lesson, subset on `IF` and `OF`.  
 
@@ -150,7 +92,7 @@ The hypotheses are:
 $H_0$: $\sigma^2_{IF}=\sigma^2{OF}$. There is no difference in the variance of on base percentage for infielders and outfielders.  
 $H_A$: $\sigma^2_{IF}\neq \sigma^2_{OF}$. There is a difference in variances.
  
-c. Use the differences in sample standard deviations as your test statistic. Using a permutation test, find the p-value and discuss your decision.  
+c. Use the differences in sample standard deviations as your test statistic. Using a permutation test, find the $p$-value and discuss your decision.  
 
 ```{r}
 mlb_prob3 %>%
@@ -192,13 +134,13 @@ results %>%
           x="Test statistic")
 ```
 
-The p-value is
+The $p$-value is
 
 ```{r}
 2*prop1(~(perm_stat>=obs),data=results)
 ```  
 
-This is a two sided test since we did not know in advance which variance would be larger. We reject the hypothesis of equal variance but the p-value is too close to the significance level. The conclusion is suspect. We need more data.
+This is a two sided test since we did not know in advance which variance would be larger. We reject the hypothesis of equal variance but the $p$-value is too close to the significance level. The conclusion is suspect. We need more data.
 
 d. Create a bootstrap distribution of the differences in sample standard deviations, and report a 95\% confidence interval. Compare with part c.  
 
@@ -225,4 +167,218 @@ results %>%
   gf_labs(title="Bootstrap sampling of difference in variances",
           x="Difference in variances")
 ```
+
+
+
+
+### Problem 3
+
+Exploration of the chi-squared and $t$ distributions. 
+
+a. In `R`, plot the pdf of a random variable with the chi-squared distribution with 1 degree of freedom. On the same plot, include the pdfs with degrees of freedom of 5, 10 and 50. Describe how the behavior of the pdf changes with increasing degrees of freedom. 
+
+```{r}
+gf_dist("chisq",df=1,col=1) %>%
+   gf_dist("chisq",df=5,col=2) %>%
+   gf_dist("chisq",df=10,col=3) %>%
+   gf_dist("chisq",df=50,col=4) %>%
+   gf_lims(y=c(0,.25)) %>%
+   gf_labs(y="f(x)") %>%
+   gf_theme(theme_classic()) 
+```  
+
+The "bump" moves to the rights as the degrees of freedom increase.
+
+The plot should have a legend, but I could not find a way to do it within `ggformula` so here it is in `ggplot`.
+
+```{r}
+ggplot(data = data.frame(x = c(0, 75)), aes(x)) +
+  stat_function(fun = dchisq, n = 101, 
+                args = list(df = 1),
+                mapping=aes(col="myline1")) + 
+  stat_function(fun = dchisq, n = 101, 
+                args = list(df = 5),
+                mapping=aes(col="myline2")) + 
+  stat_function(fun = dchisq, n = 101, 
+                args = list(df = 10),
+                mapping=aes(col="myline3")) +    
+   stat_function(fun = dchisq, n = 101, 
+                args = list(df = 50),
+                mapping=aes(col="myline4")) + 
+   ylab("") +
+  scale_y_continuous(breaks = NULL) +
+   theme_classic()+
+scale_colour_manual(name="Legend",
+    values=c(myline1="black", 
+             myline2="red",
+             myline3="green",
+             myline4="blue"),
+    labels=c("df=1","df=5","df=10","df=50"))
+```
+
+b. Repeat part (a) with the $t$ distribution. Add the pdf of a standard normal random variable as well. What do you notice? 
+
+```{r warning=FALSE}
+gf_dist("t",df=1,col="black") %>%
+   gf_dist("t",df=5,col="red") %>%
+   gf_dist("t",df=10,col="green") %>%
+   gf_dist("t",df=50,col="blue") %>%
+   gf_dist("norm",lty=2,lwd=1.5) %>%
+   gf_lims(x=c(-4,4)) %>%
+   gf_labs(y="f(x)") %>%
+   gf_theme(theme_classic()) 
+```
+
+As degrees of freedom increases, the $t$-distribution approaches the standard normal distribution. 
+
+```{r}
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dt, n = 101, 
+                args = list(df = 1),
+                mapping=aes(col="myline1")) + 
+  stat_function(fun = dt, n = 101, 
+                args = list(df = 5),
+                mapping=aes(col="myline2")) + 
+  stat_function(fun = dt, n = 101, 
+                args = list(df = 10),
+                mapping=aes(col="myline3")) +    
+   stat_function(fun = dt, n = 101, 
+                args = list(df = 50),
+                mapping=aes(col="myline4")) + 
+   stat_function(fun = dnorm, n = 101, 
+                args = list(mean=0,sd=1),
+                linetype="dashed",
+                mapping=aes(col="myline5")) + 
+   ylab("") +
+  scale_y_continuous(breaks = NULL) +
+   theme_classic()+
+scale_colour_manual(name="Legend",
+    values=c(myline1="black", 
+             myline2="red",
+             myline3="green",
+             myline4="blue",
+             myline5="grey"),
+    labels=c("df=1","df=5","df=10","df=50","Normal"))
+```
+
+
+
+### Problem 4
+
+**Paired data**. Are textbooks actually cheaper online? Here we compare the price of textbooks at the University of California, Los Angeles' (UCLA's) bookstore and prices at Amazon.com. Seventy-three UCLA courses were randomly sampled in Spring 2010, representing less than 10\% of all UCLA courses. When a class had multiple books, only the most expensive text was considered.
+
+The data is in the file `textbooks.csv` under the data folder.
+
+```{r}
+textbooks<-read_csv("data/textbooks.csv")
+```
+
+```{r}
+head(textbooks)
+```
+
+
+Each textbook has two corresponding prices in the data set: one for the UCLA bookstore and one for Amazon. Therefore, each textbook price from the UCLA bookstore has a natural correspondence with a textbook price from Amazon. When two sets of observations have this special correspondence, they are said to be **paired**.
+
+To analyze paired data, it is often useful to look at the difference in outcomes of each pair of observations. In  `textbooks`, we look at the difference in prices, which is represented as the `diff` variable. It is important that we always subtract using a consistent order; here Amazon prices are always subtracted from UCLA prices. 
+
+a. Is this data tidy? Explain. 
+
+Yes, because each row is a textbook and each column is a variable.  
+
+b. Make a scatterplot of the UCLA price versus the Amazon price. Add a 45 degree line to the plot. 
+
+```{r warning=FALSE}
+textbooks %>%
+  gf_point(ucla_new~amaz_new) %>%
+  gf_abline(slope=1,intercept = 0,color="darkblue") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(x="Amazon",y="UCLA")
+```
+
+It appears the books at the UCLA bookstore are more expensive. One way to test this is with a regression model; we will learn about in the next block.
+
+
+c. Make a histogram of the differences in price. 
+
+
+```{r}
+textbooks %>%
+  gf_histogram(~diff,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Distribution of price differences",
+          x="Price difference between UCLA and Amazon")
+```  
+
+The distribution is skewed.
+
+The hypotheses are:  
+$H_0$: $\mu_{diff}=0$. There is no difference in the average textbook price.  
+$H_A$: $\mu_{diff} \neq 0$. There is a difference in average prices.  
+ 
+d. To use a $t$ distribution, the variable `diff` has to be independent and normally distributed. Since the 73 books represent less than 10\% of the population, the assumption that the random sample is independent is reasonable. Check normality using `qqnorsim()` from the `openintro` package. It generates 8 qq plots of simulated normal data that you can use to judge the `diff` variable. 
+
+```{r}
+qqnormsim(diff,textbooks)
+```  
+
+The normality assumption is suspect but we have a large sample so it should be acceptable to use the $t$.
+
+e. Run a $t$ test on the `diff` variable. Report the $p$-value and conclusion.
+
+```{r}
+t_test(~diff,textbooks)
+```  
+
+We did not have to use the `paired` option since we already took the difference. Here is an example of using the `paired` option.
+
+```{r}
+t_test(textbooks$ucla_new,textbooks$amaz_new,paired=TRUE)
+```  
+
+The $p$-value is so small that we don't believe the average price of the books from the UCLA bookstore and Amazon are the same.
+
+
+f. If there is really no differences between book sources, the variable `more` is a binomial and under the null the probably of success is $\pi = 0.5$. Run a hypothesis test using the variable `more`.
+
+```{r warning=FALSE,message=FALSE}
+inspect(textbooks)
+```
+
+We have 45 books that were more expensive out of the total of 73.
+
+```{r}
+prop_test(45,73,p=0.5)
+```  
+
+Notice that this test failed to reject the null hypothesis. In the paired test, the evidence was so strong but in the binomial model it is not. There is a loss of information making a discrete variable out of a continuous one.
+
+g. Could you use a permutation test on this example? Explain.  
+
+Yes, but you have to be careful because you want to keep the pairing so you can't just shuffle the names. You have to shuffle the names within the paired values. This means to simply randomly switch the names within a row. This is easier to do by just multiplying the diff column by a random choice of -1 and 1.
+
+```{r}
+sample(c(-1,1),size=73,replace = TRUE)
+```
+
+```{r cache=TRUE}
+set.seed(406)
+results <- do(1000)*mean((~diff*sample(c(-1,1),size=73,replace = TRUE)),data=textbooks)
+```
+
+```{r}
+results %>%
+  gf_histogram(~mean,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Randomization sampling distribution of mean of differences in price",
+          x="Mean of price difference")
+```
+
+```{r}
+prop1((~mean>=obs_stat),data=results)
+```
+
+None of the permuted values is at or greater that the observed value.
+
+
 

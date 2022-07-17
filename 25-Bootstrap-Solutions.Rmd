@@ -13,9 +13,7 @@
 
 ### Problem 1
 
-**Poker**  
-
-An aspiring poker player recorded her winnings and losses over 50 evenings of play, the data is in the `openintro` package in the object `poker`. The poker player would like to better understand the volatility in her long term play.
+**Poker**. An aspiring poker player recorded her winnings and losses over 50 evenings of play, the data is in the `openintro` package in the object `poker`. The poker player would like to better understand the volatility in her long term play.
 
 a. Load the data and plot a histogram.  
 
@@ -84,30 +82,15 @@ g. ADVANCED: Do you think sample MAD is an unbiased estimator of population MAD?
 We don't know without doing some math. We do know that the sample standard deviation is biased and part of that is because we have to use the sample mean in its calculation. We are doing the same thing here, so our estimate might also be biased for the same reason.
 
 
+
+
 ### Problem 2
 
 **Bootstrap hypothesis testing**  
 
-Bootstrap hypothesis testing is relatively undeveloped, and is generally not as accurate as permutation testing. Therefore in general avoid it. But for our problem in the reading, it may work. We will sample in a way that is consistent with the null hypothesis, then calculate a p-value as a tail probability like we do in permutation tests. This example does not generalize well to other applications like relative risk, correlation, regression, or categorical data.
+Bootstrap hypothesis testing is relatively undeveloped, and is generally not as accurate as permutation testing. Therefore in general avoid it. But for our problem in the reading, it may work. We will sample in a way that is consistent with the null hypothesis, then calculate a $p$-value as a tail probability like we do in permutation tests. This example does not generalize well to other applications like relative risk, correlation, regression, or categorical data.
 
-a. Using the `HELPrct` data set, store the observed value of the difference of means for male and female.  
-
-I am going to just select the two columns I need.
-
-```{r}
-HELP_sub <- HELPrct %>%
-  select(age,sex)
-```
-
-
-```{r}
-obs <- diffmean(age~sex,data=HELP_sub)
-obs
-```
-
-
-
-b. The null hypothesis requires the means of each group to be equal. Pick one group to adjust, either `male` or `female`. First zero the mean of the selected group by subtracting the sample mean of this group from data points only in this group. Then add the sample mean of the other group to each data point in the selected group. Store in a new object called `HELP_null`.
+a. Using the `HELPrct` data set, the null hypothesis requires the means of each group to be equal. Pick one group to adjust, either `male` or `female`. First zero the mean of the selected group by subtracting the sample mean of this group from data points only in this group. Then add the sample mean of the other group to each data point in the selected group. Store in a new object called `HELP_null`.
 
 This is tricky, we are doing some data wrangling here.
 
@@ -142,6 +125,22 @@ HELP_sub_new<-HELP_sub %>%
 ```
 
 
+b. Store the observed value of the difference of means for male and female.  
+
+I am going to just select the two columns I need.
+
+```{r}
+HELP_sub <- HELPrct %>%
+  select(age,sex)
+```
+
+
+```{r}
+obs <- diffmean(age~sex,data=HELP_sub)
+obs
+```
+
+
 c. Run `favstats()` to check that the means are equal.
 
 ```{r}
@@ -167,18 +166,131 @@ results %>%
 ```
 
 
-f. Find a p-value.
+f. Find a $p$-value.
 
 ```{r}
 2*prop1(~(diffmean<=obs),data=results)
 ```
 
 
-g. How does the p-value compare with those in the reading.
+g. How does the $p$-value compare with those in the reading?
 
-This is a similar p-value.
+This is a similar $p$-value.
+
+
 
 ### Problem 3
+
+**Bootstrap hypothesis testing**. Repeat the analysis of the MLB data from the lesson but this time generate a bootstrap distribution of the $F$ statistic.
+
+First, read in the data.
+
+```{r message=FALSE}
+mlb_obp <- read_csv("data/mlb_obp.csv")
+```
+
+Convert `position` to a factor.
+
+```{r}
+mlb_obp <- mlb_obp %>%
+  mutate(position=as.factor(position))
+```
+
+Summarize the data.
+
+```{r}
+favstats(obp~position,data=mlb_obp)
+```
+
+We need a function to resample the data, we will use the `resample()` from the `mosaic` package.
+
+
+```{r}
+library(broom)
+```
+
+```{r}
+f_boot <- function(x){
+  aov(obp~position,data=resample(x)) %>%
+  tidy() %>%
+  summarize(stat=meansq[1]/meansq[2]) %>%
+  pull()
+}
+```
+
+
+```{r cache=TRUE}
+set.seed(541)
+results<-do(1000)*f_boot(mlb_obp)
+```
+
+Let's plot our sampling distribution.
+
+```{r}
+results %>%
+  gf_histogram(~f_boot,fill="cyan",color="black") %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Bootstrap sampling distribution of F test statistic",
+          x="Test statistic")
+```  
+
+Now the confidence interval for the F-statistic is:
+
+```{r}
+cdata(~f_boot,data=results)
+```
+
+We are 95\% confident that the $F$ statistic is in the interval $(0.35,8.72)$ which includes 1 so we fail to reject the null hypothesis of equal means. Remember under the null hypothesis the ratio of the variance between means to the pooled variance within categories should be 1. 
+
+
+
+##### DEFINE THIS PROBLEM FURTHER ##### 
+
+### Problem 4 
+
+**Paired data**. Return to the paired data problem...
+
+f. Create a bootstrap distribution and generate a 95\% confidence interval on the mean of the differences, the `diff` column.
+
+```{r}
+textbooks %>%
+  summarise(obs_diff=mean(diff))
+```
+
+We need to just pull the difference.
+
+```{r}
+obs_stat<- textbooks %>%
+  summarise(obs_diff=mean(diff)) %>%
+  pull(obs_diff)
+
+obs_stat
+```
+
+Next a bootstrap distribution.
+
+```{r cache=TRUE}
+set.seed(843)
+results<-do(1000)*mean(~diff,data=resample(textbooks))
+```
+
+```{r warning=FALSE,message=FALSE}
+results %>%
+  gf_dhistogram(~mean,fill="cyan",color="black") %>%
+  gf_dist("norm",mean=12.76,sd=14/sqrt(72),color="red") %>%
+  gf_vline(xintercept = obs_stat) %>%
+  gf_theme(theme_classic()) %>%
+  gf_labs(title="Sampling distribution of the mean of differences in price",
+          x="Mean of differences in price")
+```
+
+```{r}
+cdata(~mean,data=results)
+```
+
+Not a bad solution for this problem.
+
+
 
 **Paired data**  
 
@@ -241,7 +353,7 @@ qqnormsim(diff,textbooks)
 
 The normality assumption is suspect but we have a large sample so it should be acceptable to use the $t$.
 
-e. Run a $t$ test on the `diff` variable. Report the p-value and conclusion.
+e. Run a $t$ test on the `diff` variable. Report the $p$-value and conclusion.
 
 ```{r}
 t_test(~diff,textbooks)
@@ -253,49 +365,10 @@ We did not have to use the `paired` option since we already took the difference.
 t_test(textbooks$ucla_new,textbooks$amaz_new,paired=TRUE)
 ```  
 
-The p-value is so small that we don't believe the average price of the books from the UCLA bookstore and Amazon are the same.
+The $p$-value is so small that we don't believe the average price of the books from the UCLA bookstore and Amazon are the same.
 
-f. Create a bootstrap distribution and generate a 95\% confidence interval on the mean of the differences, the `diff` column.
 
-```{r}
-textbooks %>%
-  summarise(obs_diff=mean(diff))
-```
-
-We need to just pull the difference.
-
-```{r}
-obs_stat<- textbooks %>%
-  summarise(obs_diff=mean(diff)) %>%
-  pull(obs_diff)
-
-obs_stat
-```
-
-Next a bootstrap distribution.
-
-```{r cache=TRUE}
-set.seed(843)
-results<-do(1000)*mean(~diff,data=resample(textbooks))
-```
-
-```{r warning=FALSE,message=FALSE}
-results %>%
-  gf_dhistogram(~mean,fill="cyan",color="black") %>%
-  gf_dist("norm",mean=12.76,sd=14/sqrt(72),color="red") %>%
-  gf_vline(xintercept = obs_stat) %>%
-  gf_theme(theme_classic()) %>%
-  gf_labs(title="Sampling distribution of the mean of differences in price",
-          x="Mean of differences in price")
-```
-
-```{r}
-cdata(~mean,data=results)
-```
-
-Not a bad solution for this problem.
-
-g. If there is really no differences between book sources, the variable `more` is a binomial and under the null the probably of success is $\pi = 0.5$. Run a hypothesis test using the variable `more`.
+f. If there is really no differences between book sources, the variable `more` is a binomial and under the null the probably of success is $\pi = 0.5$. Run a hypothesis test using the variable `more`.
 
 ```{r warning=FALSE,message=FALSE}
 inspect(textbooks)
@@ -309,7 +382,7 @@ prop_test(45,73,p=0.5)
 
 Notice that this test failed to reject the null hypothesis. In the paired test, the evidence was so strong but in the binomial model it is not. There is a loss of information making a discrete variable out of a continuous one.
 
-h. Could you use a permutation test on this example? Explain.  
+g. Could you use a permutation test on this example? Explain.  
 
 Yes, but you have to be careful because you want to keep the pairing so you can't just shuffle the names. You have to shuffle the names within the paired values. This means to simply randomly switch the names within a row. This is easier to do by just multiplying the diff column by a random choice of -1 and 1.
 
@@ -335,7 +408,5 @@ prop1((~mean>=obs_stat),data=results)
 ```
 
 None of the permuted values is at or greater that the observed value.
-
-
 
 

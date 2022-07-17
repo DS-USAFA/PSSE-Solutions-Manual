@@ -14,9 +14,7 @@
 
 ### Problem 1  
 
-**Side effects of Avandia**  
-
-Rosiglitazone is the active ingredient in the controversial type~2 diabetes medicine Avandia and has been linked to an increased risk of serious cardiovascular problems such as stroke, heart failure, and death. A common alternative treatment is pioglitazone, the active ingredient in a diabetes medicine called Actos. In a nationwide retrospective observational study of 227,571 Medicare beneficiaries aged  65 years or older, it was found that 2,593 of the 67,593 patients using rosiglitazone and 5,386 of the 159,978 using pioglitazone had serious cardiovascular problems. These data are summarized in the contingency table below.
+**Side effects of Avandia**. Rosiglitazone is the active ingredient in the controversial type~2 diabetes medicine Avandia and has been linked to an increased risk of serious cardiovascular problems such as stroke, heart failure, and death. A common alternative treatment is pioglitazone, the active ingredient in a diabetes medicine called Actos. In a nationwide retrospective observational study of 227,571 Medicare beneficiaries aged  65 years or older, it was found that 2,593 of the 67,593 patients using rosiglitazone and 5,386 of the 159,978 using pioglitazone had serious cardiovascular problems. These data are summarized in the contingency table below.
 
 $$
 \begin{array}{ccc|cc|c} & & &\textbf{Cardiovascular} & \textbf{problems} &
@@ -27,11 +25,11 @@ $$
 \end{array} 
 $$
 
-Determine if each of the following statements is true or false. If false, explain why. \textit{Be careful:} The reasoning may be wrong even if the statement's conclusion is correct. In such cases, the statement should be considered false.
+Determine if each of the following statements is true or false. If false, explain why. The reasoning may be wrong even if the statement's conclusion is correct. In such cases, the statement should be considered false.
 
 a. Since more patients on pioglitazone had cardiovascular problems (5,386 vs. 2,593), we can conclude that the rate of cardiovascular problems for those on a pioglitazone treatment is higher.  
 
-False. Instead of comparing counts, we should compare percentages.
+False. Instead of comparing counts, we should compare percentages. We then see that more patients on rosiglitazone had cardiovascular problems (3.8% vs. 3.4%). 
 
 b. The data suggest that diabetic patients who are taking rosiglitazone are more likely to have cardiovascular problems since the rate of incidence was (2,593 / 67,593 = 0.038) 3.8\% for patients on this treatment, while it was only (5,386 / 159,978 = 0.034) 3.4\% for patients on pioglitazone.  
 
@@ -46,14 +44,11 @@ d. Based on the information provided so far, we cannot tell if the difference be
 
 True. 
 
-\pagebreak
+
 
 ### Problem 2  
 
-**Heart transplants** 
-
-
-The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable \texttt{group} indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. Another variable called \texttt{outcome} was used to indicate whether or not the patient was alive at the end of the study.
+**Heart transplants**. The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable \texttt{group} indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. Another variable called \texttt{outcome} was used to indicate whether or not the patient was alive at the end of the study.
 
 In the study, of the 34 patients in the control group, 4 were alive at the end of the study. Of the 69 patients in the treatment group, 24 were alive. The contingency table below summarizes these results.
 
@@ -110,7 +105,7 @@ to chance and the heart transplant is effective.
 c.  The paragraph below describes the set up for such approach, if we were to do it without using statistical software. Fill in the blanks with a number or phrase, whichever is appropriate.
 
 
-We write *alive* on **28** cards representing patients who were alive at the end of the study, and *dead* on **75** cards representing patients who were not. Then, we shuffle these cards and split them into two groups: one group of size **69** representing treatment, and another group of size **34** representing control. We calculate the difference between the proportion of *dead* cards in the control and treatment groups (control - treatment), this is just so we have positive observed value, and record this value. We repeat this many times to build a distribution centered at **zero**. Lastly, we calculate the fraction of simulations where the simulated differences in proportions are **0.23** or **greater**. If this fraction of simulations, the empirical p-value, is low, we conclude that it is unlikely to have observed such an outcome by chance and that the null hypothesis should be rejected in favor of the alternative.
+We write *alive* on **28** cards representing patients who were alive at the end of the study, and *dead* on **75** cards representing patients who were not. Then, we shuffle these cards and split them into two groups: one group of size **69** representing treatment, and another group of size **34** representing control. We calculate the difference between the proportion of *dead* cards in the control and treatment groups (control - treatment), this is just so we have positive observed value, and record this value. We repeat this many times to build a distribution centered at **zero**. Lastly, we calculate the fraction of simulations where the simulated differences in proportions are **0.23** or **greater**. If this fraction of simulations, the empirical $p$-value, is low, we conclude that it is unlikely to have observed such an outcome by chance and that the null hypothesis should be rejected in favor of the alternative.
 
 
 Next we will perform the simulation and use results to decide the effectiveness of the transplant program.
@@ -146,14 +141,14 @@ results %>%
   
 ```
 
-g. Find p-value. Think carefully about what more extreme would mean.
+g. Find $p$-value. Think carefully about what more extreme would mean.
 
 ```{r}
 results %>%
   summarise(p_value = mean(diffprop>=obs))
 ```
 
-If we wanted to use a `hypergeometric`. We could use any of the cell in the table. We will use the upper left. More extreme would be 4 or fewer in the control group being alive. We get a similar p-value.
+If we wanted to use a `hypergeometric`. We could use any of the cell in the table. We will use the upper left. More extreme would be 4 or fewer in the control group being alive. We get a similar $p$-value.
 
 ```{r}
 tally(~outcome+group,data=heart,margins = TRUE)

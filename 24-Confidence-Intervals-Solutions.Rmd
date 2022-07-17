@@ -15,9 +15,7 @@
 
 ### Problem 1
 
-**Chronic illness**
-
-In 2013, the Pew Research Foundation reported that "45\% of U.S. adults report that they live with one or more chronic conditions".^[http://pewinternet.org/Reports/2013/The-Diagnosis-Difference.aspx The Diagnosis Difference. November 26, 2013. Pew Research.] However, this value was based on a sample, so it may not be a perfect estimate for the population parameter of interest on its own. The study reported a standard error of about 1.2\%, and a normal model may reasonably be used in this setting. 
+**Chronic illness**. In 2013, the Pew Research Foundation reported that "45\% of U.S. adults report that they live with one or more chronic conditions".^[http://pewinternet.org/Reports/2013/The-Diagnosis-Difference.aspx The Diagnosis Difference. November 26, 2013. Pew Research.] However, this value was based on a sample, so it may not be a perfect estimate for the population parameter of interest on its own. The study reported a standard error of about 1.2\%, and a normal model may reasonably be used in this setting. 
 
 a. Create a 95\% confidence interval for the proportion of U.S. adults who live with one or more chronic conditions. Also interpret the confidence interval in the context of the study.
 
@@ -50,7 +48,7 @@ True, this is the definition of the confidence level.
 
 True, the equivalent significance level of a two-sided hypothesis test for a 95\% confidence interval is indeed 5\%, and since the interval lies below 50\% this statement is correct.
 
-- Since the standard error is 1.2\%, only 1.2\% of people in the study communicated uncertainty about their answer.
+- A standard error of 1.2\% means that only 1.2\% of people in the study communicated uncertainty about their answer.
 
 False, the 1.2\% measures the uncertainty associated with the sample proportion (the point estimate) not the uncertainty of individual observations, uncertainty in the sense of not being sure of one's answer to a survey question.
 
@@ -69,13 +67,12 @@ qnorm(.95)
 
 Notice that 46.9 is smaller than 47.4.  
 
-\pagebreak
+
+
 
 ### Problem 2  
 
-**Vegetarian college students** 
-
-Suppose that 8\% of college students are vegetarians. Determine if the following statements are true or false, and explain your reasoning.
+**Vegetarian college students**. Suppose that 8\% of college students are vegetarians. Determine if the following statements are true or false, and explain your reasoning.
 
 a. The distribution of the sample proportions of vegetarians in random samples of size 60 is approximately normal since $n \ge 30$. 
 
@@ -99,7 +96,7 @@ $$ SE_{\hat{p}}
 
 A $\hat{p}$ of 0.12 is only $\frac{0.12 - 0.08}{0.0243} = 1.65$ standard errors away from the mean, which would not be considered unusual.
 
-The p-value is:
+The $p$-value is:
 
 ```{r}
 2*(1-pnorm(1.65))
@@ -117,7 +114,7 @@ Notice that doubling the sample size only reduced the standard error by $\sqrt{2
 
 A $\hat{p}$ of 0.12 is $\frac{0.12 - 0.08}{0.0172} = 2.32$ standard errors away from the mean, which might be considered unusual.
 
-The p-value is:
+The $p$-value is:
 
 ```{r}
 2*(1-pnorm(2.32))
@@ -141,11 +138,12 @@ names(temp)<-c("95%","99%")
 temp
 ```
 
+
+
+
 ### Problem 3
 
-**Orange tabbies** 
-
-Suppose that 90\% of orange tabby cats are male. Determine if the following statements are true or false, and explain your reasoning.  
+**Orange tabbies**. Suppose that 90\% of orange tabby cats are male. Determine if the following statements are true or false, and explain your reasoning.  
 
 a. The distribution of sample proportions of random samples of size 30 is left skewed.  
 
@@ -171,11 +169,11 @@ $$n(1-\hat{p}) = 140 \times 0.10 = 14;$$
 
 therefore the distribution of $\hat{p}$ is nearly normal.
 
+
+
 ### Problem 4  
 
-**Working backwards** 
-
-A 90\% confidence interval for a population mean is (65,77). The population distribution is approximately normal and the population standard deviation is unknown. This confidence interval is based on a simple random sample of 25 observations. Calculate the sample mean, the margin of error, and the sample standard deviation.
+**Working backwards**. A 90\% confidence interval for a population mean is (65,77). The population distribution is approximately normal and the population standard deviation is unknown. This confidence interval is based on a simple random sample of 25 observations. Calculate the sample mean, the margin of error, and the sample standard deviation.
 
 The sample mean is the midpoint of the confidence interval: 
 
@@ -195,49 +193,12 @@ $$ ME = t_{24}\times \frac{s}{\sqrt{n}}$$
 $$6 = 1.71\times \frac{s}{\sqrt{25}}$$
 $$s = 17.54$$
 
+ 
+
+
 ### Problem 5
-
-**Find the p-value** 
-
-An independent random sample is selected from an approximately normal population with an unknown standard deviation. Find the p-value for the given set of hypotheses and $T$ test statistic. Also determine if the null hypothesis would be rejected at $\alpha = 0.05$.
-
-a. $H_{A}: \mu > \mu_{0}$, $n = 11$, $T = 1.91$  
-
-```{r}
-1-pt(1.91,10)
-```
-
-The p-value is less than 0.05, reject the null hypothesis.
-
-b. $H_{A}: \mu < \mu_{0}$, $n = 17$, $T = - 3.45$  
-
-```{r}
-pt(-3.45,16)
-```
-
-The p-value is less than 0.05, reject the null hypothesis.
-
-c. $H_{A}: \mu \ne \mu_{0}$, $n = 7$, $T = 0.83$  
-
-```{r}
-2*(1-pt(0.83,6))
-```
-
-The p-value is greater than 0.05, fail to reject the null hypothesis.
-
-d. $H_{A}: \mu > \mu_{0}$, $n = 28$, $T = 2.13$  
-
-```{r}
-1-pt(2.13,27)
-```
-
-The p-value is less than 0.05, reject the null hypothesis.
  
-### Problem 6
- 
-**Sleep habits of New Yorkers**   
-
-New York is known as "the city that never sleeps". A random sample of 25 New Yorkers were asked how much sleep they get per night. Statistical summaries of these data are shown below. Do these data provide strong evidence that New Yorkers sleep less than 8 hours a night on average?
+**Sleep habits of New Yorkers**. New York is known as "the city that never sleeps". A random sample of 25 New Yorkers were asked how much sleep they get per night. Statistical summaries of these data are shown below. Do these data provide strong evidence that New Yorkers sleep less than 8 hours a night on average?
 
 $$
 \begin{array}{cccccc} & & & &  &
@@ -263,17 +224,17 @@ $$T = \frac{\bar{x} - \mu_0}{\frac{s}{\sqrt{n}}}  = $$
 $$\frac{7.73 - 8}{\frac{0.77}{\sqrt{25}}} = - 1.75$$
 $df = 25 - 1 = 24$.
 
-c. Find and interpret the p-value in this context. 
+c. Find and interpret the $p$-value in this context. 
 
 ```{r}
 pt(-1.75,24)
 ```
 
-If in fact the true population mean of the amount New Yorkers sleep per night was 8 hours, the probability of getting a random sample of 25 New Yorkers where the average amount of sleep is 7.73 hrs per night or less is 0.046. This p-value is close to 0.05.
+If in fact the true population mean of the amount New Yorkers sleep per night was 8 hours, the probability of getting a random sample of 25 New Yorkers where the average amount of sleep is 7.73 hrs per night or less is 0.046. This $p$-value is close to 0.05.
 
 d. What is the conclusion of the hypothesis test?   
 
-Since the p-value is less than 0.05, we reject the null hypothesis that New Yorkers sleep an average of 8 hours per night in favor of the alternative that they sleep less than 8 hours per night on average. However, the p-value is close to the significance level and we may want to run the study again and/or look at sample sizes to determine how big of a difference from 8 hours is important from a practical standpoint. 
+Since the $p$-value is less than 0.05, we reject the null hypothesis that New Yorkers sleep an average of 8 hours per night in favor of the alternative that they sleep less than 8 hours per night on average. However, the $p$-value is close to the significance level and we may want to run the study again and/or look at sample sizes to determine how big of a difference from 8 hours is important from a practical standpoint. 
 
 Let's look at the power of this test. Remember that power is the probability of rejecting the null when the alternative is true. Since the alternative specifies a range of values for the parameter, we must specify a value. This is done by subject matter experts. How much of a difference in average sleep is needed from a practical standpoint to say it is different? Let's say that a half an hour is important to detect. We will use the function `power.t.test()` to determine the power of our test.
 
@@ -318,11 +279,11 @@ So the upper confidence bound is
 
 The value of 8 is not included in the interval, but it is close. We need more data or another study to be confident in our results.
 
-### Problem 7  
 
-**Vegetarian college students II**
 
-From problem 2 part c, suppose that it has been reported that 8\% of college students are vegetarians. We think USAFA is not typical because of their fitness and health awareness, we think there are more vegetarians. We collect a random sample of 125 cadets and find 12\% claimed they are vegetarians. Is there enough evidence to claim that USAFA cadets are different?
+### Problem 6  
+
+**Vegetarian college students II**. From problem 2 part c, suppose that it has been reported that 8\% of college students are vegetarians. We think USAFA is not typical because of their fitness and health awareness, we think there are more vegetarians. We collect a random sample of 125 cadets and find 12\% claimed they are vegetarians. Is there enough evidence to claim that USAFA cadets are different?
 
 a. Use `binom.test()` to conduct the hypothesis test and find a confidence interval.  
 
@@ -354,9 +315,9 @@ Go into the help for `binom.test()` in `R` and it explains these intervals.  The
 
 The first test is an exact test and as stated in the help, it guarantees that the coverage rate is at least 95\%. This means the interval tends to be too large. This is the largest interval and tends to be conservative.
 
-The second test is the **Score** test, also called the **Wilson**. It is found by inverting the p-value, beyond the scope of this class. This interval is a nice compromise in its coverage.
+The second test is the **Score** test, also called the **Wilson**. It is found by inverting the $p$-value, beyond the scope of this class. This interval is a nice compromise in its coverage.
 
-The third is still a score but in the calculation of the p-value, a continuity correction is applied. This correction takes the limits on the binomial and extends it 0.5 in each direction. This is done to give the discrete binomial a better approximation to the continuous normal in the CLT. This interval is the default in `R` via `prop.test()`.
+The third is still a score but in the calculation of the $p$-value, a continuity correction is applied. This correction takes the limits on the binomial and extends it 0.5 in each direction. This is done to give the discrete binomial a better approximation to the continuous normal in the CLT. This interval is the default in `R` via `prop.test()`.
 
 None of these are our simple confidence interval based on the normal approximation. Here is the code for it:
 
@@ -369,3 +330,4 @@ binom.test(x=15,n=125,p=.08,alternative = "greater",ci.method = "Wald")
 ```
 
 This interval is not very good. The coverage is poor especially for small sample sizes. To learn more, read *Approximate is better then exact for interval estimation of binomial proportions.* A. Agresti and B. A. Coull, American Statistician 52, 1998, 119-126.
+
