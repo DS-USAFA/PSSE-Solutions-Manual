@@ -31,7 +31,7 @@ rmd_files: [
    "20-Hypothesis-Testing-with-Known-Distributions-Solutions.Rmd",                                   
    "21-Hypothesis-Testing-with-the-Central-Limit-Theorem-Solutions.Rmd",                                 
    "22-Additional-Hypothesis-Tests-Solutions.Rmd",          
-   "23-ANOVA-Solutions.Rmd",
+   "23-Analysis-of-Variance-Solutions.Rmd",
    "24-Confidence-Intervals-Solutions.Rmd",                                  
    "25-Bootstrap-Solutions.Rmd",                                             
    "26-Linear-Regression-Case-Study-Solutions.Rmd",                          

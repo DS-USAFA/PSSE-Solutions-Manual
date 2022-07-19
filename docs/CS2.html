@@ -149,7 +149,7 @@ Complete a similar analysis for case where exactly 2 people in a room of 23 peop
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>match<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">length</span><span class="op">==</span><span class="fl">22</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">match</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##     prob
-## 1 0.3701</code></pre>
+## 1 0.3612</code></pre>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_bar</span><span class="op">(</span><span class="op">~</span><span class="va">length</span><span class="op">)</span></span></code></pre></div>
@@ -256,7 +256,7 @@ Repeat problem 1 but do it mathematically. As a big hint, you will need to use t
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-17.</p>
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

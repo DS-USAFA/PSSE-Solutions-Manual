@@ -163,9 +163,9 @@ Figure 29.1: Homework problem 1.
 <li>Weak relationship because a change in <span class="math inline">\(x\)</span> does not cause a change in <span class="math inline">\(y\)</span> even though the points would cluster around a horizontal line. Trying a linear fit would be reasonable.</li>
 </ol>
 </div>
-<div id="problem-2-26" class="section level3" number="29.2.2">
+<div id="problem-2-25" class="section level3" number="29.2.2">
 <h3>
-<span class="header-section-number">29.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-26"><i class="fas fa-link"></i></a>
+<span class="header-section-number">29.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-25"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Beer and blood alcohol content</strong></p>
 <p>We will use the blood alcohol content data again. As a reminder this is the description of the data: <em>Many people believe that gender, weight, drinking habits, and many other factors are much more important in predicting blood alcohol content (BAC) than simply considering the number of drinks a person consumed. Here we examine data from sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer. These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (BAC) in grams of alcohol per deciliter of blood.</em></p>
@@ -173,18 +173,18 @@ Figure 29.1: Homework problem 1.
 <ol style="list-style-type: lower-alpha">
 <li>Obtain and interpret <span class="math inline">\(R\)</span>-squared for this model.</li>
 </ol>
-<div class="sourceCode" id="cb680"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb700"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac</span><span class="op">&lt;-</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/bac.csv"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb681"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb701"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of cans of beer"</span>,y<span class="op">=</span><span class="st">"BAC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-2-1.png" width="672"></div>
-<div class="sourceCode" id="cb682"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb702"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span>,data<span class="op">=</span><span class="va">bac</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb683"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb703"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bac_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -208,14 +208,14 @@ Figure 29.1: Homework problem 1.
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Evaluate the assumptions of this model. Do we have anything to be concerned about?</li>
 </ol>
-<div class="sourceCode" id="cb685"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb705"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
 <p>The fit is pretty good, there is one data point that is an outlier, the student that drank 9 beers.</p>
-<div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb706"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
-<div class="sourceCode" id="cb687"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb707"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac</span></span></code></pre></div>
 <pre><code>## # A tibble: 16 x 3
 ##    student beers   bac
@@ -237,19 +237,19 @@ Figure 29.1: Homework problem 1.
 ## 15      15     1 0.01 
 ## 16      16     4 0.05</code></pre>
 <p>The 3rd, 7th, and 10th data points stand out. This data set is too small to make any decisions about normality. It is suspect though.</p>
-<div class="sourceCode" id="cb689"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb709"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
 <p>We have higher variance at the higher number of beers. Again this appears to be caused by the small number of data points and the influence of observation number 3.</p>
-<div class="sourceCode" id="cb690"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb710"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">bac_mod</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
-<p>The points we’re looking for(or not looking for) are values in the upper right or lower right corners, which are outside the red dashed Cook’s distance line. These are points that would be influential in the model and removing them would likely noticeably alter the regression results. Now we see that observation 3 has extreme leverage on the model. Removing it would potentially drastically alter the model.</p>
+<p>The points we’re looking for (or not looking for) are values in the upper right or lower right corners, which are outside the red dashed Cook’s distance line. These are points that would be influential in the model and removing them would likely noticeably alter the regression results. Now we see that observation 3 has extreme leverage on the model. Removing it would potentially drastically alter the model.</p>
 <p>To learn more about measures of influence, see <a href="https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html" class="uri">https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html</a></p>
 </div>
-<div id="problem-3-21" class="section level3" number="29.2.3">
+<div id="problem-3-20" class="section level3" number="29.2.3">
 <h3>
-<span class="header-section-number">29.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-21"><i class="fas fa-link"></i></a>
+<span class="header-section-number">29.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-20"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Outliers</strong></p>
 <p>Identify the outliers in the scatterplots shown below and determine what type of outliers they are. Explain your reasoning. The labels are off so treat the bottom row as (d), (e), and (f).</p>
@@ -286,8 +286,8 @@ Figure 29.2: Homework problem 3.
 <li>
 <a class="nav-link" href="#homework-28"><span class="header-section-number">29.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-28"><span class="header-section-number">29.2.1</span> Problem 1</a></li>
-<li><a class="nav-link" href="#problem-2-26"><span class="header-section-number">29.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-21"><span class="header-section-number">29.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-2-25"><span class="header-section-number">29.2.2</span> Problem 2</a></li>
+<li><a class="nav-link" href="#problem-3-20"><span class="header-section-number">29.2.3</span> Problem 3</a></li>
 </ul>
 </li>
 </ul>
@@ -306,7 +306,7 @@ Figure 29.2: Homework problem 3.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-17.</p>
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -143,7 +143,7 @@
 <div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sims</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">10000</span>,<span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="fu">mean</span><span class="op">(</span><span class="va">sims</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 8.010021</code></pre>
+<pre><code>## [1] 7.923259</code></pre>
 <p>So, <span class="math inline">\(g(\mbox{E}(X))=4\)</span> and <span class="math inline">\(\mbox{E}(g(X))\approx 7.84\)</span>.</p>
 </div>
 <div id="problem-2-15" class="section level3" number="16.2.2">
@@ -257,7 +257,7 @@ Figure 16.1: pdf of <span class="math inline">\(T\)</span>
 </ol>
 <div class="sourceCode" id="cb329"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">T</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 10.29624 10.40235 13.18780</code></pre>
+<pre><code>## [1] 19.03599 12.42314 15.35556</code></pre>
 <div class="sourceCode" id="cb331"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1144</span><span class="op">)</span></span>
 <span><span class="va">sim_exercise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>T1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">T</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">)</span>,T2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">T</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -326,7 +326,7 @@ Figure 16.1: pdf of <span class="math inline">\(T\)</span>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-17.</p>
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -136,16 +136,134 @@
 <h3>
 <span class="header-section-number">23.2.1</span> Problem 1<a class="anchor" aria-label="anchor" href="#problem-1-22"><i class="fas fa-link"></i></a>
 </h3>
-</div>
-<div id="problem-2-22" class="section level3" number="23.2.2">
-<h3>
-<span class="header-section-number">23.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2-22"><i class="fas fa-link"></i></a>
-</h3>
-</div>
-<div id="problem-3-17" class="section level3" number="23.2.3">
-<h3>
-<span class="header-section-number">23.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-17"><i class="fas fa-link"></i></a>
-</h3>
+<p><strong>Census data.</strong> A group of researchers wants to conduct an Analysis of Variance to investigate whether there is a relationship between marital status and total personal income. They obtained a random sample of 500 observations from the 2000 U.S. Census. The data is available in the <code>census</code> data set in the <strong>openintro</strong> package.</p>
+<div class="sourceCode" id="cb527"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">census</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 x 8
+##   census_year state_fips_code total_family_income   age sex    race_general   
+##         &lt;int&gt; &lt;fct&gt;                         &lt;int&gt; &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;          
+## 1        2000 Florida                       14550    44 Male   Two major races
+## 2        2000 Florida                       22800    20 Female White          
+## 3        2000 Florida                           0    20 Male   Black          
+## 4        2000 Florida                       23000     6 Female White          
+## 5        2000 Florida                       48000    55 Male   White          
+## 6        2000 Florida                       74000    43 Female White          
+## # ... with 2 more variables: marital_status &lt;fct&gt;, total_personal_income &lt;int&gt;</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>State the null and alternative hypotheses in context of the research problem. Note: there are six different marital status types.</li>
+</ol>
+<p><span class="math inline">\(H_0\)</span>: The total personal income is equal for every marital status. <span class="math inline">\(\mu_{\text{divorced}} = \mu_{\text{absent}} = \mu_{\text{present}} = \mu_{\text{single}} = \mu_{\text{separated}} = \mu_{\text{widowed}}\)</span>
+<span class="math inline">\(H_A\)</span>: The total personal income for at least one marital status is different.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Using the <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> function, conduct an ANOVA using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>. Clearly state your conclusion.</li>
+</ol>
+<div class="sourceCode" id="cb529"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">total_personal_income</span> <span class="op">~</span> <span class="va">marital_status</span>, data <span class="op">=</span> <span class="va">census</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                 Df    Sum Sq   Mean Sq F value  Pr(&gt;F)   
+## marital_status   5 4.145e+10 8.290e+09   4.055 0.00134 **
+## Residuals      386 7.891e+11 2.044e+09                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 108 observations deleted due to missingness</code></pre>
+<p>The <span class="math inline">\(p\)</span>-value is 0.00134. We reject the null hypothesis and conclude that the total personal income for at least one marital status is different from the others. The plot below shows the <span class="math inline">\(F\)</span> distribution with the observed <span class="math inline">\(F\)</span> test statistic shown as a red line.</p>
+<div class="sourceCode" id="cb531"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gf_dist</span><span class="op">(</span><span class="st">"f"</span>, df1 <span class="op">=</span> <span class="fl">5</span>, df2 <span class="op">=</span> <span class="fl">386</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">4.055</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"F distribution"</span>, x <span class="op">=</span> <span class="st">"F value"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-Analysis-of-Variance-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Is an ANOVA, using the <span class="math inline">\(F\)</span> distribution, appropriate for this data set? Why or why not? Clearly communicate your answer, including appropriate data visualizations.</li>
+</ol>
+<p>It is reasonable to assume that the observations are independent within and between groups, as this is a random sample from the census. The other assumptions of ANOVA are not met though; the total personal income for each group is not normally distributed (seen in the faceted QQ plots) and the variance for each group does not appear to be equal (seen in the <code><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats()</a></code> table and the boxplot).</p>
+<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">census</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_qq</span><span class="op">(</span><span class="op">~</span><span class="va">total_personal_income</span> <span class="op">|</span> <span class="va">marital_status</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_qqline</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-Analysis-of-Variance-Solutions_files/figure-html/unnamed-chunk-4-1.png" width="672"></div>
+<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="va">total_personal_income</span> <span class="op">~</span> <span class="va">marital_status</span>, data <span class="op">=</span> <span class="va">census</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##           marital_status   min    Q1 median      Q3    max     mean       sd
+## 1               Divorced     0  8880  25650 39662.5 150500 29503.42 29552.24
+## 2  Married/spouse absent     0 10375  17100 28255.0 100000 23652.86 25515.50
+## 3 Married/spouse present -4400 10000  23850 43522.5 456000 38855.73 60230.72
+## 4   Never married/single     0  1450  11160 26925.0 141900 17677.30 21152.51
+## 5              Separated     0  5150  10300 17650.0  25000 11766.67 12564.37
+## 6                Widowed     0  8050  11580 17150.0  55000 14095.29 12343.10
+##     n missing
+## 1  38       0
+## 2  14       0
+## 3 192       0
+## 4 114     108
+## 5   3       0
+## 6  31       0</code></pre>
+<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">census</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="va">total_personal_income</span> <span class="op">~</span> <span class="va">marital_status</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-Analysis-of-Variance-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Repeat part b), but use a randomization test this time. You should use <span class="math inline">\(F\)</span>, the test statistic for ANOVA, as your test statistic.</li>
+</ol>
+<p>Load the <strong>broom</strong> library, which contains the <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code> function.</p>
+<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span></code></pre></div>
+<p>We can calculate the <span class="math inline">\(F\)</span> test statistic by taking <span class="math inline">\(MS_G / MS_E\)</span>, or we can directly extract the value from the <code><a href="https://rdrr.io/r/stats/aov.html">aov()</a></code> output. We’ll save this as our observed test statistic value.</p>
+<div class="sourceCode" id="cb537"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">total_personal_income</span> <span class="op">~</span> <span class="va">marital_status</span>, data <span class="op">=</span> <span class="va">census</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">statistic</span><span class="op">)</span></span>
+<span><span class="va">obs</span> </span></code></pre></div>
+<pre><code>## [1] 4.055081</code></pre>
+<p>Under the null hypothesis, the <code>marital_status</code> doesn’t matter. Thus, we use <code><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle()</a></code> to move around the <code>marital_status</code> labels. Now, let’s define a function to get our <span class="math inline">\(F\)</span> test statistic under the null hypothesis.</p>
+<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">total_personal_income</span> <span class="op">~</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle</a></span><span class="op">(</span><span class="va">marital_status</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">statistic</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Let’s check our function.</p>
+<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="fu">f_stat</span><span class="op">(</span><span class="va">census</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.3830356</code></pre>
+<p>Let’s run the randomization test.</p>
+<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">f_stat</span><span class="op">(</span><span class="va">census</span><span class="op">)</span></span></code></pre></div>
+<p>Now we plot the sampling distribution from the randomization test. The <span class="math inline">\(F\)</span> distribution is overlaid as a dark blue curve, and the observed <span class="math inline">\(F\)</span> test statistic is shown as a red line.</p>
+<div class="sourceCode" id="cb543"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_dhistogram</span><span class="op">(</span><span class="op">~</span><span class="va">f_stat</span>, fill <span class="op">=</span> <span class="st">"cyan"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"f"</span>, df1 <span class="op">=</span> <span class="fl">5</span>, df2 <span class="op">=</span> <span class="fl">386</span>, color <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">obs</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Randomization test sampling distribution"</span>,</span>
+<span>          subtitle <span class="op">=</span> <span class="st">"Test statistic is the F test statistic (ratio of variances)"</span>,</span>
+<span>          x <span class="op">=</span> <span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-Analysis-of-Variance-Solutions_files/figure-html/unnamed-chunk-12-1.png" width="672"></div>
+<p>Finally, we calculate the <span class="math inline">\(p\)</span>-value.</p>
+<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/prop.html">prop1</a></span><span class="op">(</span><span class="op">~</span><span class="op">(</span><span class="va">f_stat</span> <span class="op">&gt;=</span> <span class="va">obs</span><span class="op">)</span>, <span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  prop_TRUE 
+## 0.03496503</code></pre>
+<p>This <span class="math inline">\(p\)</span>-value is much larger than that found with the ANOVA using the <span class="math inline">\(F\)</span> distribution. The <span class="math inline">\(p\)</span>-value for the “traditional” ANOVA makes the assumptions of independent observations, normally distributed data within each group, and constant variance across groups. However, we know from part c) that the latter two assumptions are not met, and thus ANOVA using the <span class="math inline">\(F\)</span> distribution is not valid. Still, our permutation test leads us to the same conclusion; we reject the null hypothesis and conclude that not all groups are equal. That is, the total personal income for at least one marital status is different.</p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>How do we determine which groups are different?</li>
+</ol>
+<p>One way is to perform all possible pairwise comparisons (e.g., divorced vs. absent, divorced vs. present, divorced vs. single, etc.). This strategy can be dangerous though. With six marital status types, we will have <span class="math inline">\(\binom{6}{2} = 15\)</span> comparisons. However, with this many comparisons, our Type 1 error is inflated and it is likely we’ll find a difference just by chance. There are adjustments that can be made to the significance level to correct for many comparisons, such as the Tukey and Bonferroni method. These allow us to make many pairwise comparisons and keep the Type 1 error rate low.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Below is a boxplot of the total personal income by marital status. We have “zoomed in” on the <span class="math inline">\(y\)</span>-axis, considering only total personal income between $0 and $100,000, and rotated the text on the <span class="math inline">\(x\)</span>-axis. The largest difference between sample means appears to be between the separated and married/spouse absent groups. Why can’t we simply determine whether there is a statistically significant difference between <span class="math inline">\(\mu_{\text{absent}}\)</span> and <span class="math inline">\(\mu_{\text{separated}}\)</span>?</li>
+</ol>
+<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">census</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="va">total_personal_income</span> <span class="op">~</span> <span class="va">marital_status</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_lims</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100000</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="23-Analysis-of-Variance-Solutions_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
+<p>This is <em>data fishing</em>. We are inspecting the data before picking groups to compare. We should test for a difference among all the groups, or choose groups to compare before looking at the data.</p>
 
 </div>
 </div>
@@ -159,11 +277,7 @@
 <li><a class="nav-link" href="#ANOVA"><span class="header-section-number">23</span> Analysis of Variance</a></li>
 <li><a class="nav-link" href="#objectives-21"><span class="header-section-number">23.1</span> Objectives</a></li>
 <li>
-<a class="nav-link" href="#homework-22"><span class="header-section-number">23.2</span> Homework</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#problem-1-22"><span class="header-section-number">23.2.1</span> Problem 1</a></li>
-<li><a class="nav-link" href="#problem-2-22"><span class="header-section-number">23.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-17"><span class="header-section-number">23.2.3</span> Problem 3</a></li>
-</ul>
+<a class="nav-link" href="#homework-22"><span class="header-section-number">23.2</span> Homework</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#problem-1-22"><span class="header-section-number">23.2.1</span> Problem 1</a></li></ul>
 </li>
 </ul>
 
@@ -181,7 +295,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-17.</p>
+    <p>"<strong>Solutions for Probability and Statistics - MASTER version</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

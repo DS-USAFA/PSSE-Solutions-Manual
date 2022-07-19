@@ -155,7 +155,7 @@ plot(bac_mod,5)
 
 <img src="29-Linear-Regression-Diagnostics-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
-The points we’re looking for(or not looking for) are values in the upper right or lower right corners, which are outside the red dashed Cook’s distance line. These are points that would be influential in the model and removing them would likely noticeably alter the regression results. Now we see that observation 3 has extreme leverage on the model. Removing it would potentially drastically alter the model. 
+The points we’re looking for (or not looking for) are values in the upper right or lower right corners, which are outside the red dashed Cook’s distance line. These are points that would be influential in the model and removing them would likely noticeably alter the regression results. Now we see that observation 3 has extreme leverage on the model. Removing it would potentially drastically alter the model. 
 
 To learn more about measures of influence, see https://cran.r-project.org/web/packages/olsrr/vignettes/influence_measures.html 
 
