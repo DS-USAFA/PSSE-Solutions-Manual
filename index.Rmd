@@ -14,7 +14,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-cover-image: "figures/CoverSol2.png"
+cover-image: "figures/Cover_Engineers.png"
 description: "This is a set of solutions used for Math 356, starting in the spring of 2022."
 ---
 
@@ -24,7 +24,7 @@ description: "This is a set of solutions used for Math 356, starting in the spri
 
 
 ```{r echo=FALSE}
-knitr::include_graphics("./figures/CoverSol2.png")
+knitr::include_graphics("./figures/Cover_Engineers.png")
 ```
   
 
