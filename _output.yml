@@ -7,7 +7,7 @@ bookdown::gitbook:
         <li><a href="./">Solutions Manual</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit : null
+    edit : https://github.com/DS-USAFA/CPS-Solutions-Manual/%s
     sharing: null
     info: no
     download: no
@@ -19,13 +19,10 @@ bookdown::bs4_book:
     toc:
       collapse: section
       before: |
-        <li><a href="./">Computational Probability and Statistics</a></li>
+        <li><a href="./">Solutions Manual</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit : null
-    sharing: null
-    info: no
-    download: no
+    repo : https://github.com/DS-USAFA/CPS-Solutions-Manual
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
