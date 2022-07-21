@@ -1,4 +1,4 @@
-book_filename: "Solutions Manual - MASTER version"
+book_filename: "Solutions Manual for 'Probability and Statistics for Scientists and Engineers'"
 output_dir: "docs"
 new_session: yes
 before_chapter_script: "library_load.R"
@@ -24,8 +24,8 @@ rmd_files: [
    "13-Named-Continuous-Distributions-Solutions.Rmd",                        
    "14-Multivariate-Distributions-Solutions.Rmd",                            
    "15-Multivariate-Expectation-Solutions.Rmd",                              
-   "16-Transformations-Solutions.Rmd",
-   "17-Estimation-Methods-Solutions.Rmd",
+   # "16-Transformations-Solutions.Rmd",
+   # "17-Estimation-Methods-Solutions.Rmd",
    "18-Hypothesis-Testing-Case-Study-Solutions.Rmd",                         
    "19-Hypothesis-Testing-with-Simulation-Solutions.Rmd",                                    
    "20-Hypothesis-Testing-with-Known-Distributions-Solutions.Rmd",                                   
