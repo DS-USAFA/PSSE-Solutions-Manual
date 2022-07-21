@@ -1,11 +1,11 @@
 --- 
-title: "Solutions for Probability and Statistics - MASTER version"
+title: "Solutions Manual for 'Probability and Statistics for Scientists and Engineers'"
 author: 
 - Matthew Davis
 - Brianna Hitt
 - Kenneth Horton
 - Bradley Warner
-date: "2022-07-19"
+date: "2022-07-21"
 header-includes:
    - \usepackage{multirow}
    - \usepackage{multicol}
@@ -15,7 +15,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 cover-image: "figures/CoverSol2.png"
-description: "This is a set of solutions used for Math 377 and 356, starting in the fall of 2020 and the spring of 2022, respectively."
+description: "This is a set of solutions used for Math 356, starting in the spring of 2022."
 ---
 
 \input{latex/math-definitions.tex}
@@ -26,7 +26,7 @@ description: "This is a set of solutions used for Math 377 and 356, starting in 
 <img src="./figures/CoverSol2.png" width="705" />
   
 
-Contained in this volume are the solutions to homework problems in the Computational Probability and Statistics book, master version.  
+Contained in this volume are the solutions to homework problems in the Probability and Statistics for Scientists and Engineers book.  
 
 
 ## Book Structure and How to Use It
@@ -54,7 +54,7 @@ This book is licensed under the [Creative Commons Attribution-NonCommercial-Shar
 
 ## File Creation Information 
 
-  * File creation date: 2022-07-19
+  * File creation date: 2022-07-21
   * R version 4.1.3 (2022-03-10)
 
 
