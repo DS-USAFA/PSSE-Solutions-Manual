@@ -14,7 +14,7 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-cover-image: "figures/CoverSol2.png"
+cover-image: "figures/Cover_Engineers.png"
 description: "This is a set of solutions used for Math 356, starting in the spring of 2022."
 ---
 
@@ -23,7 +23,7 @@ description: "This is a set of solutions used for Math 356, starting in the spri
 # Preface {-}
 
 
-<img src="./figures/CoverSol2.png" width="705" />
+<img src="./figures/Cover_Engineers.png" width="850" />
   
 
 Contained in this volume are the solutions to homework problems in the Probability and Statistics for Scientists and Engineers book.  
