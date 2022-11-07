@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">12</span> Named Discrete Distributions<a class="anchor" aria-label="anchor" href="#DISCRETENAMED"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-11" class="section level2" number="12.1">
+<div id="objectives-12" class="section level2" number="12.1">
 <h2>
-<span class="header-section-number">12.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-11"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-12"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Recognize and set up for use common discrete distributions (Uniform, Binomial, Poisson, Hypergeometric) to include parameters, assumptions, and moments.</p></li>
@@ -144,15 +145,15 @@
 <p><span class="math inline">\(X\sim \textsf{Bin}(n=15,p=0.01)\)</span></p>
 <p><span class="math inline">\(\mbox{E}(X)=15*0.01=0.15\)</span> and <span class="math inline">\(\mbox{Var}(X)=15*0.01*0.99=0.1485\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{No maintenance failures})=\mbox{P}(X=0)={15\choose 0}0.01^0(1-0.01)^{15}=0.99^{15}\)</span></p>
-<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.99</span><span class="op">^</span><span class="fl">15</span></span></code></pre></div>
 <pre><code>## [1] 0.8600584</code></pre>
-<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## or </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">15</span>,<span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.8600584</code></pre>
 <p>This probability makes sense, since the expected value is fairly low. Because, on average, only 0.15 failures would occur every 15 trials, 0 failures would be a very common result. Graphically, the pmf looks like this:</p>
-<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gf_dist</span><span class="op">(</span><span class="st">"binom"</span>,size<span class="op">=</span><span class="fl">15</span>,prob<span class="op">=</span><span class="fl">0.01</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="12-Named-Discrete-Distributions-Solutions_files/figure-html/hw8b-1.png" width="672" style="display: block; margin: auto;"></div>
@@ -160,23 +161,23 @@
 <li>Find the probability of at least two maintenance failures in 15 sorties.</li>
 </ol>
 <p>We can use the same <span class="math inline">\(X\)</span> as above. Now, we are looking for <span class="math inline">\(\mbox{P}(X\geq 2)\)</span>. This is equivalent to finding <span class="math inline">\(1-\mbox{P}(X\leq 1)\)</span>:</p>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Directly</span></span>
 <span><span class="fl">1</span><span class="op">-</span><span class="op">(</span><span class="fl">0.99</span><span class="op">^</span><span class="fl">15</span> <span class="op">+</span> <span class="fl">15</span><span class="op">*</span><span class="fl">0.01</span><span class="op">*</span><span class="fl">0.99</span><span class="op">^</span><span class="fl">14</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.009629773</code></pre>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## or, using R</span></span>
 <span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">15</span>,<span class="fl">15</span>,<span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.009629773</code></pre>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## or</span></span>
 <span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>,<span class="fl">15</span>,<span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.009629773</code></pre>
-<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## or</span></span>
 <span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">15</span>,<span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.009629773</code></pre>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## or </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">15</span>,<span class="fl">0.01</span>,lower.tail <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.009629773</code></pre>
@@ -186,10 +187,10 @@
 <p><span class="math inline">\(X\)</span>: the number of maintenance failures out of 30 sorties.</p>
 <p><span class="math inline">\(X\sim \textsf{Binom}(n=30,p=0.01)\)</span>, and <span class="math inline">\(\mbox{E}(X)=0.3\)</span> and <span class="math inline">\(\mbox{Var}(X)=0.297\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{0 failures})=\mbox{P}(X=0)=0.99^{30}\)</span></p>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.99</span><span class="op">^</span><span class="fl">30</span></span></code></pre></div>
 <pre><code>## [1] 0.7397004</code></pre>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##or </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">30</span>,<span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.7397004</code></pre>
@@ -197,30 +198,30 @@
 <p><span class="math inline">\(Y\)</span>: the number of successful sorties before the first failure.</p>
 <p><span class="math inline">\(Y\sim \textsf{NegBin}(n=1,p=0.01)\)</span>, and <span class="math inline">\(\mbox{E}(X)=99\)</span> and <span class="math inline">\(\mbox{Var}(X)=9900\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{at least 30 successes before first failure})=\mbox{P}(Y\geq 30)\)</span></p>
-<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html">pnbinom</a></span><span class="op">(</span><span class="fl">29</span>,<span class="fl">1</span>,<span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.7397004</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Find the probability of at least 50 successful sorties before the third failure.</li>
 </ol>
 <p>Using a binomial random variable, we have 52 trials and need at least 50 to be a success. The random variable is <span class="math inline">\(X\)</span> the number of successful sorties out of 52.</p>
-<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span><span class="fl">49</span>,<span class="fl">52</span>,<span class="fl">.99</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.9846474</code></pre>
 <p>Or using a negative binomial, let</p>
 <p><span class="math inline">\(Y\)</span>: the number of successful sorties before the third failure.</p>
 <p><span class="math inline">\(Y\sim \textsf{NegBin}(n=3,p=0.01)\)</span>, and <span class="math inline">\(\mbox{E}(X)=297\)</span> and <span class="math inline">\(\mbox{Var}(X)=29700\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{at least 50 successes before 3rd failure})=\mbox{P}(Y\geq 50)\)</span></p>
-<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html">pnbinom</a></span><span class="op">(</span><span class="fl">49</span>,<span class="fl">3</span>,<span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.9846474</code></pre>
 <p>Notice if the question had been exactly 50 successful sorties before the 3 failure, that is a different question. Then we could use either:</p>
-<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">52</span>,<span class="fl">.99</span><span class="op">)</span><span class="op">*</span><span class="fl">.01</span></span></code></pre></div>
 <pre><code>## [1] 0.000802238</code></pre>
 <p>The <span class="math inline">\(0.01\)</span> is because the last trial is a failure.</p>
 <p>Or</p>
-<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/NegBinomial.html">dnbinom</a></span><span class="op">(</span><span class="fl">50</span>,<span class="fl">3</span>,<span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.000802238</code></pre>
 <div style="page-break-after: always;"></div>
@@ -236,10 +237,10 @@
 <p><span class="math inline">\(X\)</span>: number of vehicles that arrive in 10 minutes</p>
 <p><span class="math inline">\(X\sim \textsf{Pois}(\lambda=40/6=6.67)\)</span> and <span class="math inline">\(\mbox{E}(X)=\mbox{Var}(X)=6.67\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{no arrivals in 10 minutes})=\mbox{P}(X=0)=\frac{6.67^0 e^{-6.67}}{0!}=e^{-6.67}\)</span></p>
-<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span><span class="op">/</span><span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.001272634</code></pre>
-<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##or</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">dpois</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">/</span><span class="fl">6</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.001272634</code></pre>
@@ -249,7 +250,7 @@
 <p><span class="math inline">\(X\)</span>: number of vehicles that arrive in an hour</p>
 <p><span class="math inline">\(X\sim \textsf{Pois}(\lambda=40)\)</span> and <span class="math inline">\(\mbox{E}(X)=\mbox{Var}(X)=40\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{at least 50 arrivals in 1 hour})=\mbox{P}(X\geq 50)\)</span></p>
-<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">ppois</a></span><span class="op">(</span><span class="fl">49</span>,<span class="fl">40</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.07033507</code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
@@ -258,18 +259,18 @@
 <p><span class="math inline">\(X\)</span>: number of vehicles that arrive in 5 minutes</p>
 <p><span class="math inline">\(X\sim \textsf{Pois}(\lambda=40/12=3.33)\)</span> and <span class="math inline">\(\mbox{E}(X)=\mbox{Var}(X)=3.33\)</span>.</p>
 <p><span class="math inline">\(\mbox{P}(\mbox{no arrivals in 5 minutes})=\mbox{P}(X=0)=\frac{3.33^0 e^{-3.33}}{0!}=e^{-3.33}\)</span></p>
-<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fl">40</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.03567399</code></pre>
-<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##or</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">dpois</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">/</span><span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.03567399</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
-<div id="problem-3-8" class="section level3" number="12.2.3">
+<div id="problem-3-7" class="section level3" number="12.2.3">
 <h3>
-<span class="header-section-number">12.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-8"><i class="fas fa-link"></i></a>
+<span class="header-section-number">12.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-7"><i class="fas fa-link"></i></a>
 </h3>
 <p>Suppose there are 12 male and 7 female cadets in a classroom. I select 5 completely at random (without replacement).</p>
 <ol style="list-style-type: lower-alpha">
@@ -280,10 +281,10 @@
 <p><span class="math display">\[
 \mbox{P}(\mbox{no female cadets selected})=\mbox{P}(X=0)=\frac{{7\choose 0}{12\choose 5}}{{19\choose 5}}
 \]</span></p>
-<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">19</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.06811146</code></pre>
-<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##or</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Hypergeometric.html">dhyper</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">7</span>,<span class="fl">12</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.06811146</code></pre>
@@ -294,10 +295,10 @@
 <span class="math display">\[
 \mbox{P}(\mbox{more than 2 female})=\mbox{P}(X&gt;2)=1-\mbox{P}(X\leq 2)
 \]</span></p>
-<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Hypergeometric.html">phyper</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">7</span>,<span class="fl">12</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.2365841</code></pre>
-<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##or</span></span>
 <span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Hypergeometric.html">dhyper</a></span><span class="op">(</span><span class="fl">3</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">12</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.2365841</code></pre>
@@ -312,19 +313,20 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#DISCRETENAMED"><span class="header-section-number">12</span> Named Discrete Distributions</a></li>
-<li><a class="nav-link" href="#objectives-11"><span class="header-section-number">12.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-12"><span class="header-section-number">12.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-11"><span class="header-section-number">12.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-11"><span class="header-section-number">12.2.1</span> Problem 1</a></li>
 <li><a class="nav-link" href="#problem-2-11"><span class="header-section-number">12.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-8"><span class="header-section-number">12.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-3-7"><span class="header-section-number">12.2.3</span> Problem 3</a></li>
 </ul>
 </li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/12-Named-Discrete-Distributions-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/12-Named-Discrete-Distributions-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -336,7 +338,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

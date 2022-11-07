@@ -47,7 +47,7 @@ head(golf_balls)
 
 
 ```r
-tally(~number,data=golf_balls)
+tally(~number, data = golf_balls)
 ```
 
 ```
@@ -59,10 +59,18 @@ tally(~number,data=golf_balls)
 
 b. Using the function `chisq.test` conduct a hypothesis test of equally likely distribution of balls. You may have to read the help menu. 
 
+The hypotheses from Chapter \@ref(HYPTESTDIST) are 
+
+$H_0$: All of the numbers are equally likely. $\pi_1 = \pi_2 = \pi_3 = \pi_4$ or $\pi_1 = \frac{1}{4}, \pi_2 = \frac{1}{4}, \pi_3 = \frac{1}{4} = \pi_4 = \frac{1}{4}$ 
+
+$H_A$: There is some other distributio of the numbers in the population. At least one population proportion is not $\frac{1}{4}$. 
+
+We use the `chisq.test()` function in `R` to conduct the hypothesis test. 
 
 
 ```r
-chisq.test(tally(~number,data=golf_balls),p=c(.25,.25,.25,.25))
+chisq.test(tally(~number, data = golf_balls), 
+           p = c(0.25, 0.25, 0.25, 0.25))
 ```
 
 ```
@@ -73,12 +81,14 @@ chisq.test(tally(~number,data=golf_balls),p=c(.25,.25,.25,.25))
 ## X-squared = 8.4691, df = 3, p-value = 0.03725
 ```
 
+The p-value is 0.03725. We reject the null hypothesis; there is evidence that there is some other distribution of the numbers in the population (at least one population proportion is different from $\frac{1}{4}$). 
 
 c. Repeat part b), but assume balls with the numbers 1 and 2 occur 30\% of the time and balls with 3 and 4 occur 20\%. 
 
 
 ```r
-chisq.test(tally(~number,data=golf_balls),p=c(.3,.3,.2,.2))
+chisq.test(tally(~number, data = golf_balls),
+           p = c(0.3, 0.3, 0.2, 0.2))
 ```
 
 ```
@@ -89,9 +99,82 @@ chisq.test(tally(~number,data=golf_balls),p=c(.3,.3,.2,.2))
 ## X-squared = 2.4122, df = 3, p-value = 0.4914
 ```
 
+The p-value is 0.4914. We fail to reject the null hypothesis; there is not enough evidence to say that the distribution of numbers in the population is different from 0.3, 0.3, 0.2 and 0.2.
+
+
 d. Repeat part c), but use a randomization test this time. You should use $\chi^2$, the chi-squared test statistic, as your test statistic.  
 
-###### ADD ANSWER HERE ######
+Let's calculate the observed value of the test statistic. 
+
+
+```r
+obs <- chisq(~number, data = golf_balls)
+obs
+```
+
+```
+## X.squared 
+##  8.469136
+```
+
+
+Next, we will use a randomization process to find the sampling distribution of our test statistic. Because there is only a single variable, we can't use the `shuffle()` function. Instead, think about what we want to do.  
+
+Under the null hypothesis, all of the numbers (1 through 4) are equally likely. We will generate a sample of the numbers 1 through 4 that is the same size as our `golf_balls` data set (486 observations). Then, we'll use the `chisq()` function to find the chi-square test statistic based on that sample. 
+
+
+```r
+set.seed(1018)
+chisq(~sample(1:4, size = 486, replace = TRUE))
+```
+
+```
+## X.squared 
+##  4.584362
+```
+
+This assumes that the probability of each number is the same ($\frac{1}{4} for each number). You can also change the probability of each number within your `sample()`. 
+
+Now, let's do the same thing many times. 
+
+
+```r
+set.seed(1018)
+results <- do(1000)*chisq(~sample(1:4, size = 486, replace = TRUE))
+```
+
+
+We plot the sampling distribution and compare our observed test statistic (shown as a red line). The chi-square distribution with 3 degrees of freedom 
+(4 categories/golf ball numbers minus 1) is shown as a dark blue curve. 
+
+
+```r
+results %>%
+  gf_dhistogram(~X.squared, fill = "cyan", color = "black") %>%
+  gf_vline(xintercept = obs, color = "red") %>%
+  gf_theme(theme_classic()) %>%
+  gf_dist("chisq", df = 3, color = "darkblue") %>%
+  gf_labs(title = "Sampling distribution of chi-squared test statistic",
+          subtitle = "For the distribution of golf ball numbers",
+          x = "Test statistic")
+```
+
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
+We find the p-value using `prop1()`. 
+
+
+```r
+prop1(~X.squared >= obs, data = results)
+```
+
+```
+##  prop_TRUE 
+## 0.03196803
+```
+
+Based on this p-value, we reject the null hypothesis; there is evidence that at least one population proportion is different from $\frac{1}{4}$. 
+
 
 
 ### Problem 2 
@@ -145,7 +228,7 @@ mlb_prob3 %>%
   gf_theme(theme_classic())
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 The hypotheses are:  
 $H_0$: $\sigma^2_{IF}=\sigma^2{OF}$. There is no difference in the variance of on base percentage for infielders and outfielders.  
@@ -210,7 +293,7 @@ results %>%
           x="Test statistic")
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 The $p$-value is
 
@@ -226,38 +309,6 @@ The $p$-value is
 
 This is a two sided test since we did not know in advance which variance would be larger. We reject the hypothesis of equal variance but the $p$-value is too close to the significance level. The conclusion is suspect. We need more data.
 
-d. Create a bootstrap distribution of the differences in sample standard deviations, and report a 95\% confidence interval. Compare with part c.  
-
-Let's write a function.
-
-
-```r
-var_stat <- function(x){
-  resample(x) %>%
-  summarize(stat=sd(obp[position=="IF"])-sd(obp[position=="OF"])) %>%
-  pull()
-}
-```
-
-
-```r
-set.seed(827)
-results<-do(1000)*var_stat(mlb_prob3)
-```
-
-
-```r
-results %>% 
-  gf_histogram(~var_stat,fill="cyan",color="black") %>%
-  gf_vline(xintercept=obs,color="red")%>%
-  gf_theme(theme_classic()) %>%
-  gf_labs(title="Bootstrap sampling of difference in variances",
-          x="Difference in variances")
-```
-
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-18-1.png" width="672" />
-
-
 
 
 ### Problem 3
@@ -272,12 +323,12 @@ gf_dist("chisq",df=1,col=1) %>%
    gf_dist("chisq",df=5,col=2) %>%
    gf_dist("chisq",df=10,col=3) %>%
    gf_dist("chisq",df=50,col=4) %>%
-   gf_lims(y=c(0,.25)) %>%
+   gf_lims(y=c(0, 0.25)) %>%
    gf_labs(y="f(x)") %>%
    gf_theme(theme_classic()) 
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 The "bump" moves to the rights as the degrees of freedom increase.
 
@@ -309,7 +360,7 @@ scale_colour_manual(name="Legend",
     labels=c("df=1","df=5","df=10","df=50"))
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 b. Repeat part (a) with the $t$ distribution. Add the pdf of a standard normal random variable as well. What do you notice? 
 
@@ -325,7 +376,7 @@ gf_dist("t",df=1,col="black") %>%
    gf_theme(theme_classic()) 
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 As degrees of freedom increases, the $t$-distribution approaches the standard normal distribution. 
 
@@ -360,7 +411,7 @@ scale_colour_manual(name="Legend",
     labels=c("df=1","df=5","df=10","df=50","Normal"))
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-24-1.png" width="672" />
 
 
 
@@ -373,17 +424,6 @@ The data is in the file `textbooks.csv` under the data folder.
 
 ```r
 textbooks<-read_csv("data/textbooks.csv")
-```
-
-```
-## Rows: 73 Columns: 7
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (4): dept_abbr, course, isbn, more
-## dbl (3): ucla_new, amaz_new, diff
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ```
 
 
@@ -423,7 +463,7 @@ textbooks %>%
   gf_labs(x="Amazon",y="UCLA")
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 It appears the books at the UCLA bookstore are more expensive. One way to test this is with a regression model; we will learn about in the next block.
 
@@ -440,7 +480,7 @@ textbooks %>%
           x="Price difference between UCLA and Amazon")
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-28-1.png" width="672" />
 
 The distribution is skewed.
 
@@ -455,7 +495,7 @@ d. To use a $t$ distribution, the variable `diff` has to be independent and norm
 qqnormsim(diff,textbooks)
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-27-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
 The normality assumption is suspect but we have a large sample so it should be acceptable to use the $t$.
 
@@ -565,9 +605,9 @@ sample(c(-1,1),size=73,replace = TRUE)
 ```
 
 ```
-##  [1]  1 -1  1  1  1 -1 -1  1 -1  1  1  1 -1 -1  1 -1 -1 -1 -1  1 -1  1  1  1  1
-## [26]  1  1 -1  1 -1 -1  1  1  1  1  1 -1  1  1  1 -1  1  1  1  1 -1  1  1  1 -1
-## [51] -1  1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1  1  1 -1  1 -1  1 -1  1  1 -1
+##  [1] -1 -1  1  1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1  1 -1  1  1  1  1 -1  1 -1 -1
+## [26] -1 -1 -1 -1 -1 -1  1 -1 -1  1 -1 -1  1  1  1 -1  1 -1  1  1  1  1  1 -1 -1
+## [51]  1 -1 -1 -1 -1 -1  1  1 -1  1 -1 -1 -1 -1 -1  1  1 -1  1 -1 -1 -1  1
 ```
 
 
@@ -585,7 +625,7 @@ results %>%
           x="Mean of price difference")
 ```
 
-<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-34-1.png" width="672" />
+<img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
 We need our observed test statistic to calculate a $p$-value. 
 

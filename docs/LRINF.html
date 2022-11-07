@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">26</span> Linear Regression Inference<a class="anchor" aria-label="anchor" href="#LRINF"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-24" class="section level2" number="26.1">
+<div id="objectives-25" class="section level2" number="26.1">
 <h2>
-<span class="header-section-number">26.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-24"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-25"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Given a simple linear regression model, conduct inference on the coefficients <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p></li>
@@ -147,9 +148,9 @@
 <ol style="list-style-type: lower-alpha">
 <li>Create a scatterplot for cans of beer and blood alcohol level.</li>
 </ol>
-<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/bac.csv"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of cans of beer"</span>,y<span class="op">=</span><span class="st">"BAC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -164,9 +165,9 @@
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Write the equation of the regression line. Interpret the slope and intercept in context.</li>
 </ol>
-<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span>,data<span class="op">=</span><span class="va">bac</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">bac_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -198,7 +199,7 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
 <li>Build a 95% confidence interval for the slope and interpret it in the context of your hypothesis test from part d. </li>
 </ol>
 <p>We need a lower confidence bound since the alternative is <span class="math inline">\(\beta_1 &gt; 0\)</span>. For a 95% lower confidence bound, we need at 90% confidence interval and then just ignore the upper value.</p>
-<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">bac_mod</span>,level<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                     5 %        95 %
 ## (Intercept) -0.03495916 0.009557957
@@ -211,7 +212,7 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
 <ol start="7" style="list-style-type: lower-alpha">
 <li>Predict the average BAC after two beers and build a 90% confidence interval around that prediction.</li>
 </ol>
-<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_bac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>beers<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">bac_mod</span>, newdata <span class="op">=</span> <span class="va">new_bac</span>, interval <span class="op">=</span> <span class="st">'confidence'</span>,level<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          fit         lwr       upr
@@ -219,7 +220,7 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
 <ol start="8" style="list-style-type: lower-alpha">
 <li>Repeat except build a 90% prediction interval and interpret.</li>
 </ol>
-<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">bac_mod</span>, newdata <span class="op">=</span> <span class="va">new_bac</span>, interval <span class="op">=</span> <span class="st">'prediction'</span>,level<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          fit        lwr        upr
 ## 1 0.02322692 -0.0157444 0.06219824</code></pre>
@@ -227,7 +228,7 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
 <ol style="list-style-type: lower-roman">
 <li>Plot the data points with a regression line, confidence band, and prediction band.</li>
 </ol>
-<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bac</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">bac</span><span class="op">~</span><span class="va">beers</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of cans of beers"</span>,y<span class="op">=</span><span class="st">"BAC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -237,9 +238,9 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
 <span>  <span class="fu">gf_refine</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="28-Linear-Regression-Inference-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
 </div>
-<div id="problem-3-17" class="section level3" number="26.2.3">
+<div id="problem-3-16" class="section level3" number="26.2.3">
 <h3>
-<span class="header-section-number">26.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-17"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-16"><i class="fas fa-link"></i></a>
 </h3>
 <p>Suppose I build a regression fitting a response variable to one predictor variable. I build a 95% confidence interval on <span class="math inline">\(\beta_1\)</span> and find that it contains 0, meaning that a slope of 0 is feasible. Does this mean that the response and the predictor are independent?</p>
 <p>No. It merely means that my best guess is that the two variables are <em>linearly uncorrelated</em>. They could be related another way (quadratically, for example), but still result in an estimated slope close to 0.</p>
@@ -254,19 +255,20 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#LRINF"><span class="header-section-number">26</span> Linear Regression Inference</a></li>
-<li><a class="nav-link" href="#objectives-24"><span class="header-section-number">26.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-25"><span class="header-section-number">26.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-25"><span class="header-section-number">26.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-25"><span class="header-section-number">26.2.1</span> Problem 1</a></li>
 <li><a class="nav-link" href="#problem-2-22"><span class="header-section-number">26.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-17"><span class="header-section-number">26.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-3-16"><span class="header-section-number">26.2.3</span> Problem 3</a></li>
 </ul>
 </li>
 </ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/28-Linear-Regression-Inference-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/28-Linear-Regression-Inference-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -278,7 +280,7 @@ Slope: For each additional can of beer consumed, the model predicts an additiona
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

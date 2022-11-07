@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="active" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">1</span> Case Study<a class="anchor" aria-label="anchor" href="#CS1"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives" class="section level2" number="1.1">
+<div id="objectives-1" class="section level2" number="1.1">
 <h2>
-<span class="header-section-number">1.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-1"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Use <code>R</code> for basic analysis and visualization.</p></li>
@@ -146,10 +147,10 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stent_study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'data/stent_study.csv'</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>Complete the steps below.<br>
-i. Use <code>inspect</code> on the data.</li>
+<li>Complete the steps below. The start of code is provided below. You will need to add <code>{r}</code> to the start of each code chunk or insert your own code chunks to use the code.</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<pre><code>i. Use `inspect` on the data.  </code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">stent_study</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## categorical variables:  
@@ -161,43 +162,38 @@ i. Use <code>inspect</code> on the data.</li>
 ## 1 control (50.3%), trmt (49.7%)                
 ## 2 no_event (89.8%), stroke (10.2%)             
 ## 3 no_event (83.8%), stroke (16.2%)</code></pre>
-<pre><code>ii. Create a table of `outcome365` and `group`. Comment on the results.  
-
-
-```r
-tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = TRUE)
-```
-
-```
-##           group
+<p>This shows the different variables and their types.</p>
+<pre><code>ii. Create a table of `outcome365` and `group`. Comment on the results.  </code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="va">outcome365</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">stent_study</span>, format <span class="op">=</span> <span class="st">"proportion"</span>, margins <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##           group
 ## outcome365   control      trmt
 ##   no_event 0.8766520 0.7991071
 ##   stroke   0.1233480 0.2008929
-##   Total    1.0000000 1.0000000
-```</code></pre>
+##   Total    1.0000000 1.0000000</code></pre>
 <p>Patients in the treatment group had a higher proportion of strokes than those in the control group after one year. The treatment does not appear to help the rate of strokes and, in fact, may hurt it.</p>
 <pre><code>iii. Create a barchart of the data.  </code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stent_study</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_props</span><span class="op">(</span><span class="op">~</span><span class="va">group</span>, fill <span class="op">=</span> <span class="op">~</span><span class="va">outcome365</span>, position <span class="op">=</span> <span class="st">'fill'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Impact of Stents on Stroke"</span>,</span>
 <span>          subtitle <span class="op">=</span> <span class="st">'Experiment with 451 Patients'</span>,</span>
 <span>          x <span class="op">=</span> <span class="st">"Experimental Group"</span>, </span>
-<span>          y <span class="op">=</span> <span class="st">"Number of Events"</span><span class="op">)</span></span></code></pre></div>
+<span>          y <span class="op">=</span> <span class="st">"Proportion of patients"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="01-Data-Case-Study-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
 </div>
 <div id="problem-2" class="section level3" number="1.2.2">
 <h3>
 <span class="header-section-number">1.2.2</span> Problem 2<a class="anchor" aria-label="anchor" href="#problem-2"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Migraine and acupuncture</strong>. A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture. To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control. The 43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. The 46 patients in the control group received placebo acupuncture (needle insertion at non-acupoint locations). Then 24 hours after patients received acupuncture, they were asked if they were pain free.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;G. Allais et al. &lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/21533739"&gt;“Ear acupuncture in the treatment of migraine attacks: a randomized trial on the efficacy of appropriate versus inappropriate acupoints”.&lt;/a&gt; In: Neurological Sci. 32.1 (2011), pp. 173–175.&lt;/p&gt;'><sup>1</sup></a></p>
+<p><strong>Migraine and acupuncture</strong>. A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture. To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control. The 43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. The 46 patients in the control group received placebo acupuncture (needle insertion at non-acupoint locations). Then 24 hours after patients received acupuncture, they were asked if they were pain free.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;G. Allais et al. “Ear acupuncture in the treatment of migraine attacks: a randomized trial on the efficacy of appropriate versus inappropriate acupoints”. &lt;a href="http://www.ncbi.nlm.nih.gov/pubmed/21533739" class="uri"&gt;http://www.ncbi.nlm.nih.gov/pubmed/21533739&lt;/a&gt; In: Neurological Sci. 32.1 (2011), pp. 173–175.&lt;/p&gt;'><sup>1</sup></a></p>
 <pre><code>The data is in the file `migraine_study.csv` in the `data` folder. Complete the following work:</code></pre>
 <ol style="list-style-type: lower-alpha">
 <li>Read the data into an object called <code>migraine_study</code>.</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">migraine_study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/migraine_study.csv"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">migraine_study</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   group     pain_free
@@ -211,7 +207,7 @@ tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = T
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Create a table of the data.</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="va">pain_free</span> <span class="op">~</span> <span class="va">group</span>, data <span class="op">=</span> <span class="va">migraine_study</span>, </span>
 <span>      format <span class="op">=</span> <span class="st">"proportion"</span>, margin <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          group
@@ -249,13 +245,13 @@ tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = T
 </div>
 
   <div class="chapter-nav">
-<div class="prev"><a href="index.html">Preface</a></div>
+<div class="prev"><a href="objectives.html">Objectives</a></div>
 <div class="next"><a href="DB.html"><span class="header-section-number">2</span> Data Basics</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#CS1"><span class="header-section-number">1</span> Case Study</a></li>
-<li><a class="nav-link" href="#objectives"><span class="header-section-number">1.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-1"><span class="header-section-number">1.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework"><span class="header-section-number">1.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1"><span class="header-section-number">1.2.1</span> Problem 1</a></li>
@@ -266,7 +262,8 @@ tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = T
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/01-Data-Case-Study-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/01-Data-Case-Study-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -278,7 +275,7 @@ tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = T
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

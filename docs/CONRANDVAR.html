@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">11</span> Continuous Random Variables<a class="anchor" aria-label="anchor" href="#CONRANDVAR"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-10" class="section level2" number="11.1">
+<div id="objectives-11" class="section level2" number="11.1">
 <h2>
-<span class="header-section-number">11.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-10"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-11"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Define and properly use in context all new terminology, to include: <em>probability density function (pdf)</em> and <em>cumulative distribution function (cdf)</em> for continuous random variables.</p></li>
@@ -145,11 +146,11 @@
 \]</span></p>
 <p>Thus, <span class="math inline">\(k=3\)</span>.</p>
 <p>Using <code>R</code>, see if you can follow the code.</p>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_pdf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="va">y</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">18</span>,<span class="op">-</span><span class="va">x</span>,<span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">value</span></span></code></pre></div>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">my_pdf</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">my_pdf</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">domain</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">.01</span>,<span class="fl">5</span>,<span class="fl">.1</span><span class="op">)</span></span>
 <span><span class="fu">gf_line</span><span class="op">(</span><span class="fu">my_pdf</span><span class="op">(</span><span class="va">domain</span><span class="op">)</span><span class="op">~</span><span class="va">domain</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -157,25 +158,25 @@
 <span>  <span class="fu">gf_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">1</span>,color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="11-Continuous-Random-Variables-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
 <p>Looks like <span class="math inline">\(k \approx 3\)</span> from the plot.</p>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/uniroot.html">uniroot</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="fu">my_pdf</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">root</span></span></code></pre></div>
 <pre><code>## [1] 2.999997</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Plot the pdf of <span class="math inline">\(X\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">0.001</span><span class="op">)</span></span>
 <span><span class="va">fx</span><span class="op">&lt;-</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">18</span></span>
 <span><span class="fu">gf_line</span><span class="op">(</span><span class="va">fx</span><span class="op">~</span><span class="va">x</span>,ylab<span class="op">=</span><span class="st">"f(x)"</span>,title<span class="op">=</span><span class="st">"pdf of X"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="11-Continuous-Random-Variables-Solutions_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y<span class="op">=</span><span class="st">"f(x)"</span>,title<span class="op">=</span><span class="st">"pdf of X"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="11-Continuous-Random-Variables-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672"></div>
-<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html">curve</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">18</span>,from<span class="op">=</span><span class="op">-</span><span class="fl">3</span>,to<span class="op">=</span><span class="fl">3</span>,ylab<span class="op">=</span><span class="st">"f(x)"</span>,main<span class="op">=</span><span class="st">"pdf of X"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="11-Continuous-Random-Variables-Solutions_files/figure-html/hw9a-1.png" width="672"></div>
 <ol start="3" style="list-style-type: lower-alpha">
@@ -188,7 +189,7 @@ F_X(x)=\mbox{P}(X\leq x)=\int_{-3}^x \frac{t^2}{18}\mathop{}\!\mathrm{d}t = \fra
 <p><span class="math display">\[
 F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, &amp; -3\leq x \leq 3 \\ 1, &amp; x&gt;3 \end{array}\right.
 \]</span></p>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.5</span>,<span class="fl">3.5</span>,<span class="fl">0.001</span><span class="op">)</span></span>
 <span><span class="va">fx</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">pmin</a></span><span class="op">(</span><span class="fl">1</span>,<span class="op">(</span><span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;=</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">/</span><span class="fl">54</span><span class="op">+</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">gf_line</span><span class="op">(</span><span class="va">fx</span><span class="op">~</span><span class="va">x</span>,ylab<span class="op">=</span><span class="st">"F(x)"</span>,title<span class="op">=</span><span class="st">"cdf of X"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -201,7 +202,7 @@ F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, 
 \]</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">18</span>,<span class="op">-</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 0.5185185 with absolute error &lt; 5.8e-15</code></pre>
 <ol start="5" style="list-style-type: lower-alpha">
@@ -211,14 +212,14 @@ F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, 
 \]</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">18</span>,<span class="fl">1.5</span>,<span class="fl">2.5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 0.2268519 with absolute error &lt; 2.5e-15</code></pre>
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Find the 80th percentile of <span class="math inline">\(X\)</span> (the value <span class="math inline">\(x\)</span> for which 80% of the distribution is to the left of that value).</li>
 </ol>
 <p>Need <span class="math inline">\(x\)</span> such that <span class="math inline">\(F(x)=0.8\)</span>. Solving <span class="math inline">\(\frac{x^3}{54}+\frac{1}{2}=0.8\)</span> for <span class="math inline">\(x\)</span> yields <span class="math inline">\(x=2.530\)</span>.</p>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/uniroot.html">uniroot</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">/</span><span class="fl">54</span><span class="op">+</span><span class="fl">.5</span><span class="op">-</span><span class="fl">.8</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## $root
 ## [1] 2.530293
@@ -256,20 +257,20 @@ F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, 
 <li>Simulate 10000 values from this distribution and plot the density.</li>
 </ol>
 <p>This is tricky since we need a cube root function. Just raising to the one-third power won’t work. Let’s write our own function.</p>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cuberoot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sign.html">sign</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">cuberoot</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">-</span><span class="fl">.5</span><span class="op">)</span><span class="op">*</span><span class="fl">54</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_dens</span><span class="op">(</span><span class="op">~</span><span class="va">cuberoot</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"pdf from simulation"</span>,x<span class="op">=</span><span class="st">"x"</span>,y<span class="op">=</span><span class="st">"f(x)"</span><span class="op">)</span> </span></code></pre></div>
 <div class="inline-figure"><img src="11-Continuous-Random-Variables-Solutions_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
 <p>Notice that the smoothing operation goes past the support of <span class="math inline">\(X\)</span> and thus shows a concave down curve. We could clean up by limiting the x-axis to the interval [-3,3].</p>
-<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## quantitative variables:  
@@ -300,7 +301,7 @@ F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, 
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#CONRANDVAR"><span class="header-section-number">11</span> Continuous Random Variables</a></li>
-<li><a class="nav-link" href="#objectives-10"><span class="header-section-number">11.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-11"><span class="header-section-number">11.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-10"><span class="header-section-number">11.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-10"><span class="header-section-number">11.2.1</span> Problem 1</a></li>
@@ -311,7 +312,8 @@ F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, 
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/11-Continuous-Random-Variables-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/11-Continuous-Random-Variables-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -323,7 +325,7 @@ F_X(x)=\left\{\begin{array}{ll} 0, &amp; x&lt;-3 \\ \frac{x^3}{54}+\frac{1}{2}, 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

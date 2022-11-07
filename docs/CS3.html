@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">16</span> Case Study<a class="anchor" aria-label="anchor" href="#CS3"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-15" class="section level2" number="16.1">
+<div id="objectives-16" class="section level2" number="16.1">
 <h2>
-<span class="header-section-number">16.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-15"><i class="fas fa-link"></i></a>
+<span class="header-section-number">16.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-16"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Define and use properly in context all new terminology, to include: <em>point estimate</em>, <em>null hypothesis</em>, <em>alternative hypothesis</em>, <em>hypothesis test</em>, <em>randomization</em>, <em>permutation test</em>, <em>test statistic</em>, and <em><span class="math inline">\(p\)</span>-value</em>.</p></li>
@@ -176,12 +177,12 @@
 \end{array}
 \]</span></p>
 <p>The data is in a file called <strong>Stanford_heart_study.csv</strong>. Read the data in and answer the following questions.</p>
-<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">heart</span><span class="op">&lt;-</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/Stanford_heart_study.csv"</span><span class="op">)</span></span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
 <li>What proportion of patients in the treatment group and what proportion of patients in the control group died?</li>
 </ol>
-<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">heart</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## categorical variables:  
@@ -191,14 +192,14 @@
 ##                                    distribution
 ## 1 Dead (72.8%), Alive (27.2%)                  
 ## 2 Treatment (67%), Control (33%)</code></pre>
-<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">outcome</span><span class="op">+</span><span class="va">group</span>,data<span class="op">=</span><span class="va">heart</span>,margins <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group
 ## outcome Control Treatment Total
 ##   Alive       4        24    28
 ##   Dead       30        45    75
 ##   Total      34        69   103</code></pre>
-<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">~</span><span class="va">group</span>,data<span class="op">=</span><span class="va">heart</span>,margins <span class="op">=</span> <span class="cn">TRUE</span>,format<span class="op">=</span><span class="st">"percent"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group
 ## outcome   Control Treatment
@@ -220,7 +221,7 @@ to chance and the heart transplant is effective.</p>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Find observed value of the test statistic, which we decided to use the difference in proportions.</li>
 </ol>
-<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obs</span><span class="op">&lt;-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/diffmean.html">diffprop</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">~</span><span class="va">group</span>,data<span class="op">=</span><span class="va">heart</span><span class="op">)</span></span>
 <span><span class="va">obs</span></span></code></pre></div>
 <pre><code>## diffprop 
@@ -228,13 +229,13 @@ to chance and the heart transplant is effective.</p>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Simulate 1000 values of the test statistic by using <code><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle()</a></code> on the variable <code>group</code>.</li>
 </ol>
-<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1213</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/diffmean.html">diffprop</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">~</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle</a></span><span class="op">(</span><span class="va">group</span><span class="op">)</span>,data<span class="op">=</span><span class="va">heart</span><span class="op">)</span></span></code></pre></div>
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Plot distribution of results. Include a vertical line for the observed value. Clean up the plot as if you were presenting to a decision maker.</li>
 </ol>
-<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">diffprop</span>,xlab<span class="op">=</span><span class="st">"Difference in proportions"</span>,</span>
 <span>               ylab<span class="op">=</span><span class="st">"Count"</span>,</span>
@@ -248,20 +249,20 @@ to chance and the heart transplant is effective.</p>
 <ol start="7" style="list-style-type: lower-alpha">
 <li>Find <span class="math inline">\(p\)</span>-value. Think carefully about what more extreme would mean.</li>
 </ol>
-<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>p_value <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">diffprop</span><span class="op">&gt;=</span><span class="va">obs</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   p_value
 ## 1   0.011</code></pre>
 <p>If we wanted to use a <code>hypergeometric</code>. We could use any of the cell in the table. We will use the upper left. More extreme would be 4 or fewer in the control group being alive. We get a similar <span class="math inline">\(p\)</span>-value.</p>
-<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">outcome</span><span class="op">+</span><span class="va">group</span>,data<span class="op">=</span><span class="va">heart</span>,margins <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        group
 ## outcome Control Treatment Total
 ##   Alive       4        24    28
 ##   Dead       30        45    75
 ##   Total      34        69   103</code></pre>
-<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb330"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Hypergeometric.html">phyper</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">34</span>,<span class="fl">69</span>,<span class="fl">28</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.01039537</code></pre>
 <ol start="8" style="list-style-type: lower-alpha">
@@ -279,7 +280,7 @@ to chance and the heart transplant is effective.</p>
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#CS3"><span class="header-section-number">16</span> Case Study</a></li>
-<li><a class="nav-link" href="#objectives-15"><span class="header-section-number">16.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-16"><span class="header-section-number">16.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-15"><span class="header-section-number">16.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-15"><span class="header-section-number">16.2.1</span> Problem 1</a></li>
@@ -290,7 +291,8 @@ to chance and the heart transplant is effective.</p>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/18-Hypothesis-Testing-Case-Study-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/18-Hypothesis-Testing-Case-Study-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -302,7 +304,7 @@ to chance and the heart transplant is effective.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

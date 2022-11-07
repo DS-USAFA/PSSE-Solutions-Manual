@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">9</span> Conditional Probability<a class="anchor" aria-label="anchor" href="#CONDPROB"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-8" class="section level2" number="9.1">
+<div id="objectives-9" class="section level2" number="9.1">
 <h2>
-<span class="header-section-number">9.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-8"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-9"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Define conditional probability and distinguish it from joint probability.</p></li>
@@ -189,7 +190,7 @@
 \]</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.6</span><span class="op">^</span><span class="fl">5</span></span></code></pre></div>
 <pre><code>## [1] 0.07776</code></pre>
 <ol start="6" style="list-style-type: lower-alpha">
@@ -199,13 +200,13 @@
 <span class="math display">\[
 \mbox{P}(\mbox{2 heads out of 5 flips})=\binom{5}{2} 0.6^2(1-0.6)^3 = 0.2304
 \]</span></p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fl">0.6</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="fl">0.4</span><span class="op">^</span><span class="fl">3</span></span></code></pre></div>
 <pre><code>## [1] 0.2304</code></pre>
 </div>
-<div id="problem-3-6" class="section level3" number="9.2.3">
+<div id="problem-3-5" class="section level3" number="9.2.3">
 <h3>
-<span class="header-section-number">9.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">9.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-5"><i class="fas fa-link"></i></a>
 </h3>
 <p>(Adapted from IPSUR, <span class="citation">(<a href="references.html#ref-ipsur" role="doc-biblioref">Kerns 2010</a>)</span>). Suppose there are three assistants working at a company: Moe, Larry and Curly. All three assist with a filing process. Only one filing assistant is needed at a time. Moe assists 60% of the time, Larry assists 30% of the time and Curly assists the remaining 10% of the time. Occasionally, they make errors (misfiles); Moe has a misfile rate of 0.01, Larry has a misfile rate of 0.025, and Curly has a rate of 0.05. Suppose a misfile was discovered, but it is unknown who was on schedule when it occurred. Who is most likely to have committed the misfile? Calculate the probabilities for each of the three assistants.</p>
 <p>Let <span class="math inline">\(E\)</span> be the event a misfile was committed. Also, let <span class="math inline">\(M\)</span>, <span class="math inline">\(L\)</span>, and <span class="math inline">\(C\)</span> denote the events that Moe, Larry and Curly was the assistant at the time, respectively.</p>
@@ -248,7 +249,7 @@
 <p><span class="math display">\[
 \mbox{P}(Fair | 3 Heads) =  \frac{\frac{1}{8}\frac{1}{2}}{\frac{1}{8}\frac{1}{2}+.8^{3}\frac{1}{2}} = 0.196
 \]</span></p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">.125</span><span class="op">*</span><span class="fl">.5</span><span class="op">/</span><span class="op">(</span><span class="fl">.125</span><span class="op">*</span><span class="fl">.5</span><span class="op">+</span><span class="fl">.8</span><span class="op">^</span><span class="fl">3</span><span class="op">*</span><span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.1962323</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
@@ -256,7 +257,7 @@
 </ol>
 <p>Let’s use the same assumptions. We could do this problem in two ways. We could flip each coin a fixed number of times and combine the information or use a random process to pick a flipped coin and then flip it three times. Let’s do the first.</p>
 <p>Let’s flip a fair coin 50,000 times and count how many heads we get.</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1154</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">50000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">heads</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -264,7 +265,7 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 6157</code></pre>
 <p>Now flip the biased coin.</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">50000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">3</span>,prob<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">heads</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>count<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -272,12 +273,12 @@
 <pre><code>## [1] 25743</code></pre>
 <p>So we have a total 6157 + 25743 heads of which 6157 came from the fair coin.</p>
 <p>Thus the probability of the coin being fair given 3 heads on the flips is:</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">6157</span><span class="op">/</span><span class="op">(</span><span class="fl">6157</span> <span class="op">+</span> <span class="fl">25743</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.1930094</code></pre>
 <p>Or 19.3%.</p>
 <p>Next pick a one of the coins with equal probability 100,000 times.</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">501</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">100000</span>,summarize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">results</span></span></code></pre></div>
@@ -285,25 +286,25 @@
 ## 1 1e+05 50226 49774  0.5</code></pre>
 <p>Now the fair coin was flipped 50226 times.</p>
 <p>Let’s see how many times we get 3 heads when we flip that coin 3 times.</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">50226</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">heads</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>count<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 6270</code></pre>
 <p>We have 6270 cases with 3 heads. Now for the biased coin.</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">49774</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">3</span>,prob<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">heads</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>count<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 25512</code></pre>
 <p>Now we can determine the probability of a fair coin given 3 heads.</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">6270</span><span class="op">/</span><span class="op">(</span><span class="fl">6270</span><span class="op">+</span><span class="fl">25512</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.1972815</code></pre>
 <p>This code we could easily adapt if we don’t think each coin is being selected with the same frequency. Suppose we think the fair coin has a 75% chance of being selected. The analysis would look like this:</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">9021</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">100000</span>,prob<span class="op">=</span><span class="fl">.75</span>,summarize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">results</span></span></code></pre></div>
@@ -311,21 +312,21 @@
 ## 1 1e+05 75023 24977 0.75</code></pre>
 <p>Now the fair coin was flipped 75023 times.</p>
 <p>Let’s see how many times we get 3 heads when we flip that coin 3 times.</p>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">75023</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">heads</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>count<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 9579</code></pre>
 <p>We have 9579 cases with 3 heads. Now for the biased coin.</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">24977</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/rflip.html">rflip</a></span><span class="op">(</span><span class="fl">3</span>,prob<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">heads</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>count<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 12789</code></pre>
 <p>Now we can determine the probability of a fair coin given 3 heads.</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">9579</span><span class="op">/</span><span class="op">(</span><span class="fl">9579</span><span class="op">+</span><span class="fl">12789</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.4282457</code></pre>
 <p>A much different answer. That is because prior to getting the data we believed the fair coin would be selected with a 75% probability. The data indicates that we need to update and lower this probability. We only flipped 3 times but the evidence is so in favor of the biased coin, that our probability dropped substantially. This is why Bayes is such a powerful tool.</p>
@@ -341,12 +342,12 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#CONDPROB"><span class="header-section-number">9</span> Conditional Probability</a></li>
-<li><a class="nav-link" href="#objectives-8"><span class="header-section-number">9.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-9"><span class="header-section-number">9.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-8"><span class="header-section-number">9.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-8"><span class="header-section-number">9.2.1</span> Problem 1</a></li>
 <li><a class="nav-link" href="#problem-2-8"><span class="header-section-number">9.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-6"><span class="header-section-number">9.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-3-5"><span class="header-section-number">9.2.3</span> Problem 3</a></li>
 <li><a class="nav-link" href="#problem-4-2"><span class="header-section-number">9.2.4</span> Problem 4</a></li>
 </ul>
 </li>
@@ -354,7 +355,8 @@
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/09-Conditional-Probability-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/09-Conditional-Probability-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -366,7 +368,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

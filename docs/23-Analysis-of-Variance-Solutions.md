@@ -33,8 +33,9 @@ head(census)
 
 a. State the null and alternative hypotheses in context of the research problem. Note: there are six different marital status types.  
 
-$H_0$: The total personal income is equal for every marital status. $\mu_{\text{divorced}} = \mu_{\text{absent}} = \mu_{\text{present}} = \mu_{\text{single}} = \mu_{\text{separated}} = \mu_{\text{widowed}}$
-$H_A$: The total personal income for at least one marital status is different. 
+$H_0$: The average total personal income is equal for every marital status. $\mu_{\text{divorced}} = \mu_{\text{absent}} = \mu_{\text{present}} = \mu_{\text{single}} = \mu_{\text{separated}} = \mu_{\text{widowed}}$  
+
+$H_A$: The average total personal income for at least one marital status is different. 
 
 b. Using the `aov()` function, conduct an ANOVA using a significance level of $\alpha = 0.05$. Clearly state your conclusion. 
 
@@ -52,7 +53,7 @@ summary(aov(total_personal_income ~ marital_status, data = census))
 ## 108 observations deleted due to missingness
 ```
 
-The $p$-value is 0.00134. We reject the null hypothesis and conclude that the total personal income for at least one marital status is different from the others. The plot below shows the $F$ distribution with the observed $F$ test statistic shown as a red line.  
+The $p$-value is 0.00134. We reject the null hypothesis and conclude that the average total personal income for at least one marital status is different from the others. The plot below shows the $F$ distribution with the observed $F$ test statistic shown as a red line.  
 
 
 ```r
@@ -194,7 +195,7 @@ prop1(~(f_stat >= obs), results)
 ## 0.03496503
 ```
 
-This $p$-value is much larger than that found with the ANOVA using the $F$ distribution. The $p$-value for the "traditional" ANOVA makes the assumptions of independent observations, normally distributed data within each group, and constant variance across groups. However, we know from part c) that the latter two assumptions are not met, and thus ANOVA using the $F$ distribution is not valid. Still, our permutation test leads us to the same conclusion; we reject the null hypothesis and conclude that not all groups are equal. That is, the total personal income for at least one marital status is different. 
+This $p$-value is much larger than that found with the ANOVA using the $F$ distribution. The $p$-value for the "traditional" ANOVA makes the assumptions of independent observations, normally distributed data within each group, and constant variance across groups. However, we know from part c) that the latter two assumptions are not met, and thus ANOVA using the $F$ distribution is not valid. Still, our permutation test leads us to the same conclusion; we reject the null hypothesis and conclude that not all groups are equal. That is, the average total personal income for at least one marital status is different. 
 
 
 e. How do we determine which groups are different? 

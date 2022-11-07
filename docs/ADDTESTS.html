@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">20</span> Additional Hypothesis Tests<a class="anchor" aria-label="anchor" href="#ADDTESTS"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-18" class="section level2" number="20.1">
+<div id="objectives-19" class="section level2" number="20.1">
 <h2>
-<span class="header-section-number">20.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-18"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-19"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Conduct and interpret a goodness of fit test using both Pearson’s chi-squared and randomization to evaluate the independence between two categorical variables.</p></li>
@@ -141,9 +142,9 @@
 <ol style="list-style-type: lower-alpha">
 <li>Load the data and tally the data into a table. The data is in <code>golf_balls.csv</code>.</li>
 </ol>
-<div class="sourceCode" id="cb429"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">golf_balls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/golf_balls.csv"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb430"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">golf_balls</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 x 1
 ##   number
@@ -154,39 +155,78 @@
 ## 4      4
 ## 5      4
 ## 6      3</code></pre>
-<div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>,data<span class="op">=</span><span class="va">golf_balls</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>, data <span class="op">=</span> <span class="va">golf_balls</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## number
 ##   1   2   3   4 
 ## 137 138 107 104</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Using the function <code>chisq.test</code> conduct a hypothesis test of equally likely distribution of balls. You may have to read the help menu.</li>
 </ol>
-<div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>,data<span class="op">=</span><span class="va">golf_balls</span><span class="op">)</span>,p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>,<span class="fl">.25</span>,<span class="fl">.25</span>,<span class="fl">.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>The hypotheses from Chapter <a href="HYPTESTDIST.html#HYPTESTDIST">18</a> are</p>
+<p><span class="math inline">\(H_0\)</span>: All of the numbers are equally likely. <span class="math inline">\(\pi_1 = \pi_2 = \pi_3 = \pi_4\)</span> or <span class="math inline">\(\pi_1 = \frac{1}{4}, \pi_2 = \frac{1}{4}, \pi_3 = \frac{1}{4} = \pi_4 = \frac{1}{4}\)</span></p>
+<p><span class="math inline">\(H_A\)</span>: There is some other distributio of the numbers in the population. At least one population proportion is not <span class="math inline">\(\frac{1}{4}\)</span>.</p>
+<p>We use the <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> function in <code>R</code> to conduct the hypothesis test.</p>
+<div class="sourceCode" id="cb437"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>, data <span class="op">=</span> <span class="va">golf_balls</span><span class="op">)</span>, </span>
+<span>           p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  tally(~number, data = golf_balls)
 ## X-squared = 8.4691, df = 3, p-value = 0.03725</code></pre>
+<p>The p-value is 0.03725. We reject the null hypothesis; there is evidence that there is some other distribution of the numbers in the population (at least one population proportion is different from <span class="math inline">\(\frac{1}{4}\)</span>).</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Repeat part b), but assume balls with the numbers 1 and 2 occur 30% of the time and balls with 3 and 4 occur 20%.</li>
 </ol>
-<div class="sourceCode" id="cb436"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>,data<span class="op">=</span><span class="va">golf_balls</span><span class="op">)</span>,p<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.3</span>,<span class="fl">.3</span>,<span class="fl">.2</span>,<span class="fl">.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>, data <span class="op">=</span> <span class="va">golf_balls</span><span class="op">)</span>,</span>
+<span>           p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
 ## 
 ## data:  tally(~number, data = golf_balls)
 ## X-squared = 2.4122, df = 3, p-value = 0.4914</code></pre>
+<p>The p-value is 0.4914. We fail to reject the null hypothesis; there is not enough evidence to say that the distribution of numbers in the population is different from 0.3, 0.3, 0.2 and 0.2.</p>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Repeat part c), but use a randomization test this time. You should use <span class="math inline">\(\chi^2\)</span>, the chi-squared test statistic, as your test statistic.</li>
 </ol>
-<div id="add-answer-here" class="section level6" number="20.2.1.0.0.1">
-<h6>
-<span class="header-section-number">20.2.1.0.0.1</span> ADD ANSWER HERE<a class="anchor" aria-label="anchor" href="#add-answer-here"><i class="fas fa-link"></i></a>
-</h6>
-</div>
+<p>Let’s calculate the observed value of the test statistic.</p>
+<div class="sourceCode" id="cb441"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/chisq.html">chisq</a></span><span class="op">(</span><span class="op">~</span><span class="va">number</span>, data <span class="op">=</span> <span class="va">golf_balls</span><span class="op">)</span></span>
+<span><span class="va">obs</span></span></code></pre></div>
+<pre><code>## X.squared 
+##  8.469136</code></pre>
+<p>Next, we will use a randomization process to find the sampling distribution of our test statistic. Because there is only a single variable, we can’t use the <code><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle()</a></code> function. Instead, think about what we want to do.</p>
+<p>Under the null hypothesis, all of the numbers (1 through 4) are equally likely. We will generate a sample of the numbers 1 through 4 that is the same size as our <code>golf_balls</code> data set (486 observations). Then, we’ll use the <code><a href="https://www.mosaic-web.org/mosaic/reference/chisq.html">chisq()</a></code> function to find the chi-square test statistic based on that sample.</p>
+<div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1018</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/chisq.html">chisq</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, size <span class="op">=</span> <span class="fl">486</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## X.squared 
+##  4.584362</code></pre>
+<p>This assumes that the probability of each number is the same ($ for each number). You can also change the probability of each number within your <code><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample()</a></code>.</p>
+<p>Now, let’s do the same thing many times.</p>
+<div class="sourceCode" id="cb445"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1018</span><span class="op">)</span></span>
+<span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/chisq.html">chisq</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, size <span class="op">=</span> <span class="fl">486</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>We plot the sampling distribution and compare our observed test statistic (shown as a red line). The chi-square distribution with 3 degrees of freedom
+(4 categories/golf ball numbers minus 1) is shown as a dark blue curve.</p>
+<div class="sourceCode" id="cb446"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_dhistogram</span><span class="op">(</span><span class="op">~</span><span class="va">X.squared</span>, fill <span class="op">=</span> <span class="st">"cyan"</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">obs</span>, color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"chisq"</span>, df <span class="op">=</span> <span class="fl">3</span>, color <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gf_labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Sampling distribution of chi-squared test statistic"</span>,</span>
+<span>          subtitle <span class="op">=</span> <span class="st">"For the distribution of golf ball numbers"</span>,</span>
+<span>          x <span class="op">=</span> <span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<p>We find the p-value using <code><a href="https://rdrr.io/pkg/mosaicCore/man/prop.html">prop1()</a></code>.</p>
+<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/prop.html">prop1</a></span><span class="op">(</span><span class="op">~</span><span class="va">X.squared</span> <span class="op">&gt;=</span> <span class="va">obs</span>, data <span class="op">=</span> <span class="va">results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  prop_TRUE 
+## 0.03196803</code></pre>
+<p>Based on this p-value, we reject the null hypothesis; there is evidence that at least one population proportion is different from <span class="math inline">\(\frac{1}{4}\)</span>.</p>
 </div>
 <div id="problem-2-19" class="section level3" number="20.2.2">
 <h3>
@@ -199,13 +239,13 @@
 <ol style="list-style-type: lower-alpha">
 <li>Using the MLB from the lesson, subset on <code>IF</code> and <code>OF</code>.</li>
 </ol>
-<div class="sourceCode" id="cb438"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlb_obp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/mlb_obp.csv"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlb_prob3</span> <span class="op">&lt;-</span> <span class="va">mlb_obp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">|</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html">droplevels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb440"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mlb_prob3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##    position              obp        
 ##  Length:274         Min.   :0.1740  
@@ -218,16 +258,16 @@
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Create a side-by-side boxplot.</li>
 </ol>
-<div class="sourceCode" id="cb442"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlb_prob3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="va">obp</span><span class="op">~</span><span class="va">position</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
 <p>The hypotheses are:<br><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\sigma^2_{IF}=\sigma^2{OF}\)</span>. There is no difference in the variance of on base percentage for infielders and outfielders.<br><span class="math inline">\(H_A\)</span>: <span class="math inline">\(\sigma^2_{IF}\neq \sigma^2_{OF}\)</span>. There is a difference in variances.</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Use the differences in sample standard deviations as your test statistic. Using a permutation test, find the <span class="math inline">\(p\)</span>-value and discuss your decision.</li>
 </ol>
-<div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mlb_prob3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">position</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -236,24 +276,24 @@
 ##   &lt;chr&gt;     &lt;dbl&gt;
 ## 1 IF       0.0371
 ## 2 OF       0.0294</code></pre>
-<div class="sourceCode" id="cb445"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="va">mlb_prob3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">obs</span></span></code></pre></div>
 <pre><code>## [1] 0.007651101</code></pre>
 <p>Let’s write a function to shuffle the position.</p>
-<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">perm_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>position<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">shuffle</a></span><span class="op">(</span><span class="va">position</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb459"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">443</span><span class="op">)</span></span>
 <span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">perm_stat</span><span class="op">(</span><span class="va">mlb_prob3</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">perm_stat</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept<span class="op">=</span><span class="va">obs</span>,color<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -261,55 +301,34 @@
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Sampling distribution of difference in variances"</span>,</span>
 <span>          subtitle<span class="op">=</span><span class="st">"Randomization permutation test"</span>,</span>
 <span>          x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-14-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-19-1.png" width="672"></div>
 <p>The <span class="math inline">\(p\)</span>-value is</p>
-<div class="sourceCode" id="cb450"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb461"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/prop.html">prop1</a></span><span class="op">(</span><span class="op">~</span><span class="op">(</span><span class="va">perm_stat</span><span class="op">&gt;=</span><span class="va">obs</span><span class="op">)</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  prop_TRUE 
 ## 0.04395604</code></pre>
 <p>This is a two sided test since we did not know in advance which variance would be larger. We reject the hypothesis of equal variance but the <span class="math inline">\(p\)</span>-value is too close to the significance level. The conclusion is suspect. We need more data.</p>
-<ol start="4" style="list-style-type: lower-alpha">
-<li>Create a bootstrap distribution of the differences in sample standard deviations, and report a 95% confidence interval. Compare with part c. </li>
-</ol>
-<p>Let’s write a function.</p>
-<div class="sourceCode" id="cb452"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">var_stat</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>stat<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"IF"</span><span class="op">]</span><span class="op">)</span><span class="op">-</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sd</a></span><span class="op">(</span><span class="va">obp</span><span class="op">[</span><span class="va">position</span><span class="op">==</span><span class="st">"OF"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">827</span><span class="op">)</span></span>
-<span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">var_stat</span><span class="op">(</span><span class="va">mlb_prob3</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb454"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">var_stat</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">gf_vline</span><span class="op">(</span>xintercept<span class="op">=</span><span class="va">obs</span>,color<span class="op">=</span><span class="st">"red"</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Bootstrap sampling of difference in variances"</span>,</span>
-<span>          x<span class="op">=</span><span class="st">"Difference in variances"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-18-1.png" width="672"></div>
 </div>
-<div id="problem-3-14" class="section level3" number="20.2.3">
+<div id="problem-3-13" class="section level3" number="20.2.3">
 <h3>
-<span class="header-section-number">20.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-14"><i class="fas fa-link"></i></a>
+<span class="header-section-number">20.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-13"><i class="fas fa-link"></i></a>
 </h3>
 <p>Exploration of the chi-squared and <span class="math inline">\(t\)</span> distributions.</p>
 <ol style="list-style-type: lower-alpha">
 <li>In <code>R</code>, plot the pdf of a random variable with the chi-squared distribution with 1 degree of freedom. On the same plot, include the pdfs with degrees of freedom of 5, 10 and 50. Describe how the behavior of the pdf changes with increasing degrees of freedom.</li>
 </ol>
-<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb463"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gf_dist</span><span class="op">(</span><span class="st">"chisq"</span>,df<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"chisq"</span>,df<span class="op">=</span><span class="fl">5</span>,col<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"chisq"</span>,df<span class="op">=</span><span class="fl">10</span>,col<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"chisq"</span>,df<span class="op">=</span><span class="fl">50</span>,col<span class="op">=</span><span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>   <span class="fu">gf_lims</span><span class="op">(</span>y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.25</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>   <span class="fu">gf_lims</span><span class="op">(</span>y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_labs</span><span class="op">(</span>y<span class="op">=</span><span class="st">"f(x)"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-19-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
 <p>The “bump” moves to the rights as the degrees of freedom increase.</p>
 <p>The plot should have a legend, but I could not find a way to do it within <code>ggformula</code> so here it is in <code>ggplot</code>.</p>
-<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">75</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">dchisq</span>, n <span class="op">=</span> <span class="fl">101</span>, </span>
 <span>                args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
@@ -332,11 +351,11 @@
 <span>             myline3<span class="op">=</span><span class="st">"green"</span>,</span>
 <span>             myline4<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>    labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"df=1"</span>,<span class="st">"df=5"</span>,<span class="st">"df=10"</span>,<span class="st">"df=50"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-20-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Repeat part (a) with the <span class="math inline">\(t\)</span> distribution. Add the pdf of a standard normal random variable as well. What do you notice?</li>
 </ol>
-<div class="sourceCode" id="cb457"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gf_dist</span><span class="op">(</span><span class="st">"t"</span>,df<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"t"</span>,df<span class="op">=</span><span class="fl">5</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_dist</span><span class="op">(</span><span class="st">"t"</span>,df<span class="op">=</span><span class="fl">10</span>,col<span class="op">=</span><span class="st">"green"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -345,9 +364,9 @@
 <span>   <span class="fu">gf_lims</span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_labs</span><span class="op">(</span>y<span class="op">=</span><span class="st">"f(x)"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-23-1.png" width="672"></div>
 <p>As degrees of freedom increases, the <span class="math inline">\(t\)</span>-distribution approaches the standard normal distribution.</p>
-<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span>fun <span class="op">=</span> <span class="va">dt</span>, n <span class="op">=</span> <span class="fl">101</span>, </span>
 <span>                args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>df <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
@@ -375,7 +394,7 @@
 <span>             myline4<span class="op">=</span><span class="st">"blue"</span>,</span>
 <span>             myline5<span class="op">=</span><span class="st">"grey"</span><span class="op">)</span>,</span>
 <span>    labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"df=1"</span>,<span class="st">"df=5"</span>,<span class="st">"df=10"</span>,<span class="st">"df=50"</span>,<span class="st">"Normal"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-22-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-24-1.png" width="672"></div>
 </div>
 <div id="problem-4-8" class="section level3" number="20.2.4">
 <h3>
@@ -383,17 +402,9 @@
 </h3>
 <p><strong>Paired data</strong>. Are textbooks actually cheaper online? Here we compare the price of textbooks at the University of California, Los Angeles’ (UCLA’s) bookstore and prices at Amazon.com. Seventy-three UCLA courses were randomly sampled in Spring 2010, representing less than 10% of all UCLA courses. When a class had multiple books, only the most expensive text was considered.</p>
 <p>The data is in the file <code>textbooks.csv</code> under the data folder.</p>
-<div class="sourceCode" id="cb459"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb467"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">textbooks</span><span class="op">&lt;-</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/textbooks.csv"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## Rows: 73 Columns: 7
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr (4): dept_abbr, course, isbn, more
-## dbl (3): ucla_new, amaz_new, diff
-## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb461"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##   dept_abbr course isbn           ucla_new amaz_new more   diff
@@ -413,37 +424,37 @@
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Make a scatterplot of the UCLA price versus the Amazon price. Add a 45 degree line to the plot.</li>
 </ol>
-<div class="sourceCode" id="cb463"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">textbooks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">ucla_new</span><span class="op">~</span><span class="va">amaz_new</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_abline</span><span class="op">(</span>slope<span class="op">=</span><span class="fl">1</span>,intercept <span class="op">=</span> <span class="fl">0</span>,color<span class="op">=</span><span class="st">"darkblue"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Amazon"</span>,y<span class="op">=</span><span class="st">"UCLA"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-25-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-27-1.png" width="672"></div>
 <p>It appears the books at the UCLA bookstore are more expensive. One way to test this is with a regression model; we will learn about in the next block.</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Make a histogram of the differences in price.</li>
 </ol>
-<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb471"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">textbooks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">diff</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Distribution of price differences"</span>,</span>
 <span>          x<span class="op">=</span><span class="st">"Price difference between UCLA and Amazon"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-26-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
 <p>The distribution is skewed.</p>
 <p>The hypotheses are:<br><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_{diff}=0\)</span>. There is no difference in the average textbook price.<br><span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu_{diff} \neq 0\)</span>. There is a difference in average prices.</p>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>To use a <span class="math inline">\(t\)</span> distribution, the variable <code>diff</code> has to be independent and normally distributed. Since the 73 books represent less than 10% of the population, the assumption that the random sample is independent is reasonable. Check normality using <code>qqnorsim()</code> from the <code>openintro</code> package. It generates 8 qq plots of simulated normal data that you can use to judge the <code>diff</code> variable.</li>
 </ol>
-<div class="sourceCode" id="cb465"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://openintrostat.github.io/openintro/reference/qqnormsim.html">qqnormsim</a></span><span class="op">(</span><span class="va">diff</span>,<span class="va">textbooks</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-27-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-29-1.png" width="672"></div>
 <p>The normality assumption is suspect but we have a large sample so it should be acceptable to use the <span class="math inline">\(t\)</span>.</p>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Run a <span class="math inline">\(t\)</span> test on the <code>diff</code> variable. Report the <span class="math inline">\(p\)</span>-value and conclusion.</li>
 </ol>
-<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb473"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/ttest.html">t_test</a></span><span class="op">(</span><span class="op">~</span><span class="va">diff</span>,<span class="va">textbooks</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
@@ -457,7 +468,7 @@
 ## mean of x 
 ##  12.76164</code></pre>
 <p>We did not have to use the <code>paired</code> option since we already took the difference. Here is an example of using the <code>paired</code> option.</p>
-<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb475"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/ttest.html">t_test</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">$</span><span class="va">ucla_new</span>,<span class="va">textbooks</span><span class="op">$</span><span class="va">amaz_new</span>,paired<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  Paired t-test
@@ -474,7 +485,7 @@
 <ol start="6" style="list-style-type: lower-alpha">
 <li>If there is really no differences between book sources, the variable <code>more</code> is a binomial and under the null the probably of success is <span class="math inline">\(\pi = 0.5\)</span>. Run a hypothesis test using the variable <code>more</code>.</li>
 </ol>
-<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb477"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/inspect.html">inspect</a></span><span class="op">(</span><span class="va">textbooks</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## categorical variables:  
@@ -495,7 +506,7 @@
 ## 2 amaz_new numeric  8.60 20.21  34.95  88.09 176.0 59.46027 48.99557 73       0
 ## 3     diff numeric -9.53  3.80   8.23  17.59  66.0 12.76164 14.25530 73       0</code></pre>
 <p>We have 45 books that were more expensive out of the total of 73.</p>
-<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb479"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/prop_test.html">prop_test</a></span><span class="op">(</span><span class="fl">45</span>,<span class="fl">73</span>,p<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  1-sample proportions test with continuity correction
@@ -513,30 +524,30 @@
 <li>Could you use a permutation test on this example? Explain.</li>
 </ol>
 <p>Yes, but you have to be careful because you want to keep the pairing so you can’t just shuffle the names. You have to shuffle the names within the paired values. This means to simply randomly switch the names within a row. This is easier to do by just multiplying the diff column by a random choice of -1 and 1.</p>
-<div class="sourceCode" id="cb474"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb481"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,size<span class="op">=</span><span class="fl">73</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1]  1 -1  1  1  1 -1 -1  1 -1  1  1  1 -1 -1  1 -1 -1 -1 -1  1 -1  1  1  1  1
-## [26]  1  1 -1  1 -1 -1  1  1  1  1  1 -1  1  1  1 -1  1  1  1  1 -1  1  1  1 -1
-## [51] -1  1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1  1  1 -1  1 -1  1 -1  1  1 -1</code></pre>
-<div class="sourceCode" id="cb476"><pre class="downlit sourceCode r">
+<pre><code>##  [1] -1 -1  1  1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1  1 -1  1  1  1  1 -1  1 -1 -1
+## [26] -1 -1 -1 -1 -1 -1  1 -1 -1  1 -1 -1  1  1  1 -1  1 -1  1  1  1  1  1 -1 -1
+## [51]  1 -1 -1 -1 -1 -1  1  1 -1  1 -1 -1 -1 -1 -1  1  1 -1  1 -1 -1 -1  1</code></pre>
+<div class="sourceCode" id="cb483"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">406</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="op">(</span><span class="op">~</span><span class="va">diff</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,size<span class="op">=</span><span class="fl">73</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>,data<span class="op">=</span><span class="va">textbooks</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb477"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb484"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Randomization sampling distribution of mean of differences in price"</span>,</span>
 <span>          x<span class="op">=</span><span class="st">"Mean of price difference"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-34-1.png" width="672"></div>
+<div class="inline-figure"><img src="22-Additional-Hypothesis-Tests-Solutions_files/figure-html/unnamed-chunk-36-1.png" width="672"></div>
 <p>We need our observed test statistic to calculate a <span class="math inline">\(p\)</span>-value.</p>
-<div class="sourceCode" id="cb478"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb485"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obs_stat</span><span class="op">&lt;-</span> <span class="va">textbooks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>obs_diff<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">obs_diff</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">obs_stat</span></span></code></pre></div>
 <pre><code>## [1] 12.76164</code></pre>
-<div class="sourceCode" id="cb480"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb487"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/prop.html">prop1</a></span><span class="op">(</span><span class="op">(</span><span class="op">~</span><span class="va">mean</span><span class="op">&gt;=</span><span class="va">obs_stat</span><span class="op">)</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   prop_TRUE 
 ## 0.000999001</code></pre>
@@ -552,12 +563,12 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#ADDTESTS"><span class="header-section-number">20</span> Additional Hypothesis Tests</a></li>
-<li><a class="nav-link" href="#objectives-18"><span class="header-section-number">20.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-19"><span class="header-section-number">20.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-19"><span class="header-section-number">20.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-19"><span class="header-section-number">20.2.1</span> Problem 1</a></li>
 <li><a class="nav-link" href="#problem-2-19"><span class="header-section-number">20.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-14"><span class="header-section-number">20.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-3-13"><span class="header-section-number">20.2.3</span> Problem 3</a></li>
 <li><a class="nav-link" href="#problem-4-8"><span class="header-section-number">20.2.4</span> Problem 4</a></li>
 </ul>
 </li>
@@ -565,7 +576,8 @@
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/22-Additional-Hypothesis-Tests-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/22-Additional-Hypothesis-Tests-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -577,7 +589,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

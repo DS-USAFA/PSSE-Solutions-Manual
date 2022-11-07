@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">14</span> Multivariate Distributions<a class="anchor" aria-label="anchor" href="#MULTIDISTS"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-13" class="section level2" number="14.1">
+<div id="objectives-14" class="section level2" number="14.1">
 <h2>
-<span class="header-section-number">14.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-13"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-14"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Define (and distinguish between) the terms <em>joint probability mass/density function</em>, <em>marginal pmf/pdf</em>, and <em>conditional pmf/pdf</em>.</p></li>
@@ -148,7 +149,7 @@ f_{X,Y}(x,y)=x + y
 </li>
 </ol>
 <p>Or</p>
-<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb286"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bnaras.github.io/cubature/">cubature</a></span><span class="op">)</span> <span class="co"># load the package "cubature"</span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">}</span> <span class="co"># "x" is vector</span></span>
 <span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -185,11 +186,11 @@ where <span class="math inline">\(0\leq x \leq 1\)</span>.</li>
 <p><span class="math display">\[
 \mbox{P}(X&lt;0.5)=\int_0^{0.5} x+\frac{1}{2}\mathop{}\!\mathrm{d}x = \frac{x^2}{2}+\frac{x}{2}\bigg|_0^{0.5}=0.375
 \]</span></p>
-<div class="sourceCode" id="cb285"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb288"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/integrate.html">integrate</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">+</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 0.375 with absolute error &lt; 4.2e-15</code></pre>
 <p>Or using multivariate integration, integrate out <span class="math inline">\(y\)</span>.</p>
-<div class="sourceCode" id="cb287"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## $integral
 ## [1] 0.375
@@ -205,7 +206,7 @@ where <span class="math inline">\(0\leq x \leq 1\)</span>.</li>
 <p><span class="math display">\[
 \mbox{P}(Y&gt;0.8)=\int_{0.8}^1 y+\frac{1}{2}\mathop{}\!\mathrm{d}y = \frac{y^2}{2}+\frac{y}{2}\bigg|_{0.8}^1=1-0.72=0.28
 \]</span></p>
-<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.8</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## $integral
 ## [1] 0.28
@@ -224,7 +225,7 @@ where <span class="math inline">\(0\leq x \leq 1\)</span>.</li>
 <span class="math display">\[
 =\int_0^{0.2} x+\frac{1}{2}-\frac{3x}{4}-\frac{9}{32}\mathop{}\!\mathrm{d}x = \int_0^{0.2} \frac{x}{4}+\frac{7}{32}\mathop{}\!\mathrm{d}x = \frac{x^2}{8}+\frac{7x}{32}\bigg|_0^{0.2}=0.04875
 \]</span></p>
-<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.75</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## $integral
 ## [1] 0.04875
@@ -254,7 +255,7 @@ f_{X|Y=.25}(x)=\frac{x+y}{y+\frac{1}{2}}\bigg|_{y=0.25}=\frac{x+.25}{.25+\frac{1
 <span class="math display">\[
 =\frac{1}{3}\left( 2x^2 +x \right) \bigg|_0^{0.2} = \frac{1}{3}\left( 2\cdot0.2^2 +0.2 \right) \approx 0.0933
 \]</span></p>
-<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="op">(</span><span class="fl">4</span><span class="op">*</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span> <span class="op">}</span> <span class="co"># "x" is vector</span></span>
 <span><span class="fu"><a href="https://bnaras.github.io/cubature/reference/hcubature.html">adaptIntegrate</a></span><span class="op">(</span><span class="va">f2</span>, lowerLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, upperLimit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## $integral
@@ -280,9 +281,9 @@ f_{X|Y=.25}(x)=\frac{x+y}{y+\frac{1}{2}}\bigg|_{y=0.25}=\frac{x+.25}{.25+\frac{1
 <p>In the Notes, we saw an example where <span class="math inline">\(f_X(x)=f_{X|Y=y}(x)\)</span> and <span class="math inline">\(f_Y(y)=f_{Y|X=x}(y)\)</span>. This is not common and is important. What does this imply about <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
 <p>Since the conditional density function is always equal to the marginal, it means that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent of one another. Also, if the conditioning variable does not appear in the conditional density function and the domain of the joint density is rectangular, the bounds of the two variables are constants, the random variables are independent. The variables in the previous problem are dependent, look at the conditional density functions to see that the conditional density depends on the conditioned variable.</p>
 </div>
-<div id="problem-3-10" class="section level3" number="14.2.3">
+<div id="problem-3-9" class="section level3" number="14.2.3">
 <h3>
-<span class="header-section-number">14.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-10"><i class="fas fa-link"></i></a>
+<span class="header-section-number">14.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-9"><i class="fas fa-link"></i></a>
 </h3>
 <p>ADVANCED: Recall on an earlier assignment, we came up with random variables to describe timeliness at an airport. Suppose over the course of 210 days, on each day we recorded the number of customer complaints regarding timeliness. Also on each day, we recorded the weather (our airport is located somewhere without snow and without substantial wind). The data are displayed below.</p>
 <p><span class="math display">\[
@@ -412,12 +413,12 @@ where <span class="math inline">\(0\leq y \leq 2x\)</span>.</p>
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#MULTIDISTS"><span class="header-section-number">14</span> Multivariate Distributions</a></li>
-<li><a class="nav-link" href="#objectives-13"><span class="header-section-number">14.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-14"><span class="header-section-number">14.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-13"><span class="header-section-number">14.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-13"><span class="header-section-number">14.2.1</span> Problem 1</a></li>
 <li><a class="nav-link" href="#problem-2-13"><span class="header-section-number">14.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-10"><span class="header-section-number">14.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-3-9"><span class="header-section-number">14.2.3</span> Problem 3</a></li>
 <li><a class="nav-link" href="#problem-4-5"><span class="header-section-number">14.2.4</span> Problem 4</a></li>
 </ul>
 </li>
@@ -425,7 +426,8 @@ where <span class="math inline">\(0\leq y \leq 2x\)</span>.</p>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/14-Multivariate-Distributions-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/14-Multivariate-Distributions-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -437,7 +439,7 @@ where <span class="math inline">\(0\leq y \leq 2x\)</span>.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

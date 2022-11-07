@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">7</span> Case Study<a class="anchor" aria-label="anchor" href="#CS2"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-6" class="section level2" number="7.1">
+<div id="objectives-7" class="section level2" number="7.1">
 <h2>
-<span class="header-section-number">7.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-6"><i class="fas fa-link"></i></a>
+<span class="header-section-number">7.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-7"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Use <code>R</code> to simulate a probabilistic model.</p></li>
@@ -139,19 +140,24 @@ Complete a similar analysis for case where exactly 2 people in a room of 23 peop
 <ol style="list-style-type: lower-alpha">
 <li><p>Create a new R Markdown file and create a report. Yes, we know you could use this file but we want you to practice generating your own report.</p></li>
 <li><p>Simulate having 23 people in the class with each day of the year equally likely. Find the cases where exactly 2 people have the same birthday, you will have to alter the code from the Notes more than changing 18 to 23.</p></li>
-<li><p>Plot the frequency of occurrences as a bar chart.</p></li>
-<li><p>Estimate the probability of exactly two people having the same birthday.</p></li>
 </ol>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>match<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">length</span><span class="op">==</span><span class="fl">22</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">match</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>, size <span class="op">=</span> <span class="fl">23</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>match <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">length</span> <span class="op">==</span> <span class="fl">22</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">match</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##    prob
-## 1 0.359</code></pre>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+## 1 0.366</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Plot the frequency of occurrences as a bar chart.</li>
+</ol>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>, size <span class="op">=</span> <span class="fl">23</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_bar</span><span class="op">(</span><span class="op">~</span><span class="va">length</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="07-Probability-Case-Study-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Estimate the probability of exactly two people having the same birthday.</li>
+</ol>
+<p>In a class of 23 people, there is approximately a 0.36 probability of exactly two people having the same birthday.</p>
 </div>
 <div id="problem-2-6" class="section level3" number="7.2.2">
 <h3>
@@ -160,67 +166,93 @@ Complete a similar analysis for case where exactly 2 people in a room of 23 peop
 <p><strong>Exactly 2 people with the same birthday - Mathematical</strong><br>
 Repeat problem 1 but do it mathematically. As a big hint, you will need to use the <code><a href="https://rdrr.io/r/base/Special.html">choose()</a></code> function. The idea is that with 23 people we need to choose 2 of them to match. We thus need to multiply, the multiplication rule again, by <code>choose(23,2)</code>. If you are having trouble, work with a total of 3 people in the room first.</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Find a formula to determine the exact probability of exactly 2 people in a room of 23 having the same birthday.</p></li>
-<li><p>Generalize your solution to any number <code>n</code> people in the room and create a function.</p></li>
-<li><p>Vectorize the function.</p></li>
-<li><p>Plot the probability of exactly 2 people having the same birthday versus number of people in the room.</p></li>
-<li><p>Comment on the shape of the curve and explain it.</p></li>
-<li><p><code>knit</code> and compile your report.</p></li>
+<li>Find a formula to determine the probability of exactly 2 people in a room of 23 having the same birthday.</li>
 </ol>
-<p>For two people we have</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<p>For two people, we have</p>
+<p><span class="math display">\[
+\binom{23}{2}\times {365 \cdot 364 \cdot 363 \cdot\ ...\ \cdot 344 \over 365^{23}}
+\]</span></p>
+<p>In <code>R</code>,</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">prod</a></span><span class="op">(</span><span class="fl">365</span><span class="op">:</span><span class="fl">344</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">^</span><span class="fl">23</span></span></code></pre></div>
 <pre><code>## [1] 0.3634222</code></pre>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Generalize your solution to any number <code>n</code> people in the room and create a function.</li>
+</ol>
+<p>In general, we have</p>
+<p><span class="math display">\[
+\binom{n}{2}\times {365\cdot 364\cdot\ ...\ \cdot (365 - (n - 2))\over 365^{n}}
+\]</span></p>
+<p>We can write a function in <code>R</code>:</p>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exactly_two</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="va">n</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">prod</a></span><span class="op">(</span><span class="fl">365</span><span class="op">:</span><span class="op">(</span><span class="fl">365</span><span class="op">-</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">^</span><span class="va">n</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="va">n</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">prod</a></span><span class="op">(</span><span class="fl">365</span><span class="op">:</span><span class="op">(</span><span class="fl">365</span> <span class="op">-</span> <span class="op">(</span><span class="va">n</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">365</span><span class="op">^</span><span class="va">n</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">exactly_two</span><span class="op">(</span><span class="fl">23</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.3634222</code></pre>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Vectorize the function.</li>
+</ol>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exactly_two</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">exactly_two</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">gf_line</span><span class="op">(</span><span class="fu">exactly_two</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">100</span><span class="op">)</span>,</span>
-<span>        xlab<span class="op">=</span><span class="st">"Number of People"</span>,</span>
-<span>        ylab<span class="op">=</span><span class="st">"Probability of Match"</span>,</span>
-<span>        title<span class="op">=</span><span class="st">"Probability of exactly least 2 people with matching birthdays"</span><span class="op">)</span></span></code></pre></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Plot the probability of exactly 2 people having the same birthday versus number of people in the room.</li>
+</ol>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gf_line</span><span class="op">(</span><span class="fu">exactly_two</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span>
+<span>        xlab <span class="op">=</span> <span class="st">"Number of People"</span>,</span>
+<span>        ylab <span class="op">=</span> <span class="st">"Probability of Match"</span>,</span>
+<span>        title <span class="op">=</span> <span class="st">"Probability of exactly 2 people with matching birthdays"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="07-Probability-Case-Study-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Comment on the shape of the curve and explain it.</li>
+</ol>
+<p>We want the probability of exactly two people in a room having the same birthday. This is most likely in a room of around 30 people. It’s relatively likely in rooms with between 15-45 people. As the size of the room increases, the probability of exactly two people (and no more) having the same birthday decreases.</p>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>
+<code>knit</code> and compile your report.</li>
+</ol>
+<div id="additional-material" class="section level4" number="7.2.2.1">
+<h4>
+<span class="header-section-number">7.2.2.1</span> Additional material<a class="anchor" aria-label="anchor" href="#additional-material"><i class="fas fa-link"></i></a>
+</h4>
 <p>By the way, exactly three matches in simulation is hard. We have to table the data</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>, size <span class="op">=</span> <span class="fl">23</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">temp</span></span></code></pre></div>
 <pre><code>## 
 ##  13  24  50  72  92 110 137 143 154 155 211 231 263 271 285 330 338 342 344 351 
 ##   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   2   1   1   1   1 
 ## 365 
 ##   1</code></pre>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="fl">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0</span></span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>, size <span class="op">=</span> <span class="fl">23</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##     prob
 ## 1 0.0117</code></pre>
 <p>Two sets that have same but different birthday</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>, size <span class="op">=</span> <span class="fl">23</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##     prob
 ## 1 0.1139</code></pre>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>,size<span class="op">=</span><span class="fl">23</span>,replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>match<span class="op">=</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">length</span><span class="op">==</span><span class="fl">21</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob<span class="op">=</span><span class="fu">mean</span><span class="op">(</span><span class="va">match</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="va">days</span>, size <span class="op">=</span> <span class="fl">23</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>match <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">length</span> <span class="op">==</span> <span class="fl">21</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="http://friendly.github.io/vcdExtra/reference/vcdExtra-deprecated.html">summarise</a></span><span class="op">(</span>prob <span class="op">=</span> <span class="fu">mean</span><span class="op">(</span><span class="va">match</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##     prob
 ## 1 0.1187</code></pre>
 <p>Mathematically exactly 3 is easy. Simulation seems to be off a little or the math formula is off.</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">3</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">prod</a></span><span class="op">(</span><span class="fl">365</span><span class="op">:</span><span class="fl">345</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">^</span><span class="fl">23</span></span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">23</span>,<span class="fl">3</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">prod</a></span><span class="op">(</span><span class="fl">365</span><span class="op">:</span><span class="fl">345</span><span class="op">)</span> <span class="op">/</span> <span class="fl">365</span><span class="op">^</span><span class="fl">23</span></span></code></pre></div>
 <pre><code>## [1] 0.007395218</code></pre>
 
+</div>
 </div>
 </div>
 </div>
@@ -231,7 +263,7 @@ Repeat problem 1 but do it mathematically. As a big hint, you will need to use t
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#CS2"><span class="header-section-number">7</span> Case Study</a></li>
-<li><a class="nav-link" href="#objectives-6"><span class="header-section-number">7.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-7"><span class="header-section-number">7.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-6"><span class="header-section-number">7.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-6"><span class="header-section-number">7.2.1</span> Problem 1</a></li>
@@ -242,7 +274,8 @@ Repeat problem 1 but do it mathematically. As a big hint, you will need to use t
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/07-Probability-Case-Study-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/07-Probability-Case-Study-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -254,7 +287,7 @@ Repeat problem 1 but do it mathematically. As a big hint, you will need to use t
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

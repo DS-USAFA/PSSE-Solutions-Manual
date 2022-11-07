@@ -202,23 +202,25 @@ c. Find $a$ and $b$ where there is a 95% probability that the time until next co
 
 
 ```r
-qgamma(c(0.025,0.975),40,2)
+qgamma(c(0.025, 0.975), 40, 2)
 ```
 
 ```
 ## [1] 14.28829 26.65714
 ```
-So in the time interval $[14,29,26.66]$.
+
+So, there is a 95% probability that the time until next computer error will be in the time interval $[14.29, 26.66]$. This uses the central 95% of the gamma distribution. 
 
 
 ```r
-qgamma(.95,40,2)
+qgamma(0.95, 40, 2)
 ```
 
 ```
 ## [1] 25.46987
 ```
-Another answer is between $[0,25,47]$.
+
+Another answer is between $[0, 25.47]$. This uses the lower 95% of the gamma distribution.
 
 
 \newpage

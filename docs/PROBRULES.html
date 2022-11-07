@@ -71,6 +71,7 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Preface</a></li>
+<li><a class="" href="objectives.html">Objectives</a></li>
 <li class="book-part">Descriptive Statistical Modeling</li>
 <li><a class="" href="CS1.html"><span class="header-section-number">1</span> Case Study</a></li>
 <li><a class="" href="DB.html"><span class="header-section-number">2</span> Data Basics</a></li>
@@ -109,7 +110,7 @@
 </ul>
 
         <div class="book-extra">
-          
+          <p><a id="book-repo" href="https://github.com/DS-USAFA/CPS-Solutions-Manual">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -117,9 +118,9 @@
 <h1>
 <span class="header-section-number">8</span> Probability Rules<a class="anchor" aria-label="anchor" href="#PROBRULES"><i class="fas fa-link"></i></a>
 </h1>
-<div id="objectives-7" class="section level2" number="8.1">
+<div id="objectives-8" class="section level2" number="8.1">
 <h2>
-<span class="header-section-number">8.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1</span> Objectives<a class="anchor" aria-label="anchor" href="#objectives-8"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Define and use properly in context all new terminology related to probability, including: <em>sample space</em>, <em>outcome</em>, <em>event</em>, <em>subset</em>, <em>intersection</em>, <em>union</em>, <em>complement</em>, <em>probability</em>, <em>mutually exclusive</em>, <em>exhaustive</em>, <em>independent</em>, <em>multiplication rule</em>, <em>permutation</em>, <em>combination</em>.</p></li>
@@ -174,9 +175,9 @@
 \mbox{P}(\mbox{at least one boy})=1-\mbox{P}(\mbox{no boys})=1-\mbox{P}(\mbox{GGG})=1-\frac{1}{8} = 0.875
 \]</span></p>
 </div>
-<div id="problem-3-5" class="section level3" number="8.2.3">
+<div id="problem-3-4" class="section level3" number="8.2.3">
 <h3>
-<span class="header-section-number">8.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.3</span> Problem 3<a class="anchor" aria-label="anchor" href="#problem-3-4"><i class="fas fa-link"></i></a>
 </h3>
 <p>The Birthday Problem Revisited.</p>
 <ol style="list-style-type: lower-alpha">
@@ -195,22 +196,22 @@
 <span class="math display">\[
 \mbox{P}(\mbox{at least one other person shares my bday})=1-\mbox{P}(\mbox{no one else has my bday}) = 1-\left( \frac{364}{365}\right)^{n}
 \]</span></p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span><span class="op">&lt;-</span><span class="fl">1</span><span class="op">:</span><span class="fl">300</span></span>
 <span><span class="va">mybday</span><span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">1</span><span class="op">-</span><span class="op">(</span><span class="fl">364</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span><span class="op">^</span><span class="va">x</span></span>
 <span><span class="va">mybday</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Vectorize.html">Vectorize</a></span><span class="op">(</span><span class="va">mybday</span><span class="op">)</span></span></code></pre></div>
 <p>Check our function.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">mybday</span><span class="op">(</span><span class="fl">20</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.05339153</code></pre>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">gf_line</span><span class="op">(</span><span class="fu">mybday</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">~</span> <span class="va">n</span>,</span>
 <span>        xlab<span class="op">=</span><span class="st">"Number of People"</span>,</span>
 <span>        ylab<span class="op">=</span><span class="st">"Probability of Match"</span>,</span>
 <span>        title<span class="op">=</span><span class="st">"Probability of at least 1 person matching my birthday"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="va">theme_bw</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="08-Probability-Rules-Solutions_files/figure-html/unnamed-chunk-3-1.png" width="672"></div>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu">mybday</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">prob</span><span class="op">&gt;=</span> <span class="fl">.5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] 253 254 255 256 257 258 259 260 261 262 263 264 265 266 267 268 269 270 271
@@ -247,7 +248,7 @@ The first card drawn is equal to or more than 5.</p>
 <ol style="list-style-type: lower-alpha">
 <li>What is the probability that a license plate contains <strong>exactly</strong> one “B”?</li>
 </ol>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#fourth spot</span></span>
 <span><span class="va">num4</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">1</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span></span>
 <span></span>
@@ -267,7 +268,7 @@ The first card drawn is equal to or more than 5.</p>
 <p><span class="math display">\[
 1-\mbox{P}(\mbox{no B's})
 \]</span></p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">num0</span><span class="op">&lt;-</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">10</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span><span class="op">*</span><span class="fl">25</span></span>
 <span><span class="fl">1</span><span class="op">-</span><span class="va">num0</span><span class="op">/</span><span class="va">denom</span></span></code></pre></div>
 <pre><code>## [1] 0.1110036</code></pre>
@@ -284,7 +285,7 @@ The first card drawn is equal to or more than 5.</p>
 \]</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="fl">8</span><span class="op">*</span><span class="fl">7</span><span class="op">*</span><span class="fl">6</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">25</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">23</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.02434783</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
@@ -294,7 +295,7 @@ The first card drawn is equal to or more than 5.</p>
 \]</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="fl">8</span><span class="op">*</span><span class="fl">17</span><span class="op">*</span><span class="fl">7</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">25</span><span class="op">*</span><span class="fl">24</span><span class="op">*</span><span class="fl">23</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.06898551</code></pre>
 </div>
@@ -315,7 +316,7 @@ Notice here the order doesn’t matter because a pair of Kings and 4s is the sam
 <p><span class="math inline">\(\binom{44}{1}\)</span></p>
 <p>Putting it all together:</p>
 <p><span class="math inline">\(\binom{13}{2}\binom{4}{2}\binom{4}{2}\binom{44}{1}\)</span></p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">13</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">44</span>,<span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 123552</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
@@ -324,7 +325,7 @@ Notice here the order doesn’t matter because a pair of Kings and 4s is the sam
 <p><span class="math display">\[
 \mbox{P}(\mbox{4 of a kind})=\frac{\binom{13}{1}\binom{4}{4}\binom{48}{1}}{\binom{52}{5}}
 \]</span></p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="fl">13</span><span class="op">*</span><span class="fl">1</span><span class="op">*</span><span class="fl">48</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Special.html">choose</a></span><span class="op">(</span><span class="fl">52</span>,<span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.000240096</code></pre>
 </div>
@@ -344,41 +345,41 @@ We now have the 5 dice. We have to select three to have the same value and the o
 <span class="math display">\[
 \mbox{P}(\mbox{full house}) = \frac{\binom{6}{1} \times \binom{5}{1} \times \binom{5}{3}}{6^5}
 \]</span></p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">30</span><span class="op">*</span><span class="fl">10</span><span class="op">/</span><span class="op">(</span><span class="fl">6</span><span class="op">^</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.03858025</code></pre>
 <p>Simulating is tough so let’s write some code that may help.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">23</span><span class="op">)</span></span>
 <span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,size<span class="op">=</span><span class="fl">5</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">temp</span></span></code></pre></div>
 <pre><code>## 
 ## 1 3 4 5 
 ## 1 2 1 1</code></pre>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span>
 <span><span class="va">temp</span></span></code></pre></div>
 <pre><code>## temp
 ## 1 2 
 ## 3 2</code></pre>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Let’s write a function.</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">full_house</span> <span class="op">&lt;-</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">sum</a></span><span class="op">(</span><span class="va">temp</span><span class="op">==</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu">full_house</span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">751</span><span class="op">)</span></span>
 <span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">full_house</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>,size<span class="op">=</span><span class="fl">5</span>,replace<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">mean</span><span class="op">(</span><span class="op">~</span><span class="va">full_house</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
@@ -394,12 +395,12 @@ We now have the 5 dice. We have to select three to have the same value and the o
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#PROBRULES"><span class="header-section-number">8</span> Probability Rules</a></li>
-<li><a class="nav-link" href="#objectives-7"><span class="header-section-number">8.1</span> Objectives</a></li>
+<li><a class="nav-link" href="#objectives-8"><span class="header-section-number">8.1</span> Objectives</a></li>
 <li>
 <a class="nav-link" href="#homework-7"><span class="header-section-number">8.2</span> Homework</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#problem-1-7"><span class="header-section-number">8.2.1</span> Problem 1</a></li>
 <li><a class="nav-link" href="#problem-2-7"><span class="header-section-number">8.2.2</span> Problem 2</a></li>
-<li><a class="nav-link" href="#problem-3-5"><span class="header-section-number">8.2.3</span> Problem 3</a></li>
+<li><a class="nav-link" href="#problem-3-4"><span class="header-section-number">8.2.3</span> Problem 3</a></li>
 <li><a class="nav-link" href="#problem-4-1"><span class="header-section-number">8.2.4</span> Problem 4</a></li>
 <li><a class="nav-link" href="#problem-5-1"><span class="header-section-number">8.2.5</span> Problem 5</a></li>
 <li><a class="nav-link" href="#problem-6"><span class="header-section-number">8.2.6</span> Problem 6</a></li>
@@ -411,7 +412,8 @@ We now have the 5 dice. We have to select three to have the same value and the o
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/blob/main/08-Probability-Rules-Solutions.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/DS-USAFA/CPS-Solutions-Manual/edit/main/08-Probability-Rules-Solutions.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -423,7 +425,7 @@ We now have the 5 dice. We have to select three to have the same value and the o
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-07-21.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

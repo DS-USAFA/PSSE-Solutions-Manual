@@ -34,7 +34,8 @@ stent_study <- read_csv('data/stent_study.csv')
 ```
   
 
-  b. Complete the steps below.   
+  b. Complete the steps below.  The start of code is provided below. You will need to add `{r}` to the start of each code chunk or insert your own code chunks to use the code. 
+  
     i. Use `inspect` on the data.  
     
 
@@ -55,20 +56,22 @@ inspect(stent_study)
 ## 3 no_event (83.8%), stroke (16.2%)
 ```
     
+This shows the different variables and their types.  
+
     ii. Create a table of `outcome365` and `group`. Comment on the results.  
     
-    
-    ```r
-    tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = TRUE)
-    ```
-    
-    ```
-    ##           group
-    ## outcome365   control      trmt
-    ##   no_event 0.8766520 0.7991071
-    ##   stroke   0.1233480 0.2008929
-    ##   Total    1.0000000 1.0000000
-    ```
+
+```r
+tally(outcome365 ~ group, data = stent_study, format = "proportion", margins = TRUE)
+```
+
+```
+##           group
+## outcome365   control      trmt
+##   no_event 0.8766520 0.7991071
+##   stroke   0.1233480 0.2008929
+##   Total    1.0000000 1.0000000
+```
 
 Patients in the treatment group had a higher proportion of strokes than those in the control group after one year. The treatment does not appear to help the rate of strokes and, in fact, may hurt it.
 
@@ -81,7 +84,7 @@ stent_study %>%
   gf_labs(title = "Impact of Stents on Stroke",
           subtitle = 'Experiment with 451 Patients',
           x = "Experimental Group", 
-          y = "Number of Events")
+          y = "Proportion of patients")
 ```
 
 <img src="01-Data-Case-Study-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672" />
@@ -89,7 +92,7 @@ stent_study %>%
 
 ### Problem 2 
 
-**Migraine and acupuncture**.  A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture. To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control. The 43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. The 46 patients in the control group received placebo acupuncture (needle insertion at non-acupoint locations). Then 24 hours after patients received acupuncture, they were asked if they were pain free.^[G. Allais et al. [“Ear acupuncture in the treatment of migraine attacks:  a randomized trial on the efficacy of appropriate versus inappropriate acupoints”.](http://www.ncbi.nlm.nih.gov/pubmed/21533739) In: Neurological Sci. 32.1 (2011), pp. 173–175.]
+**Migraine and acupuncture**.  A migraine is a particularly painful type of headache, which patients sometimes wish to treat with acupuncture. To determine whether acupuncture relieves migraine pain, researchers conducted a randomized controlled study where 89 females diagnosed with migraine headaches were randomly assigned to one of two groups: treatment or control. The 43 patients in the treatment group received acupuncture that is specifically designed to treat migraines. The 46 patients in the control group received placebo acupuncture (needle insertion at non-acupoint locations). Then 24 hours after patients received acupuncture, they were asked if they were pain free.^[G. Allais et al. “Ear acupuncture in the treatment of migraine attacks:  a randomized trial on the efficacy of appropriate versus inappropriate acupoints”. http://www.ncbi.nlm.nih.gov/pubmed/21533739 In: Neurological Sci. 32.1 (2011), pp. 173–175.]
 
     The data is in the file `migraine_study.csv` in the `data` folder. Complete the following work:
 

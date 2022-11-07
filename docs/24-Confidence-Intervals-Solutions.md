@@ -161,7 +161,7 @@ TRUE. The width is a function of the margin of error. Keeping all else the same,
 
 
 ```r
-temp<-qnorm(c(.985,.995))
+temp<-qnorm(c(.975,.995))
 names(temp)<-c("95%","99%")
 ```
 
@@ -172,7 +172,7 @@ temp
 
 ```
 ##      95%      99% 
-## 2.170090 2.575829
+## 1.959964 2.575829
 ```
 
 
