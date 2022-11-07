@@ -32,27 +32,88 @@ head(golf_balls)
 
 
 ```{r}
-tally(~number,data=golf_balls)
+tally(~number, data = golf_balls)
 ```
 
 
 b. Using the function `chisq.test` conduct a hypothesis test of equally likely distribution of balls. You may have to read the help menu. 
 
+The hypotheses from Chapter \@ref(HYPTESTDIST) are 
+
+$H_0$: All of the numbers are equally likely. $\pi_1 = \pi_2 = \pi_3 = \pi_4$ or $\pi_1 = \frac{1}{4}, \pi_2 = \frac{1}{4}, \pi_3 = \frac{1}{4} = \pi_4 = \frac{1}{4}$ 
+
+$H_A$: There is some other distributio of the numbers in the population. At least one population proportion is not $\frac{1}{4}$. 
+
+We use the `chisq.test()` function in `R` to conduct the hypothesis test. 
 
 ```{r}
-chisq.test(tally(~number,data=golf_balls),p=c(.25,.25,.25,.25))
+chisq.test(tally(~number, data = golf_balls), 
+           p = c(0.25, 0.25, 0.25, 0.25))
 ```
 
+The p-value is 0.03725. We reject the null hypothesis; there is evidence that there is some other distribution of the numbers in the population (at least one population proportion is different from $\frac{1}{4}$). 
 
 c. Repeat part b), but assume balls with the numbers 1 and 2 occur 30\% of the time and balls with 3 and 4 occur 20\%. 
 
 ```{r}
-chisq.test(tally(~number,data=golf_balls),p=c(.3,.3,.2,.2))
+chisq.test(tally(~number, data = golf_balls),
+           p = c(0.3, 0.3, 0.2, 0.2))
 ```
+
+The p-value is 0.4914. We fail to reject the null hypothesis; there is not enough evidence to say that the distribution of numbers in the population is different from 0.3, 0.3, 0.2 and 0.2.
+
 
 d. Repeat part c), but use a randomization test this time. You should use $\chi^2$, the chi-squared test statistic, as your test statistic.  
 
-###### ADD ANSWER HERE ######
+Let's calculate the observed value of the test statistic. 
+
+```{r}
+obs <- chisq(~number, data = golf_balls)
+obs
+```
+
+
+Next, we will use a randomization process to find the sampling distribution of our test statistic. Because there is only a single variable, we can't use the `shuffle()` function. Instead, think about what we want to do.  
+
+Under the null hypothesis, all of the numbers (1 through 4) are equally likely. We will generate a sample of the numbers 1 through 4 that is the same size as our `golf_balls` data set (486 observations). Then, we'll use the `chisq()` function to find the chi-square test statistic based on that sample. 
+
+```{r}
+set.seed(1018)
+chisq(~sample(1:4, size = 486, replace = TRUE))
+```
+
+This assumes that the probability of each number is the same ($\frac{1}{4} for each number). You can also change the probability of each number within your `sample()`. 
+
+Now, let's do the same thing many times. 
+
+```{r}
+set.seed(1018)
+results <- do(1000)*chisq(~sample(1:4, size = 486, replace = TRUE))
+```
+
+
+We plot the sampling distribution and compare our observed test statistic (shown as a red line). The chi-square distribution with 3 degrees of freedom 
+(4 categories/golf ball numbers minus 1) is shown as a dark blue curve. 
+
+```{r warning=F}
+results %>%
+  gf_dhistogram(~X.squared, fill = "cyan", color = "black") %>%
+  gf_vline(xintercept = obs, color = "red") %>%
+  gf_theme(theme_classic()) %>%
+  gf_dist("chisq", df = 3, color = "darkblue") %>%
+  gf_labs(title = "Sampling distribution of chi-squared test statistic",
+          subtitle = "For the distribution of golf ball numbers",
+          x = "Test statistic")
+```
+
+We find the p-value using `prop1()`. 
+
+```{r}
+prop1(~X.squared >= obs, data = results)
+```
+
+Based on this p-value, we reject the null hypothesis; there is evidence that at least one population proportion is different from $\frac{1}{4}$. 
+
 
 
 ### Problem 2 
@@ -146,33 +207,6 @@ The $p$-value is
 
 This is a two sided test since we did not know in advance which variance would be larger. We reject the hypothesis of equal variance but the $p$-value is too close to the significance level. The conclusion is suspect. We need more data.
 
-d. Create a bootstrap distribution of the differences in sample standard deviations, and report a 95\% confidence interval. Compare with part c.  
-
-Let's write a function.
-
-```{r}
-var_stat <- function(x){
-  resample(x) %>%
-  summarize(stat=sd(obp[position=="IF"])-sd(obp[position=="OF"])) %>%
-  pull()
-}
-```
-
-```{r cache=TRUE}
-set.seed(827)
-results<-do(1000)*var_stat(mlb_prob3)
-```
-
-```{r warning=FALSE,message=FALSE}
-results %>% 
-  gf_histogram(~var_stat,fill="cyan",color="black") %>%
-  gf_vline(xintercept=obs,color="red")%>%
-  gf_theme(theme_classic()) %>%
-  gf_labs(title="Bootstrap sampling of difference in variances",
-          x="Difference in variances")
-```
-
-
 
 
 ### Problem 3
@@ -186,7 +220,7 @@ gf_dist("chisq",df=1,col=1) %>%
    gf_dist("chisq",df=5,col=2) %>%
    gf_dist("chisq",df=10,col=3) %>%
    gf_dist("chisq",df=50,col=4) %>%
-   gf_lims(y=c(0,.25)) %>%
+   gf_lims(y=c(0, 0.25)) %>%
    gf_labs(y="f(x)") %>%
    gf_theme(theme_classic()) 
 ```  
@@ -273,7 +307,7 @@ scale_colour_manual(name="Legend",
 
 The data is in the file `textbooks.csv` under the data folder.
 
-```{r}
+```{r message=F, warning=F}
 textbooks<-read_csv("data/textbooks.csv")
 ```
 

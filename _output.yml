@@ -7,7 +7,7 @@ bookdown::gitbook:
         <li><a href="./">Solutions Manual</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit : https://github.com/DS-USAFA/CPS-Solutions-Manual/%s
+    edit : https://github.com/DS-USAFA/CPS-Solutions-Manual
     sharing: null
     info: no
     download: no
@@ -22,7 +22,9 @@ bookdown::bs4_book:
         <li><a href="./">Solutions Manual</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    repo : https://github.com/DS-USAFA/CPS-Solutions-Manual
+  repo: 
+    base: https://github.com/DS-USAFA/CPS-Solutions-Manual
+    branch: main
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex

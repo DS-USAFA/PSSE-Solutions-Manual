@@ -130,7 +130,7 @@ f. A 99\% confidence will be wider than a 95\% because to have a higher confiden
 TRUE. The width is a function of the margin of error. Keeping all else the same, the critical values for 95\% and 99\% are
 
 ```{r}
-temp<-qnorm(c(.985,.995))
+temp<-qnorm(c(.975,.995))
 names(temp)<-c("95%","99%")
 ```
 

@@ -141,14 +141,16 @@ No, the memoryless property does not apply to the Gamma distribution.
 c. Find $a$ and $b$ where there is a 95% probability that the time until next computer error will be between $a$ and $b$. (Note: technically, there are many answers to this question, but find $a$ and $b$ such that each tail has equal probability.) 
 
 ```{r}
-qgamma(c(0.025,0.975),40,2)
+qgamma(c(0.025, 0.975), 40, 2)
 ```
-So in the time interval $[14,29,26.66]$.
+
+So, there is a 95% probability that the time until next computer error will be in the time interval $[14.29, 26.66]$. This uses the central 95% of the gamma distribution. 
 
 ```{r}
-qgamma(.95,40,2)
+qgamma(0.95, 40, 2)
 ```
-Another answer is between $[0,25,47]$.
+
+Another answer is between $[0, 25.47]$. This uses the lower 95% of the gamma distribution.
 
 
 \newpage
