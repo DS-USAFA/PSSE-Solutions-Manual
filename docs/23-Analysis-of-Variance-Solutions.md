@@ -20,15 +20,16 @@ head(census)
 
 ```
 ## # A tibble: 6 x 8
-##   census_year state_fips_code total_family_income   age sex    race_general   
-##         <int> <fct>                         <int> <int> <fct>  <fct>          
-## 1        2000 Florida                       14550    44 Male   Two major races
-## 2        2000 Florida                       22800    20 Female White          
-## 3        2000 Florida                           0    20 Male   Black          
-## 4        2000 Florida                       23000     6 Female White          
-## 5        2000 Florida                       48000    55 Male   White          
-## 6        2000 Florida                       74000    43 Female White          
-## # ... with 2 more variables: marital_status <fct>, total_personal_income <int>
+##   census_year state_fips_code total_family~1   age sex   race_~2 marit~3 total~4
+##         <int> <fct>                    <int> <int> <fct> <fct>   <fct>     <int>
+## 1        2000 Florida                  14550    44 Male  Two ma~ Marrie~       0
+## 2        2000 Florida                  22800    20 Fema~ White   Never ~   13000
+## 3        2000 Florida                      0    20 Male  Black   Never ~   20000
+## 4        2000 Florida                  23000     6 Fema~ White   Never ~      NA
+## 5        2000 Florida                  48000    55 Male  White   Marrie~   36000
+## 6        2000 Florida                  74000    43 Fema~ White   Marrie~   27000
+## # ... with abbreviated variable names 1: total_family_income, 2: race_general,
+## #   3: marital_status, 4: total_personal_income
 ```
 
 a. State the null and alternative hypotheses in context of the research problem. Note: there are six different marital status types.  

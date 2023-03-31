@@ -10,7 +10,7 @@
 <meta name="author" content="Kenneth Horton">
 <meta name="author" content="Bradley Warner">
 <meta name="description" content="28.1 Objectives Using the bootstrap, generate confidence intervals and estimates of standard error for parameter estimates from a linear regression model. Generate and interpret bootstrap...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.31 with bs4_book()">
 <meta property="og:title" content="Chapter 28 Simulation-Based Linear Regression | Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/figures/Cover_Engineers.png">
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="/figures/Cover_Engineers.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -143,17 +143,17 @@
 <ol style="list-style-type: lower-alpha">
 <li>Read in the data from <code>loans.csv</code> in the <code>data</code> folder.</li>
 </ol>
-<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/loans.csv"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Create a subset of data with 200 with the following three variables <code>interest_rate</code>, <code>loan_amount</code>, and <code>term</code>. Change <code>term</code> into a factor and use a stratified sample to keep the proportion of loan term roughly the same as the original data.</li>
 </ol>
-<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">term</span>,data<span class="op">=</span><span class="va">loans</span>,format<span class="op">=</span><span class="st">"percent"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## term
 ##   36   60 
 ## 69.7 30.3</code></pre>
-<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2111</span><span class="op">)</span></span>
 <span><span class="va">loans200</span> <span class="op">&lt;-</span> <span class="va">loans</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">interest_rate</span>,<span class="va">loan_amount</span>,<span class="va">term</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -161,12 +161,12 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">term</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>prop<span class="op">=</span><span class="fl">0.02</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/mosaicCore/man/tally.html">tally</a></span><span class="op">(</span><span class="op">~</span><span class="va">term</span>,data<span class="op">=</span><span class="va">loans200</span>,format<span class="op">=</span><span class="st">"percent"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## term
 ##       36       60 
 ## 69.84925 30.15075</code></pre>
-<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">loans200</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## tibble [199 x 3] (S3: tbl_df/tbl/data.frame)
 ##  $ interest_rate: num [1:199] 13.59 9.92 17.47 10.9 7.34 ...
@@ -176,7 +176,7 @@
 <li>Plot <code>interest_rate</code> versus <code>loan_amount</code>. We think <code>interest_rate</code> should be the response.</li>
 </ol>
 <p>It seems natural that you would want to predict interest rate from loan amount.</p>
-<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">loans200</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">loan_amount</span>,y<span class="op">=</span><span class="va">interest_rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title<span class="op">=</span><span class="st">"Lending Club"</span>,subtitle<span class="op">=</span><span class="st">"Loan amount versus Interest rate"</span>,</span>
@@ -186,9 +186,9 @@
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Fit a linear model to the data by regressing <code>interest_rate</code> on <code>loan_amount</code>. Is there a significant relationship between <code>interest_rate</code> and <code>loan_amount</code>?</li>
 </ol>
-<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">int_rate_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">interest_rate</span><span class="op">~</span><span class="va">loan_amount</span>,data<span class="op">=</span><span class="va">loans200</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">int_rate_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -218,13 +218,13 @@
 </ol>
 </li>
 </ol>
-<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">int_rate_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                     2.5 %       97.5 %
 ## (Intercept)  1.019986e+01 1.309374e+01
 ## loan_amount -4.592357e-05 1.008748e-04</code></pre>
 <p>We are 95% confident the true slope is between -4.592357e-05 and 1.008748e-04.</p>
-<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb660"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">int_rate_mod</span>,newdata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>loan_amount<span class="op">=</span><span class="fl">20000</span><span class="op">)</span>,</span>
 <span>        interval <span class="op">=</span> <span class="st">"confidence"</span>,level<span class="op">=</span><span class="fl">0.90</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        fit      lwr      upr
@@ -233,10 +233,10 @@
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Repeat part e using a bootstrap.</li>
 </ol>
-<div class="sourceCode" id="cb660"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb662"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">3011</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">interest_rate</span> <span class="op">~</span> <span class="va">loan_amount</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">loans200</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb661"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   Intercept   loan_amount    sigma    r.squared          F numdf dendf .row
 ## 1  10.26651  6.837311e-05 4.893962 0.0184148594 3.69578466     1   197    1
@@ -252,12 +252,12 @@
 ## 4      4
 ## 5      5
 ## 6      6</code></pre>
-<div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb665"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">loan_amount</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##              lower        upper central.p
 ## 2.5% -4.277717e-05 9.863203e-05      0.95</code></pre>
 <p>Or using the <code>infer</code> package:</p>
-<div class="sourceCode" id="cb665"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb667"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results2</span> <span class="op">&lt;-</span> <span class="va">loans200</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">specify</span><span class="op">(</span><span class="va">interest_rate</span><span class="op">~</span><span class="va">loan_amount</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">generate</span><span class="op">(</span>reps<span class="op">=</span><span class="fl">1000</span>,type<span class="op">=</span><span class="st">"bootstrap"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -274,7 +274,7 @@
 ## 4         4  0.00000481
 ## 5         5  0.0000549 
 ## 6         6  0.0000531</code></pre>
-<div class="sourceCode" id="cb667"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb669"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">get_confidence_interval</span><span class="op">(</span><span class="va">results2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Using `level = 0.95` to compute confidence interval.</code></pre>
 <pre><code>## # A tibble: 1 x 2
@@ -282,7 +282,7 @@
 ##        &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 -0.0000361 0.0000947</code></pre>
 <p>Now the confidence interval for average interest rate at a loan amount of 20000:</p>
-<div class="sourceCode" id="cb670"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb672"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>pred<span class="op">=</span><span class="va">Intercept</span><span class="op">+</span><span class="va">loan_amount</span><span class="op">*</span><span class="fl">20000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">pred</span>,data<span class="op">=</span><span class="va">.</span><span class="op">)</span></span></code></pre></div>
@@ -292,7 +292,7 @@
 <ol start="7" style="list-style-type: lower-alpha">
 <li>Check the assumptions of linear regression.</li>
 </ol>
-<div class="sourceCode" id="cb672"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb674"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">int_rate_mod</span><span class="op">)</span></span></code></pre></div>
 <p><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-16-1.png" width="672"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-16-2.png" width="672"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-16-3.png" width="672"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-16-4.png" width="672"></p>
 <p>There appears to be a lack of normality as the residuals are skewed to the right, large positive residuals. The bootstrap would probably be more appropriate for this problem.</p>
@@ -306,14 +306,14 @@
 <ol style="list-style-type: lower-alpha">
 <li>Build a set of side-by-side boxplots that summarize interest rate by term. Describe the relationship you see. Note: You will have to convert the <code>term</code> variable to a factor prior to continuing.</li>
 </ol>
-<div class="sourceCode" id="cb673"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb675"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loans200</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_boxplot</span><span class="op">(</span><span class="va">interest_rate</span><span class="op">~</span><span class="va">term</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>title<span class="op">=</span><span class="st">"Lending Club"</span>,x<span class="op">=</span><span class="st">"Length of Loan"</span>,y<span class="op">=</span><span class="st">"Interest Rate"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-17-1.png" width="672"></div>
 <p>It looks like there is a difference in interest rate based on the length of the loan. It also appears both are skewed to the right, positive skew. Let’s plot the density and see what we find.</p>
-<div class="sourceCode" id="cb674"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb676"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loans200</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_dens</span><span class="op">(</span><span class="op">~</span><span class="va">interest_rate</span>,group<span class="op">=</span><span class="op">~</span><span class="va">term</span>,color<span class="op">=</span><span class="op">~</span><span class="va">term</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -323,9 +323,9 @@
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Build a linear model fitting interest rate against term. Does there appear to be a significant difference in mean interest rates by term?</li>
 </ol>
-<div class="sourceCode" id="cb675"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb677"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">int_rate_mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">interest_rate</span><span class="op">~</span><span class="va">term</span>,data<span class="op">=</span><span class="va">loans200</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb676"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb678"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">int_rate_mod2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -353,7 +353,7 @@
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Construct a bootstrap confidence interval on the coefficient.</li>
 </ol>
-<div class="sourceCode" id="cb678"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb680"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">331</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">do</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">interest_rate</span> <span class="op">~</span> <span class="va">term</span>,data<span class="op">=</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">resample</a></span><span class="op">(</span><span class="va">loans200</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
@@ -364,13 +364,13 @@
 ## 4  11.14948 3.675445 5.250290 0.09818999 21.44956     1   197    1      4
 ## 5  10.45978 4.941671 4.960234 0.17698753 42.36454     1   197    1      5
 ## 6  11.02597 4.232862 4.891180 0.13743012 31.38729     1   197    1      6</code></pre>
-<div class="sourceCode" id="cb680"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb682"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/pqrdata.html">cdata</a></span><span class="op">(</span><span class="op">~</span><span class="va">term60</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##         lower    upper central.p
 ## 2.5% 3.029483 6.242261      0.95</code></pre>
 <p>We are 95% confident the difference in average interest rates for loans of 60 month and 36 month is between 3.03% and 6.24%.</p>
 <p>Let’s check using the assumption of normally distributed errors.</p>
-<div class="sourceCode" id="cb682"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb684"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">int_rate_mod2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                2.5 %    97.5 %
 ## (Intercept) 9.868936 11.537251
@@ -379,7 +379,7 @@
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Check model assumptions.</li>
 </ol>
-<div class="sourceCode" id="cb684"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">int_rate_mod2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-24-1.png" width="672"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-24-2.png" width="672"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-24-3.png" width="672"><img src="30-Simulation-Based-Linear-Regression-Solutions_files/figure-html/unnamed-chunk-24-4.png" width="672"></p>
 <p>Because of the discrete nature of the predictor, only the first two plots are of interest. The assumption of constant variable does seem reasonable but the assumption of normally distributed errors is not. We have a positive skewness.</p>
@@ -418,7 +418,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2023-03-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -431,7 +431,7 @@
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

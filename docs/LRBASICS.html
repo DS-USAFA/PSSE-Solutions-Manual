@@ -10,7 +10,7 @@
 <meta name="author" content="Kenneth Horton">
 <meta name="author" content="Bradley Warner">
 <meta name="description" content="25.1 Objectives Obtain parameter estimates of a simple linear regression model, given a sample of data. Interpret the coefficients of a simple linear regression. Create a scatterplot with a...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.31 with bs4_book()">
 <meta property="og:title" content="Chapter 25 Linear Regression Basics | Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/figures/Cover_Engineers.png">
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="/figures/Cover_Engineers.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -143,7 +143,7 @@
 <ol style="list-style-type: lower-alpha">
 <li>Create a scatterplot of number of calories and amount of carbohydrates.</li>
 </ol>
-<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">starbucks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/starbucks.csv"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 77 Columns: 7
 ## -- Column specification --------------------------------------------------------
@@ -153,7 +153,7 @@
 ## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">starbucks</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 77
 ## Columns: 7
@@ -164,7 +164,7 @@
 ## $ fiber    &lt;dbl&gt; 5, 7, 0, 4, 0, 5, 2, 0, 0, 0, 2, 3, 2, 2, 3, 3, 2, 3, 0, 2, 0~
 ## $ protein  &lt;dbl&gt; 10, 6, 5, 7, 0, 6, 7, 6, 5, 7, 4, 6, 5, 5, 12, 7, 8, 6, 0, 10~
 ## $ type     &lt;chr&gt; "bakery", "bakery", "bakery", "bakery", "bakery", "bakery", "~</code></pre>
-<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">starbucks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">calories</span><span class="op">~</span><span class="va">carb</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Carbohydrate Content (g)"</span>,y<span class="op">=</span><span class="st">"Calories"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -187,7 +187,7 @@ larger patch on the right side. There might be some natural groupings of the the
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Create a scatterplot of number of calories and amount of carbohydrates with the regression line included.</li>
 </ol>
-<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">starbucks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">calories</span><span class="op">~</span><span class="va">carb</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Carbohydrate Content (g)"</span>,y<span class="op">=</span><span class="st">"Calories"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -197,9 +197,9 @@ larger patch on the right side. There might be some natural groupings of the the
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Using ’lm()` fit a least squares line to the data.</li>
 </ol>
-<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">star_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">calories</span><span class="op">~</span><span class="va">carb</span>,data<span class="op">=</span><span class="va">starbucks</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">star_mod</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -226,13 +226,13 @@ larger patch on the right side. There might be some natural groupings of the the
 <ol start="8" style="list-style-type: lower-alpha">
 <li>For a menu item with 51 g of carbs, what is the estimated calorie count?</li>
 </ol>
-<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">146.0204</span><span class="op">+</span><span class="fl">4.2971</span><span class="op">*</span><span class="fl">51</span></span></code></pre></div>
 <pre><code>## [1] 365.1725</code></pre>
 <ol style="list-style-type: lower-roman">
 <li>Could we use the model for a menu item with 100 g of carbs?</li>
 </ol>
-<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">starbucks</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##      item              calories          fat             carb      
 ##  Length:77          Min.   : 80.0   Min.   : 0.00   Min.   :16.00  
@@ -253,9 +253,9 @@ larger patch on the right side. There might be some natural groupings of the the
 <li>Does the assumption of constant variance seem reasonable for this problem?</li>
 </ol>
 <p>We are going to use the <code>broom</code> package to get the residuals and corresponding independent variable values. You could also get the residuals from the model object and the independent variable values from the original dataframe.</p>
-<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">star_mod</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_point</span><span class="op">(</span><span class="va">.resid</span><span class="op">~</span><span class="va">carb</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gf_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -266,7 +266,7 @@ larger patch on the right side. There might be some natural groupings of the the
 <ol start="11" style="list-style-type: lower-alpha">
 <li>Verify that the line passes through the mean carb and mean calories, do this mathematically.</li>
 </ol>
-<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">146.0204</span><span class="op">+</span><span class="fl">4.2971</span><span class="op">*</span><span class="fl">44.87</span></span></code></pre></div>
 <pre><code>## [1] 338.8313</code></pre>
 <p>It checks.</p>
@@ -306,7 +306,7 @@ larger patch on the right side. There might be some natural groupings of the the
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2023-03-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -319,7 +319,7 @@ larger patch on the right side. There might be some natural groupings of the the
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

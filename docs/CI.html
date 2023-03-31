@@ -10,7 +10,7 @@
 <meta name="author" content="Kenneth Horton">
 <meta name="author" content="Bradley Warner">
 <meta name="description" content="22.1 Objectives Using asymptotic methods based on the normal distribution, construct and interpret a confidence interval for an unknown parameter. Describe the relationships between confidence...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.31 with bs4_book()">
 <meta property="og:title" content="Chapter 22 Confidence Intervals | Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/figures/Cover_Engineers.png">
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="/figures/Cover_Engineers.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -146,10 +146,10 @@ We are 95% confident that 42.6% to 47.4% of U.S. adults live with one or more ch
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Create a 99% confidence interval for the proportion of U.S. adults who live with one or more chronic conditions. Also interpret the confidence interval in the context of the study.</li>
 </ol>
-<div class="sourceCode" id="cb509"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb511"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.995</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 2.575829</code></pre>
-<div class="sourceCode" id="cb511"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb513"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.45</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.995</span><span class="op">)</span><span class="op">*</span><span class="fl">0.012</span></span></code></pre></div>
 <pre><code>## [1] 0.41909 0.48091</code></pre>
 <p>We are 99% confident that 41.9% to 48.1% of U.S. adults live with one or more chronic conditions.</p>
@@ -176,10 +176,10 @@ We are 95% confident that 42.6% to 47.4% of U.S. adults live with one or more ch
 <li>Suppose the researchers had formed a one-sided hypothesis, they believed that the true proportion is less than 50%. We could find an equivalent one-sided 95% confidence interval by taking the upper bound of our two-sided 95% confidence interval.</li>
 </ul>
 <p>False. In constructing a one-sided confidence interval we need <span class="math inline">\(\alpha\)</span> to be in one tail. Only taking the upper value of a two-sided 95% confidence interval leads to a 97.5% one-sided confidence interval, a more conservative value.</p>
-<div class="sourceCode" id="cb513"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.95</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1.644854</code></pre>
-<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb517"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">0.45</span> <span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.95</span><span class="op">)</span><span class="op">*</span><span class="fl">0.012</span></span></code></pre></div>
 <pre><code>## [1] 0.4697382</code></pre>
 <p>Notice that 46.9 is smaller than 47.4.</p>
@@ -210,7 +210,7 @@ therefore we know that the distribution of <span class="math inline">\(\hat{p}\)
 <span class="math display">\[=\sqrt{\frac{.08(.92)}{125}} = 0.0243\]</span></p>
 <p>A <span class="math inline">\(\hat{p}\)</span> of 0.12 is only <span class="math inline">\(\frac{0.12 - 0.08}{0.0243} = 1.65\)</span> standard errors away from the mean, which would not be considered unusual.</p>
 <p>The <span class="math inline">\(p\)</span>-value is:</p>
-<div class="sourceCode" id="cb517"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb519"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.65</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.09894294</code></pre>
 <ol start="4" style="list-style-type: lower-alpha">
@@ -223,7 +223,7 @@ therefore we know that the distribution of <span class="math inline">\(\hat{p}\)
 <p>Notice that doubling the sample size only reduced the standard error by <span class="math inline">\(\sqrt{2}\)</span>.</p>
 <p>A <span class="math inline">\(\hat{p}\)</span> of 0.12 is <span class="math inline">\(\frac{0.12 - 0.08}{0.0172} = 2.32\)</span> standard errors away from the mean, which might be considered unusual.</p>
 <p>The <span class="math inline">\(p\)</span>-value is:</p>
-<div class="sourceCode" id="cb519"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb521"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">2.32</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.02034088</code></pre>
 <ol start="5" style="list-style-type: lower-alpha">
@@ -234,10 +234,10 @@ therefore we know that the distribution of <span class="math inline">\(\hat{p}\)
 <li>A 99% confidence will be wider than a 95% because to have a higher confidence level requires a wider interval.</li>
 </ol>
 <p>TRUE. The width is a function of the margin of error. Keeping all else the same, the critical values for 95% and 99% are</p>
-<div class="sourceCode" id="cb521"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb523"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.975</span>,<span class="fl">.995</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"95%"</span>,<span class="st">"99%"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb522"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">temp</span></span></code></pre></div>
 <pre><code>##      95%      99% 
 ## 1.959964 2.575829</code></pre>
@@ -276,7 +276,7 @@ therefore we know that the distribution of <span class="math inline">\(\hat{p}\)
 The margin of error is half the width of the confidence interval:</p>
 <p><span class="math display">\[ME = \frac{ \left(77 - 65 \right)}{2} = 6 \]</span></p>
 <p>Using df = 25 - 1 = 24 and the confidence level of 90% we can find the critical value from the t-table distribution.</p>
-<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb526"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">qt</a></span><span class="op">(</span><span class="fl">.95</span>,<span class="fl">24</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1.710882</code></pre>
 <p>Lastly, using the margin of error and the critical value we can solve for <span class="math inline">\(s\)</span>:
@@ -317,7 +317,7 @@ The margin of error is half the width of the confidence interval:</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Find and interpret the <span class="math inline">\(p\)</span>-value in this context.</li>
 </ol>
-<div class="sourceCode" id="cb526"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.75</span>,<span class="fl">24</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.04644754</code></pre>
 <p>If in fact the true population mean of the amount New Yorkers sleep per night was 8 hours, the probability of getting a random sample of 25 New Yorkers where the average amount of sleep is 7.73 hrs per night or less is 0.046. This <span class="math inline">\(p\)</span>-value is close to 0.05.</p>
@@ -326,7 +326,7 @@ The margin of error is half the width of the confidence interval:</p>
 </ol>
 <p>Since the <span class="math inline">\(p\)</span>-value is less than 0.05, we reject the null hypothesis that New Yorkers sleep an average of 8 hours per night in favor of the alternative that they sleep less than 8 hours per night on average. However, the <span class="math inline">\(p\)</span>-value is close to the significance level and we may want to run the study again and/or look at sample sizes to determine how big of a difference from 8 hours is important from a practical standpoint.</p>
 <p>Let’s look at the power of this test. Remember that power is the probability of rejecting the null when the alternative is true. Since the alternative specifies a range of values for the parameter, we must specify a value. This is done by subject matter experts. How much of a difference in average sleep is needed from a practical standpoint to say it is different? Let’s say that a half an hour is important to detect. We will use the function <code><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test()</a></code> to determine the power of our test.</p>
-<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">25</span>,delta<span class="op">=</span><span class="fl">.5</span>,sd<span class="op">=</span><span class="fl">.77</span>,alternative <span class="op">=</span> <span class="st">"one.sided"</span>,type<span class="op">=</span><span class="st">"one.sample"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##      One-sample t test power calculation 
@@ -339,7 +339,7 @@ The margin of error is half the width of the confidence interval:</p>
 ##     alternative = one.sided</code></pre>
 <p>This is a high level of power, the typical value used by researchers is 80%.</p>
 <p>Let’s see what the power is for a 15 minute difference.</p>
-<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">25</span>,delta<span class="op">=</span><span class="fl">.25</span>,sd<span class="op">=</span><span class="fl">.77</span>,alternative <span class="op">=</span> <span class="st">"one.sided"</span>,type<span class="op">=</span><span class="st">"one.sample"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##      One-sample t test power calculation 
@@ -351,7 +351,7 @@ The margin of error is half the width of the confidence interval:</p>
 ##           power = 0.4731184
 ##     alternative = one.sided</code></pre>
 <p>This is a much lower power and thus not an effective test with that sample size for finding that small of a difference. We can turn the problem around and ask what sample size we need for 80% power?</p>
-<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/power.t.test.html">power.t.test</a></span><span class="op">(</span>power<span class="op">=</span><span class="fl">.8</span>,delta<span class="op">=</span><span class="fl">.25</span>,sd<span class="op">=</span><span class="fl">.77</span>,alternative <span class="op">=</span> <span class="st">"one.sided"</span>,type<span class="op">=</span><span class="st">"one.sample"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##      One-sample t test power calculation 
@@ -369,11 +369,11 @@ The margin of error is half the width of the confidence interval:</p>
 <p>We need an 95% upper bound on the confidence interval.</p>
 <p><span class="math display">\[\bar{x} + t_{24,0.95}{\frac{s}{\sqrt{n}}}  = \]</span></p>
 <p>The critical value is</p>
-<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">qt</a></span><span class="op">(</span><span class="fl">.95</span>,<span class="fl">24</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1.710882</code></pre>
 <p>So the upper confidence bound is</p>
-<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">7.73</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">qt</a></span><span class="op">(</span><span class="fl">.95</span>,<span class="fl">24</span><span class="op">)</span><span class="op">*</span><span class="fl">0.77</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 7.993476</code></pre>
 <p>The value of 8 is not included in the interval, but it is close. We need more data or another study to be confident in our results.</p>
@@ -386,7 +386,7 @@ The margin of error is half the width of the confidence interval:</p>
 <ol style="list-style-type: lower-alpha">
 <li>Use <code><a href="https://www.mosaic-web.org/mosaic/reference/binom.test.html">binom.test()</a></code> to conduct the hypothesis test and find a confidence interval.</li>
 </ol>
-<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/binom.test.html">binom.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">15</span>,n<span class="op">=</span><span class="fl">125</span>,p<span class="op">=</span><span class="fl">.08</span>,alternative <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## 
@@ -403,7 +403,7 @@ The margin of error is half the width of the confidence interval:</p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Use <code><a href="https://www.mosaic-web.org/mosaic/reference/prop.test.html">prop.test()</a></code> with <code>correct=FALSE</code> to conduct the hypothesis test and find a confidence interval.</li>
 </ol>
-<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/prop.test.html">prop.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">15</span>,n<span class="op">=</span><span class="fl">125</span>,p<span class="op">=</span><span class="fl">.08</span>,alternative <span class="op">=</span> <span class="st">"greater"</span>,correct<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  1-sample proportions test without continuity correction
@@ -420,7 +420,7 @@ The margin of error is half the width of the confidence interval:</p>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Use <code><a href="https://www.mosaic-web.org/mosaic/reference/prop.test.html">prop.test()</a></code> with <code>correction=TRUE</code> to conduct the hypothesis test and find a confidence interval.</li>
 </ol>
-<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/prop.test.html">prop.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">15</span>,n<span class="op">=</span><span class="fl">125</span>,p<span class="op">=</span><span class="fl">.08</span>,alternative <span class="op">=</span> <span class="st">"greater"</span>,correct<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  1-sample proportions test with continuity correction
@@ -442,7 +442,7 @@ The margin of error is half the width of the confidence interval:</p>
 <p>The second test is the <strong>Score</strong> test, also called the <strong>Wilson</strong>. It is found by inverting the <span class="math inline">\(p\)</span>-value, beyond the scope of this class. This interval is a nice compromise in its coverage.</p>
 <p>The third is still a score but in the calculation of the <span class="math inline">\(p\)</span>-value, a continuity correction is applied. This correction takes the limits on the binomial and extends it 0.5 in each direction. This is done to give the discrete binomial a better approximation to the continuous normal in the CLT. This interval is the default in <code>R</code> via <code><a href="https://www.mosaic-web.org/mosaic/reference/prop.test.html">prop.test()</a></code>.</p>
 <p>None of these are our simple confidence interval based on the normal approximation. Here is the code for it:</p>
-<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/binom.test.html">binom.test</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">15</span>,n<span class="op">=</span><span class="fl">125</span>,p<span class="op">=</span><span class="fl">.08</span>,alternative <span class="op">=</span> <span class="st">"greater"</span>,ci.method <span class="op">=</span> <span class="st">"Wald"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  Exact binomial test (Wald CI)
@@ -455,7 +455,7 @@ The margin of error is half the width of the confidence interval:</p>
 ## sample estimates:
 ## probability of success 
 ##                   0.12</code></pre>
-<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">15</span><span class="op">/</span><span class="fl">125</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.95</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">.12</span><span class="op">*</span><span class="fl">.88</span><span class="op">/</span><span class="fl">125</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.0721916</code></pre>
 <p>This interval is not very good. The coverage is poor especially for small sample sizes. To learn more, read <em>Approximate is better then exact for interval estimation of binomial proportions.</em> A. Agresti and B. A. Coull, American Statistician 52, 1998, 119-126.</p>
@@ -499,7 +499,7 @@ The margin of error is half the width of the confidence interval:</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2023-03-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -512,7 +512,7 @@ The margin of error is half the width of the confidence interval:</p>
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

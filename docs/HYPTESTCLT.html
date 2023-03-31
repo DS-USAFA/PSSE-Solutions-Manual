@@ -10,7 +10,7 @@
 <meta name="author" content="Kenneth Horton">
 <meta name="author" content="Bradley Warner">
 <meta name="description" content="19.1 Objectives Explain the central limit theorem and when it can be used for inference. Conduct hypothesis tests of a single mean and proportion using the CLT and R. Explain how the \(t\)...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.31 with bs4_book()">
 <meta property="og:title" content="Chapter 19 Hypothesis Testing with the Central Limit Theorem | Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/figures/Cover_Engineers.png">
@@ -21,7 +21,7 @@
 <meta name="twitter:image" content="/figures/Cover_Engineers.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -148,16 +148,16 @@
 <li>Simulate this process in <code>R</code>. Plot the resulting empirical distribution of <span class="math inline">\(\bar{X}\)</span> and report the mean and standard deviation of <span class="math inline">\(\bar{X}\)</span>. Was it what you expected?</li>
 </ol>
 <p>(HINT: You can simulate a die roll using the <code>sample</code> function. Be careful and make sure you use it properly.)</p>
-<div class="sourceCode" id="cb400"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">2003</span><span class="op">)</span></span>
 <span><span class="va">results</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">5</span>,replace<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb401"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-Hypothesis-Testing-with-the-Central-Limit-Theorem-Solutions_files/figure-html/unnamed-chunk-2-1.png" width="672"></div>
-<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,data<span class="op">=</span><span class="va">results</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  min Q1 median Q3 max    mean       sd     n missing
 ##    1  3    3.6  4   6 3.51278 0.772254 10000       0</code></pre>
@@ -169,15 +169,15 @@
 <span class="math display">\[
 \bar{X}\overset{approx}{\sim}\textsf{Norm}(3.5,0.382)
 \]</span></p>
-<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results2</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">20</span>,replace<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb405"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb407"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-Hypothesis-Testing-with-the-Central-Limit-Theorem-Solutions_files/figure-html/unnamed-chunk-5-1.png" width="672"></div>
-<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,data<span class="op">=</span><span class="va">results2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   min   Q1 median   Q3  max    mean        sd     n missing
 ##  2.15 3.25    3.5 3.75 4.95 3.49896 0.3828754 10000       0</code></pre>
@@ -185,28 +185,28 @@
 <span class="math display">\[
 \bar{X}\overset{approx}{\sim}\textsf{Norm}(3.5,0.242)
 \]</span></p>
-<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results3</span><span class="op">&lt;-</span><span class="fu">do</span><span class="op">(</span><span class="fl">10000</span><span class="op">)</span><span class="op">*</span><span class="fu">mean</span><span class="op">(</span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/resample.html">sample</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">50</span>,replace<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">results3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_histogram</span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-Hypothesis-Testing-with-the-Central-Limit-Theorem-Solutions_files/figure-html/unnamed-chunk-8-1.png" width="672"></div>
-<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span><span class="va">mean</span>,data<span class="op">=</span><span class="va">results3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##   min   Q1 median   Q3  max    mean        sd     n missing
 ##  2.54 3.34    3.5 3.66 4.36 3.49852 0.2423665 10000       0</code></pre>
 <p>Now let’s put them all together to make it easier to compare.</p>
-<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">final_results</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">results</span>,n<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">results2</span>,n<span class="op">=</span><span class="fl">20</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">results3</span>,n<span class="op">=</span><span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb413"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">final_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_dhistogram</span><span class="op">(</span><span class="op">~</span><span class="va">mean</span><span class="op">|</span><span class="va">n</span>,fill<span class="op">=</span><span class="st">"cyan"</span>,color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_theme</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu">gf_labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Test statistic"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-Hypothesis-Testing-with-the-Central-Limit-Theorem-Solutions_files/figure-html/unnamed-chunk-11-1.png" width="672"></div>
-<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.mosaic-web.org/mosaic/reference/aggregating.html">favstats</a></span><span class="op">(</span><span class="op">~</span><span class="va">mean</span><span class="op">|</span><span class="va">n</span>,data<span class="op">=</span><span class="va">final_results</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">mean</span>,<span class="va">sd</span>,<span class="va">n</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##      mean        sd  n
@@ -242,11 +242,11 @@ t = \frac{134 - 130}{2.87} = 1.39
 <li>Calculate a <span class="math inline">\(p\)</span>-value.</li>
 </ol>
 <p>The upper-tail area is 0.0823,</p>
-<div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="fl">1.39</span>,<span class="fl">34</span>,lower.tail <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.08678153</code></pre>
 <p>or</p>
-<div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="fl">1.39</span>,<span class="fl">34</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.08678153</code></pre>
 <p>so the <span class="math inline">\(p\)</span>-value is <span class="math inline">\(2 \times 0.0823 = 0.1646\)</span>.</p>
@@ -259,7 +259,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <span class="header-section-number">19.2.2.1</span> Extra material<a class="anchor" aria-label="anchor" href="#extra-material"><i class="fas fa-link"></i></a>
 </h4>
 <p>If we had used a normal model based on the CLT our <span class="math inline">\(p\)</span>-value would have been close to the value from the <span class="math inline">\(t\)</span> because our sample size is large.</p>
-<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.39</span>,lower.tail <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.08226444</code></pre>
 </div>
@@ -274,7 +274,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <span class="math inline">\(H_{A}: \mu &gt; \mu_{0}\)</span>, <span class="math inline">\(n = 11\)</span>, <span class="math inline">\(T = 1.91\)</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="fl">1.91</span>,<span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.04260244</code></pre>
 <p>The <span class="math inline">\(p\)</span>-value is less than 0.05, reject the null hypothesis.</p>
@@ -283,7 +283,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <span class="math inline">\(H_{A}: \mu &lt; \mu_{0}\)</span>, <span class="math inline">\(n = 17\)</span>, <span class="math inline">\(T = - 3.45\)</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.45</span>,<span class="fl">16</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.001646786</code></pre>
 <p>The <span class="math inline">\(p\)</span>-value is less than 0.05, reject the null hypothesis.</p>
@@ -292,7 +292,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <span class="math inline">\(H_{A}: \mu \ne \mu_{0}\)</span>, <span class="math inline">\(n = 7\)</span>, <span class="math inline">\(T = 0.83\)</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb428"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="fl">0.83</span>,<span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.4383084</code></pre>
 <p>The <span class="math inline">\(p\)</span>-value is greater than 0.05, fail to reject the null hypothesis.</p>
@@ -301,7 +301,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <span class="math inline">\(H_{A}: \mu &gt; \mu_{0}\)</span>, <span class="math inline">\(n = 28\)</span>, <span class="math inline">\(T = 2.13\)</span>
 </li>
 </ol>
-<div class="sourceCode" id="cb428"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb430"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="fl">2.13</span>,<span class="fl">27</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.02121769</code></pre>
 <p>The <span class="math inline">\(p\)</span>-value is less than 0.05, reject the null hypothesis.</p>
@@ -350,7 +350,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <p>Based on the normal model, we can compute a one-sided <span class="math inline">\(p\)</span>-value and then double to get the correct <span class="math inline">\(p\)</span>-value.</p>
 <p>The standard error can be computed. The null value is used again here, because this is a hypothesis test for a single proportion with the specified value for the probability of success.</p>
 <p><span class="math display">\[SE = \sqrt{\frac{p_0\times (1-p_0)}{n}} = \sqrt{\frac{0.5\times (1-0.5)}{500}} = 0.022\]</span></p>
-<div class="sourceCode" id="cb430"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">.52</span>,mean<span class="op">=</span><span class="fl">.5</span>,sd<span class="op">=</span><span class="fl">0.022</span>,lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.3633021</code></pre>
 <ol start="7" style="list-style-type: lower-alpha">
@@ -395,7 +395,7 @@ t = \frac{134 - 130}{2.87} = 1.39
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2022-11-07.</p>
+    <p>"<strong>Solutions Manual for ‘Probability and Statistics for Scientists and Engineers’</strong>" was written by Matthew Davis, Brianna Hitt, Kenneth Horton, Bradley Warner. It was last built on 2023-03-31.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -408,7 +408,7 @@ t = \frac{134 - 130}{2.87} = 1.39
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

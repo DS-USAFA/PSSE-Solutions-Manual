@@ -41,7 +41,6 @@ yawn <- read_csv("data/yawn.csv")
 ```
 
 
-
 ```r
 glimpse(yawn)
 ```
@@ -86,8 +85,24 @@ The random variable is the number of control patients that yawned from a populat
 
 c. Find the $p$-value using the hypergeometric distribution.
 
-In this case we want to find $\Prob(X \leq 4)$ and double it since it is a two-sided test.
+**Solution revised on 31 March 2023**: 
 
+In this case we want to find $\Prob(X \leq 4)$. We do not need to double this since we have a one-sided test. Remember that our alternative hypothesis is that someone yawning makes you more likely to yawn.  
+
+
+```r
+phyper(4,16,34,14)
+```
+
+```
+## [1] 0.5127818
+```
+
+Thus, our p-value is 0.5128. 
+
+**Previously provided solution**: This is correct only if we have a two-sided test (i.e., we think yawning has an impact but aren't sure if someone yawning makes you more or less likely to yawn). 
+
+In this case we want to find $\Prob(X \leq 4)$ and double it since it is a two-sided test. 
 
 
 ```r
@@ -115,7 +130,7 @@ gf_dist("hyper",m=16,n=34,k=14) %>%
 ## Warning: geom_hline(): Ignoring `mapping` because `yintercept` was provided.
 ```
 
-<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 
 
@@ -160,12 +175,12 @@ gf_dist("hyper",m=16,n=34,k=14) %>%
           y="Probability")
 ```
 
-<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 
 e. Determine the conclusion of the hypothesis test.  
 
-Since $p$-value, 1, is high, larger than 0.05, we fail to reject the null hypothesis of yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
+Since the $p$-value is high, larger than 0.05, we fail to reject the null hypothesis that yawning is not contagious. The data do not provide convincing evidence that people are more likely to yawn if a person near them yawns.
 
 f. Compare your results with the randomization test. 
 
@@ -249,7 +264,7 @@ results %>%
   gf_theme(theme_classic)
 ```
 
-<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 
 ```r
@@ -321,7 +336,7 @@ temperature %>%
   gf_theme(theme_classic)
 ```
 
-<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="20-Hypothesis-Testing-with-Known-Distributions-Solutions_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 
 d. Compute a test statistic. We are going to help you with this part. We cannot do a randomization test since we don't have a second variable. It would be nice to use the mean as a test statistic but we don't yet know the sampling distribution of the sample mean.  
